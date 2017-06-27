@@ -1,22 +1,14 @@
 import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {CanActivateGuard} from './canactivate.guard.service';
-import {DesignComponent} from './design/design.component';
-import {PricingComponent} from './pricing/pricing.component';
-import {LaunchingComponent} from './launching/launching.component';
+import {AppGuard} from './app.guard.service';
 
 const appRoutes: Routes = [
-    {path: '', redirectTo: 'design', pathMatch: 'full'},
-    {path: 'design', component: DesignComponent, canActivate: [CanActivateGuard]},
-    {path: 'design/:id', component: DesignComponent, canActivate: [CanActivateGuard]},
+    {path: '', redirectTo: 'storefronts', pathMatch: 'full'},
     {
-        path: 'pricing', component: PricingComponent, canActivate: [CanActivateGuard]
-    },
-    {
-        path: 'launching', component: LaunchingComponent, canActivate: [CanActivateGuard]
-    },
+        path: 'storefronts',
+        loadChildren: './modules/storefronts/storefronts.module#StorefrontsModule',
+        canActivate: [AppGuard]
+    }
 ];
-
-export const appRoutingProviders: any[] = [];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

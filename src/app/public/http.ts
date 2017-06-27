@@ -1,15 +1,35 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptionsArgs, RequestOptions, Response} from '@angular/http';
+import {Http, Headers, RequestOptionsArgs, XHRBackend, RequestOptions, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {DialogService} from 'ng2-bootstrap-modal';
-import {AlertComponent} from './public/alert.component';
-import {DsLib} from './lib/lib';
+import {AlertComponent} from './alert.component';
+import {DsLib} from '../lib/lib';
 
 @Injectable()
-export class HttpClient {
-    alertStatus = false;
+export class HttpClient extends Http {
+    private alertStatus = false;
 
-    static getRequestOptionArgs(options?: RequestOptionsArgs): RequestOptionsArgs {
+    constructor(backend: XHRBackend, options: RequestOptions, private dialogService: DialogService) {
+        super(backend, options);
+    }
+
+    public get(url: string, options?: RequestOptionsArgs) {
+        return this.intercept(super.get(url, this.getRequestOptionArgs(options)));
+    }
+
+    public post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+        return this.intercept(super.post(url, body, this.getRequestOptionArgs(options)));
+    }
+
+    public put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
+        return this.intercept(super.put(url, body, this.getRequestOptionArgs(options)));
+    }
+
+    public delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        return this.intercept(super.delete(url, this.getRequestOptionArgs(options)));
+    }
+
+    private getRequestOptionArgs(options?: RequestOptionsArgs): RequestOptionsArgs {
         if (options == null) {
             options = new RequestOptions();
         }
@@ -24,36 +44,6 @@ export class HttpClient {
             'WSS-HMAC-SHA256 Credential=TEST/20170621/leadsgen/psp/wss-request,SignedHeaders=,' +
             'Signature=b2596934cd3acf0b363ddf91e0a9b702a19063558a21e34ccb44ab9acad16609');
         return options;
-    }
-
-    constructor(private http: Http, private dialogService: DialogService) {
-    }
-
-    private alert(title) {
-        if (!this.alertStatus) {
-            this.alertStatus = true;
-            this.dialogService.addDialog(AlertComponent, {
-                alert: title
-            }).subscribe(() => {
-                this.alertStatus = false;
-            });
-        }
-    }
-
-    public get(url: string, options?: RequestOptionsArgs) {
-        return this.intercept(this.http.get(url, HttpClient.getRequestOptionArgs(options)));
-    }
-
-    public post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        return this.intercept(this.http.post(url, body, HttpClient.getRequestOptionArgs(options)));
-    }
-
-    public put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-        return this.intercept(this.http.put(url, body, HttpClient.getRequestOptionArgs(options)));
-    }
-
-    public deletex(url: string, options?: RequestOptionsArgs): Observable<Response> {
-        return this.intercept(this.http.delete(url, HttpClient.getRequestOptionArgs(options)));
     }
 
     private intercept(observable: Observable<Response>): Observable<Response> {
@@ -76,5 +66,16 @@ export class HttpClient {
             }
             return Observable.throw(err);
         });
+    }
+
+    private alert(title) {
+        if (!this.alertStatus) {
+            this.alertStatus = true;
+            this.dialogService.addDialog(AlertComponent, {
+                alert: title
+            }).subscribe(() => {
+                this.alertStatus = false;
+            });
+        }
     }
 }
