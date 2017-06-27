@@ -11,22 +11,21 @@ export class AppGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot) {
-        return true;
-        /*const step = route.url[0].path;
-         let checkRoute = false;
-         if (this.PublicService.canActive.includes(step)) {
-         checkRoute = true;
-         }
+        const step = route.url[0].path;
+        let checkRoute = false;
+        if (this.PublicService.canActive.includes(step)) {
+            checkRoute = true;
+        }
 
-         // Check session
-         if (DsLib.checkSession()) {
+        // Check session
+        if (DsLib.checkSession()) {
 
-         }
-         let tooken = '';
-         if (DsLib.checkLogin()) {
-         tooken = DsLib.getToken().id;
-         }
-         return this.PublicService.checkAccess(() => this.canAccessScreen(), tooken, checkRoute);*/
+        }
+        let tooken = '';
+        if (DsLib.checkLogin()) {
+            tooken = DsLib.getToken().id;
+        }
+        return this.PublicService.checkAccess(() => this.canAccessScreen(), tooken, checkRoute);
     }
 
     private canAccessScreen() {

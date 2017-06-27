@@ -7,17 +7,17 @@ import {AppComponent} from './app.component';
 import {AppGuard} from './app.guard.service';
 import {HttpClient} from './public/http';
 import {PublicService} from './public/public.service';
-
-
 import {routing} from './app.routing.module';
 
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {AlertComponent} from './public/alert.component';
+import {LoadingComponent} from './public/loading.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        AlertComponent
+        AlertComponent,
+        LoadingComponent
     ],
     imports: [
         BrowserModule,
@@ -32,7 +32,8 @@ import {AlertComponent} from './public/alert.component';
         PublicService
     ],
     entryComponents: [
-        AlertComponent
+        AlertComponent,
+        LoadingComponent
     ],
     bootstrap: [AppComponent]
 })

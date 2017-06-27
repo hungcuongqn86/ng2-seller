@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {PublicService} from '../../public/public.service';
 import {Observable} from 'rxjs/Rx';
 
 @Component({
@@ -8,11 +9,11 @@ import {Observable} from 'rxjs/Rx';
 })
 
 export class StorefrontsComponent implements OnInit {
-    constructor() {
+    constructor(private PublicService: PublicService) {
 
     }
 
     ngOnInit() {
-
+        this.PublicService.startLoad();
     }
 }

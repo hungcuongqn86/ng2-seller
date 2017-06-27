@@ -8,7 +8,7 @@ export interface PromptModel {
     templateUrl: './loading.component.html',
     styleUrls: ['./loading.component.css']
 })
-export class LoadingxComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
+export class LoadingComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
     status: string;
 
     constructor(dialogService: DialogService) {

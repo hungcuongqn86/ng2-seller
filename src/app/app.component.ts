@@ -10,7 +10,8 @@ import {Observable} from 'rxjs/Rx';
 export class AppComponent implements OnInit {
     title = 'app works!';
 
-    constructor(public PublicService: PublicService) {
+    constructor(private PublicService: PublicService) {
+
     }
 
     ngOnInit() {

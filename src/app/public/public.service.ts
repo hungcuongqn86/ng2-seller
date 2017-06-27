@@ -3,15 +3,20 @@ import {URLSearchParams, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {HttpClient} from './http';
 import {Observable} from 'rxjs/Rx';
+import {DialogService} from 'ng2-bootstrap-modal';
+import {LoadingComponent} from './loading.component';
 import * as config from '../app.config';
+import * as constDf from '../lib/const';
 
 @Injectable()
 export class PublicService {
-    public canActive = [''];
+    public canActive = constDf.moduleStart;
     private pspApiUrl = config.pspApiUrl;
     private aspApiUrl = config.aspApiUrl;
+    private loadingStatus = false;
+    private dlLoad: any;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private dialogService: DialogService) {
 
     }
 
@@ -36,5 +41,20 @@ export class PublicService {
         const params: URLSearchParams = new URLSearchParams();
         params.set('key', key);
         return this.http.get(url, {search: params}).map((res: Response) => res.json().value);
+    }
+
+    public startLoad(title = 'Loading...') {
+        if (this.loadingStatus) {
+            return false;
+        }
+        this.loadingStatus = true;
+        this.dlLoad = this.dialogService.addDialog(LoadingComponent, {
+            status: title
+        });
+    }
+
+    public endLoad() {
+        this.dlLoad.unsubscribe();
+        this.loadingStatus = false;
     }
 }
