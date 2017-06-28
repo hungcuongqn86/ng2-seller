@@ -1,11 +1,129 @@
 <div id="app">
     <div id="wrapper">
-        <div class="con">
-
+        <div class="mnu-top text-right">
+            <div class="container">
+                <ul class="list-inline">
+                    <li>
+                        <a href="javascript: void(0)">Register</a>
+                    </li>
+                    <li>
+                        <a (click)="authDl()" href="javascript: void(0)">Sign in</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">
+                        <img class="hidden-xs" src="./assets/img/logo-burger.png" alt="">
+                        <img class="hidden-lg hidden-md hidden-sm" src="./assets/img/logo-burger-m.png" alt="">
+                    </a>
+                </div>
+            </div>
+            <!-- /.container -->
+        </nav>
         <router-outlet></router-outlet>
         <footer>
-            Footer------------------------------
+            <div class="col-footer">
+                <div class="container">
+                    <div class="col-md-3 col-xs-12 col-item-foooter marketplace">
+                        <h3>Marketplace</h3>
+                        <ul>
+                            <li><a href="#">Shop</a></li>
+                            <li><a href="#">Open a shop</a></li>
+                            <li><a href="#">How it works</a></li>
+                            <li><a href="#">Gettings Started</a></li>
+                            <li><a href="#">New Cloth Acadeny</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-item-foooter col-help">
+                        <h3>Help</h3>
+                        <ul>
+                            <li><a href="#">Track order</a></li>
+                            <li><a href="#">Help center</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Returns</a></li>
+                            <li><a href="#">Contact us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-item-foooter col-company">
+                        <h3>Company</h3>
+                        <ul>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Carrers</a></li>
+                            <li><a href="#">Partners</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-item-foooter col-follow">
+                        <h3>Follow us</h3>
+                        <ul class="list-inline">
+                            <li><a href="#"><i class="fa fa-facebook-square  fa-2x" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest-square fa-2x" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                        <div class="change-lang-money">
+                            <div class="form-group pull-left change-lang">
+                                <div id="select-lang" data-input-name="country3" data-selected-country="VN"
+                                     data-scrollable="true" data-scrollable-height="250px" class="flagstrap">
+
+                                    <select id="flagstrap-PG3dFRO4" name="country3" style="display: none;">
+                                        <option value="VN" selected="selected">Việt Nam</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="US">United States</option>
+                                    </select>
+                                    <button type="button" data-toggle="dropdown" id="flagstrap-drop-down-PG3dFRO4"
+                                            class="btn btn-default btn-md dropdown-toggle"><span
+                                            class="flagstrap-selected-PG3dFRO4"><i class="flagstrap-icon flagstrap-vn"
+                                                                                   style="margin-right: 10px;"></i>Việt Nam</span><span
+                                            class="caret" style="margin-left: 10px;"></span></button>
+                                    <ul id="flagstrap-drop-down-PG3dFRO4-list"
+                                        aria-labelled-by="flagstrap-drop-down-PG3dFRO4" class="dropdown-menu"
+                                        style="height: auto; max-height: 250px; overflow-x: hidden;">
+                                        <li><a data-val="VN"><i class="flagstrap-icon flagstrap-vn"
+                                                                style="margin-right: 10px;"></i>Việt Nam</a></li>
+                                        <li><a data-val="AU"><i class="flagstrap-icon flagstrap-au"
+                                                                style="margin-right: 10px;"></i>Australia</a></li>
+                                        <li><a data-val="GB"><i class="flagstrap-icon flagstrap-gb"
+                                                                style="margin-right: 10px;"></i>United Kingdom</a></li>
+                                        <li><a data-val="US"><i class="flagstrap-icon flagstrap-us"
+                                                                style="margin-right: 10px;"></i>United States</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group pull-right change-money">
+                                <select class="form-control" id="sel1">
+                                    <option>VND</option>
+                                    <option>USD</option>
+                                    <option>SGD</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="copyright text-center">
+                <div class="container">
+                    <p>© 2017 BurgerPrint, Inc.</p>
+                </div>
+            </div>
         </footer>
     </div>
 </div>

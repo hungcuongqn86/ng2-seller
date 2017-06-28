@@ -25,11 +25,12 @@ export class AppGuard implements CanActivate {
         if (DsLib.checkLogin()) {
             tooken = DsLib.getToken().id;
         }
-        return this.PublicService.checkAccess(() => this.canAccessScreen(), tooken, checkRoute);
+        return true;
+        // return this.PublicService.checkAccess(() => this.canAccessScreen(), tooken, checkRoute);
     }
 
     private canAccessScreen() {
         DsLib.removeToken();
-        this.router.navigate(['/']);
+        // this.router.navigate(['/']);
     }
 }
