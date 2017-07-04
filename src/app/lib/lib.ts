@@ -17,17 +17,17 @@ export class DsLib {
 
     static setToken(res: any) {
         const cookval = JSON.stringify({
-            id: res.id,
-            user_id: '1LkvNVzwJFMJXr2Q'
-            // user_id: res.user_id
+            id: res.id
         });
-        const cookieName = btoa(config.cookie_tokens);
+        DsLib.setCookie(config.cookie_tokens, cookval, res.expire);
+    }
 
-        const dateString = res.expire,
+    static setCookie(cookieName, cookval, expire_time) {
+        const dateString = expire_time,
             reggie = /(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/,
             [, year, month, day, hours, minutes, seconds] = reggie.exec(dateString);
         const expires = new Date(Number(year), Number(month) - 1, Number(day), Number(hours), Number(minutes), Number(seconds));
-        Cookie.set(cookieName, btoa(cookval), expires, '/');
+        Cookie.set(btoa(cookieName), btoa(cookval), expires, '/');
     }
 
     static checkLogin(): boolean {
@@ -36,6 +36,15 @@ export class DsLib {
 
     static checkSession(): boolean {
         return Cookie.check(btoa(config.cookie_session));
+    }
+
+    static getProfile(): any {
+        const tk = Cookie.get('user_email');
+        if (tk && tk !== '') {
+            return tk;
+        } else {
+            return null;
+        }
     }
 
     static removeToken() {
