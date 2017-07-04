@@ -4,12 +4,10 @@ import {AppGuard} from './app.guard.service';
 
 const appRoutes: Routes = [
     {path: '', redirectTo: 'storefronts', pathMatch: 'full'},
+    {path: 'login', redirectTo: 'auth/login', pathMatch: 'full'},
+    {path: 'register', redirectTo: 'auth/register', pathMatch: 'full'},
     {
-        path: 'login',
-        loadChildren: './modules/auth/auth.module#AuthModule'
-    },
-    {
-        path: 'register',
+        path: 'auth',
         loadChildren: './modules/auth/auth.module#AuthModule'
     },
     {

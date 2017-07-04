@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {PublicService} from '../../public/public.service';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from './auth.service';
 import {Observable} from 'rxjs/Rx';
-
-declare const $: any;
+import {DsLib} from '../../lib/lib';
+import {moduleStart} from '../../lib/const';
 
 @Component({
     selector: 'app-login',
@@ -10,22 +11,50 @@ declare const $: any;
     styleUrls: ['./login.component.css']
 })
 
-export class LoginComponent implements OnInit {
-    type;
-    rSuccess;
+export class LoginComponent {
     rError;
     alert;
-    fdata: any = JSON.parse('{"source": "general","email":"","password":"","confirm_password":"","action":"regiter"}');
+    fdata: any = JSON.parse('{"source": "general","email":"","password":""}');
 
-    constructor(private PublicService: PublicService) {
-        this.PublicService.canActive = [];
-    }
-
-    ngOnInit() {
-
+    constructor(private AuthService: AuthService, private router: Router) {
+        this.AuthService.http.canActive = [];
     }
 
     public actionLogin() {
+        this.AuthService.accLogin(this.fdata).subscribe(
+            res => {
+                DsLib.setToken(res);
+                this.createSession();
+            },
+            error => {
+                if (error.status === 401) {
+                    this.rError = true;
+                    this.alert = error.json().message;
+                } else {
+                    console.error(error.json().message);
+                    return Observable.throw(error);
+                }
+            }
+        );
+    }
 
+    private createSession() {
+        const tooken = DsLib.getToken().id;
+        this.AuthService._createSession(tooken).subscribe(
+            res => {
+                this.AuthService.http.profile = DsLib.getProfile();
+                this.AuthService.http.canActive = moduleStart;
+                this.router.navigate(['/campaigns']);
+            },
+            error => {
+                if (error.status === 401) {
+                    this.rError = true;
+                    this.alert = error.json().message;
+                } else {
+                    console.error(error.json().message);
+                    return Observable.throw(error);
+                }
+            }
+        );
     }
 }

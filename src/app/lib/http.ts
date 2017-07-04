@@ -3,14 +3,15 @@ import {Http, Headers, RequestOptionsArgs, XHRBackend, RequestOptions, Response}
 import {Observable} from 'rxjs/Observable';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {AlertComponent} from '../public/alert.component';
-import {AuthComponent} from '../public/auth.component';
-import {aspApiUrl, pspApiUrl, serviceName, serviceRegion, clientId, clientKey} from '../app.config';
+import {serviceName, serviceRegion, clientId, clientKey} from '../app.config';
+import {moduleStart} from './const';
 import {DsLib} from './lib';
 import {Auth} from './auth';
 
 
 @Injectable()
 export class HttpClient extends Http {
+    public canActive = moduleStart;
     public profile: any;
     private dlauth: any;
     private alertStatus = false;
@@ -80,11 +81,11 @@ export class HttpClient extends Http {
         this.initParams['X-Date'] = this.Auth.yyyyMMddTHHmmssZ(this.timeStamp);
         let check = false;
         Object.keys(this.initParams).map((index) => {
-            /*const rand = Math.floor((Math.random() * 100) + 1);
-             if (rand > 50) {
-             check = true;
-             res[index] = this.initParams[index];
-             }*/
+            const rand = Math.floor((Math.random() * 100) + 1);
+            if (rand > 200) {
+                check = true;
+                res[index] = this.initParams[index];
+            }
         });
         if (check) {
             return res;
@@ -117,7 +118,7 @@ export class HttpClient extends Http {
                     serv.alert(ms);
                     break;
                 case 401:
-                    this.authDl('l');
+                    // Logout
                     break;
                 case 500:
                     break;
@@ -126,110 +127,6 @@ export class HttpClient extends Http {
             }
             return Observable.throw(err);
         });
-    }
-
-    public authDl(type, rError = false, rSuccess = false, alert = '') {
-        if (!this.loginStatus) {
-            this.loginStatus = true;
-            this.dlauth = this.dialogService.addDialog(AuthComponent, {
-                type: type,
-                rSuccess: rSuccess,
-                rError: rError,
-                alert: alert
-            }, {closeByClickingOutside: true}).subscribe((acc) => {
-                if (acc) {
-                    this._auth(acc);
-                } else {
-                    this.loginStatus = false;
-                }
-            });
-        }
-    }
-
-    private _auth(acc) {
-        if (acc.action === 'login') {
-            this.actionLogin(acc);
-            return false;
-        }
-        if (acc.action === 'regiter') {
-            this.actionRegister(acc);
-            return false;
-        }
-    }
-
-    private actionLogin(acc) {
-        this.accLogin(acc).subscribe(
-            res => {
-                DsLib.setToken(res);
-                this.createSession();
-            },
-            error => {
-                this.loginStatus = false;
-                this.authDl('l', true, false, this.getMessage(error));
-            }
-        );
-    }
-
-    private actionRegister(acc) {
-        this.accRegister(acc).subscribe(
-            res => {
-                this.loginStatus = false;
-                this.authDl('r', false, true, 'Register success!');
-            },
-            error => {
-                this.loginStatus = false;
-                this.authDl('r', true, false, this.getMessage(error));
-            }
-        );
-    }
-
-    private createSession() {
-        const tooken = DsLib.getToken().id;
-        this._createSession(tooken).subscribe(
-            res => {
-                this.profile = DsLib.getProfile();
-                this.dlauth.unsubscribe();
-                this.loginStatus = false;
-                this.alert('Logged in successfully!', 'success');
-            },
-            error => {
-                console.error(error.json().message);
-                return Observable.throw(error);
-            }
-        );
-    }
-
-    private _createSession(tk) {
-        const url = pspApiUrl + `sessions`;
-        const body = JSON.stringify({token: tk});
-        return this.post(url, body).map((res: Response) => res.json());
-    }
-
-    private accLogin(acc: any) {
-        const url = aspApiUrl + `tokens`;
-        const body = JSON.stringify(acc);
-        return this.post(url, body).map((res: Response) => res.json());
-    }
-
-    private accRegister(acc: any) {
-        const url = aspApiUrl + `users`;
-        const body = JSON.stringify(acc);
-        return this.post(url, body).map((res: Response) => res.json());
-    }
-
-    private getMessage(err) {
-        let ms = '';
-        switch (err.status) {
-            case 400:
-                ms = err.json().message;
-                break;
-            case 401:
-                ms = err.json().message;
-                break;
-            default:
-                ms = 'error ' + err.status + ':' + err.statusText;
-        }
-        return ms;
     }
 
     //  type =  error, success) {

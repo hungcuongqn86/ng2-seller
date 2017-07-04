@@ -6,11 +6,9 @@ import {Observable} from 'rxjs/Rx';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {LoadingComponent} from './loading.component';
 import * as config from '../app.config';
-import * as constDf from '../lib/const';
 
 @Injectable()
 export class PublicService {
-    public canActive = constDf.moduleStart;
     private loadingStatus = false;
     private dlLoad: any;
 
@@ -24,18 +22,24 @@ export class PublicService {
                 passback();
                 return Observable.of(true);
             } else {
-                const url = config.pspApiUrl + `sessions`;
-                const body = JSON.stringify({token: tk});
-                return this.http.post(url, body)
-                    .map((res: Response) => {
-                        passback();
-                        return true;
-                    }).catch(() => {
-                        fallback();
-                        return Observable.of(false);
-                    });
+                if (tk !== '') {
+                    const url = config.pspApiUrl + `sessions`;
+                    const body = JSON.stringify({token: tk});
+                    return this.http.post(url, body)
+                        .map((res: Response) => {
+                            passback();
+                            return true;
+                        }).catch(() => {
+                            fallback();
+                            return Observable.of(false);
+                        });
+                } else {
+                    fallback();
+                    return Observable.of(false);
+                }
             }
         } else {
+            fallback();
             return Observable.of(false);
         }
     }

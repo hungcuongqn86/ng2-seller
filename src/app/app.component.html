@@ -18,10 +18,11 @@
                         </ul>
                     </li>
                     <li *ngIf="!PublicService.http.profile">
-                        <a (click)="authDl('r')" href="javascript: void(0)">{{ 'AUTH.REGISTER' | translate }}</a>
+                        <a routerLinkActive="active" routerLink="auth/register" href="javascript: void(0)">{{
+                            'AUTH.REGISTER' | translate }}</a>
                     </li>
-                    <li *ngIf="!PublicService.http.profile">
-                        <a (click)="authDl('l')" href="javascript: void(0)">{{ 'AUTH.SIGN_IN' | translate }}</a>
+                    <li routerLinkActive="active" routerLink="auth/login" *ngIf="!PublicService.http.profile">
+                        <a href="javascript: void(0)">{{ 'AUTH.SIGN_IN' | translate }}</a>
                     </li>
                 </ul>
             </div>

@@ -35,7 +35,11 @@ export class DsLib {
     }
 
     static checkSession(): boolean {
-        return Cookie.check('session_id');
+        if (!Cookie.check('session_id') || !Cookie.check('user_email') || !Cookie.get('user_email') || Cookie.get('user_email') === null
+            || Cookie.get('user_email') === '') {
+            return false;
+        }
+        return true;
     }
 
     static getProfile(): any {

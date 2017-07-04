@@ -36,17 +36,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         );
     }
 
-    public authDl(type) {
-        if (type === 'l') {
-            this.router.navigate(['/login']);
-        }
-        if (type === 'r') {
-            this.router.navigate(['/register']);
-        }
-    }
-
     public logout() {
-        this.PublicService.startLoad();
         this.PublicService.http.profile = null;
         DsLib.removeToken();
         this.removeSession();
@@ -56,10 +46,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         const ss = DsLib.getSession();
         this.PublicService.removeSession(ss).subscribe(
             () => {
-                this.PublicService.endLoad();
+                this.router.navigate(['/auth/login']);
             },
             error => {
-                this.PublicService.endLoad();
                 console.error(error.json().message);
                 return Observable.throw(error);
             }
@@ -71,7 +60,6 @@ export class AppComponent implements OnInit, AfterViewInit {
             $(this).closest('.list-group').fadeOut('slide', function () {
                 $('.mini-submenu').fadeIn();
             });
-
         });
 
         $('.mini-submenu').on('click', function () {
