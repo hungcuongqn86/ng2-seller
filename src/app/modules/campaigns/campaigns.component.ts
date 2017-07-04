@@ -4,11 +4,11 @@ import {Observable} from 'rxjs/Rx';
 
 @Component({
     selector: 'app-storefronts',
-    templateUrl: './storefronts.component.html',
-    styleUrls: ['./storefronts.component.css']
+    templateUrl: './campaigns.component.html',
+    styleUrls: ['./campaigns.component.css']
 })
 
-export class StorefrontsComponent implements OnInit {
+export class CampaignsComponent implements OnInit {
     constructor(private PublicService: PublicService) {
 
     }

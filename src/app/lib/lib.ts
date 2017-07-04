@@ -51,6 +51,15 @@ export class DsLib {
         return format(date, 'YYYYMMDDThhmmss') + 'Z';
     }
 
+    static getUri(url) {
+        if (!url) {
+            return '';
+        }
+        const parser = document.createElement('a');
+        parser.href = url;
+        return parser.pathname;
+    }
+
     constructor() {
     }
 }

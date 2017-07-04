@@ -8,6 +8,11 @@ const appRoutes: Routes = [
         path: 'storefronts',
         loadChildren: './modules/storefronts/storefronts.module#StorefrontsModule',
         canActivate: [AppGuard]
+    },
+    {
+        path: 'campaigns',
+        loadChildren: './modules/campaigns/campaigns.module#CampaignsModule',
+        canActivate: [AppGuard]
     }
 ];
 

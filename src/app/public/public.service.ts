@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {URLSearchParams, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import {HttpClient} from './http';
+import {HttpClient} from '../lib/http';
 import {Observable} from 'rxjs/Rx';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {LoadingComponent} from './loading.component';

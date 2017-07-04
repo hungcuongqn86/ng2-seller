@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
 export interface PromptModel {
+    type: string;
     alert: string;
 }
 
@@ -9,6 +10,7 @@ export interface PromptModel {
     styleUrls: ['./alert.component.css']
 })
 export class AlertComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
+    type: string;
     alert: string;
 
     constructor(dialogService: DialogService) {
@@ -16,7 +18,6 @@ export class AlertComponent extends DialogComponent<PromptModel, string> impleme
     }
 
     ngOnInit() {
-
     }
 
     public mdClose() {

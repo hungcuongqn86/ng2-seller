@@ -1,13 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {PublicService} from './public/public.service';
 import {Observable} from 'rxjs/Rx';
+
+declare const $: any;
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
     title = 'app works!';
 
     constructor(private PublicService: PublicService) {
@@ -28,5 +30,19 @@ export class AppComponent implements OnInit {
                 return Observable.throw(error);
             }
         );
+    }
+
+    ngAfterViewInit() {
+        $('#slide-submenu').on('click', function () {
+            $(this).closest('.list-group').fadeOut('slide', function () {
+                $('.mini-submenu').fadeIn();
+            });
+
+        });
+
+        $('.mini-submenu').on('click', function () {
+            $(this).next('.list-group').toggle('slide');
+            $('.mini-submenu').hide();
+        });
     }
 }

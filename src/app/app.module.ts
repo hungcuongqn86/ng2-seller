@@ -5,7 +5,7 @@ import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
 import {AppGuard} from './app.guard.service';
-import {HttpClient} from './public/http';
+import {HttpClient} from './lib/http';
 import {PublicService} from './public/public.service';
 import {routing} from './app.routing.module';
 
