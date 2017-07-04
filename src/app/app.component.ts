@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     public logout() {
+        this.PublicService.http.startLoad();
         this.PublicService.http.profile = null;
         DsLib.removeToken();
         this.removeSession();
@@ -46,9 +47,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         const ss = DsLib.getSession();
         this.PublicService.removeSession(ss).subscribe(
             () => {
+                this.PublicService.http.endLoad();
                 this.router.navigate(['/auth/login']);
             },
             error => {
+                this.PublicService.http.endLoad();
                 console.error(error.json().message);
                 return Observable.throw(error);
             }

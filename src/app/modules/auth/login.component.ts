@@ -21,6 +21,7 @@ export class LoginComponent {
     }
 
     public actionLogin() {
+        this.AuthService.http.startLoad();
         this.AuthService.accLogin(this.fdata).subscribe(
             res => {
                 DsLib.setToken(res);
@@ -44,9 +45,11 @@ export class LoginComponent {
             res => {
                 this.AuthService.http.profile = DsLib.getProfile();
                 this.AuthService.http.canActive = moduleStart;
+                this.AuthService.http.endLoad();
                 this.router.navigate(['/campaigns']);
             },
             error => {
+                this.AuthService.http.endLoad();
                 if (error.status === 401) {
                     this.rError = true;
                     this.alert = error.json().message;

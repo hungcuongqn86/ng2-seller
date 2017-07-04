@@ -14,7 +14,6 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-trans
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {AlertComponent} from './public/alert.component';
 import {LoadingComponent} from './public/loading.component';
-import {AuthComponent} from './public/auth.component';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateStaticLoader(http, '/assets/i18n', '.json');
@@ -24,8 +23,7 @@ export function createTranslateLoader(http: HttpClient) {
     declarations: [
         AppComponent,
         AlertComponent,
-        LoadingComponent,
-        AuthComponent
+        LoadingComponent
     ],
     imports: [
         BrowserModule,
@@ -47,8 +45,7 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     entryComponents: [
         AlertComponent,
-        LoadingComponent,
-        AuthComponent
+        LoadingComponent
     ],
     bootstrap: [AppComponent]
 })

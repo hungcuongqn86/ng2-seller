@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot} from '@angular/router';
-import {PublicService} from './public/public.service';
+import {HttpClient} from './lib/http';
 import {Router} from '@angular/router';
 import {DsLib} from './lib/lib';
 
 @Injectable()
 export class AppGuard implements CanActivate {
-    constructor(private PublicService: PublicService, private router: Router) {
+    constructor(private http: HttpClient, private router: Router) {
     }
 
     canActivate(route: ActivatedRouteSnapshot) {
         const step = route.url[0].path;
         let checkRoute = false;
-        if (this.PublicService.http.canActive.includes(step)) {
+        if (this.http.canActive.includes(step)) {
             checkRoute = true;
         }
 
@@ -26,7 +26,7 @@ export class AppGuard implements CanActivate {
         if (DsLib.checkLogin()) {
             tooken = DsLib.getToken().id;
         }
-        return this.PublicService.checkAccess(() => this.canAccessScreen(), () => this.pass(), tooken, checkRoute, checkLogin);
+        return this.http.checkAccess(() => this.canAccessScreen(), () => this.pass(), tooken, checkRoute, checkLogin);
     }
 
     private canAccessScreen() {
@@ -35,6 +35,6 @@ export class AppGuard implements CanActivate {
     }
 
     private pass() {
-        this.PublicService.http.profile = DsLib.getProfile();
+        this.http.profile = DsLib.getProfile();
     }
 }

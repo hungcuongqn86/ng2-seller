@@ -3,7 +3,8 @@ import {Http, Headers, RequestOptionsArgs, XHRBackend, RequestOptions, Response}
 import {Observable} from 'rxjs/Observable';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {AlertComponent} from '../public/alert.component';
-import {serviceName, serviceRegion, clientId, clientKey} from '../app.config';
+import {LoadingComponent} from '../public/loading.component';
+import {pspApiUrl, serviceName, serviceRegion, clientId, clientKey} from '../app.config';
 import {moduleStart} from './const';
 import {DsLib} from './lib';
 import {Auth} from './auth';
@@ -13,9 +14,8 @@ import {Auth} from './auth';
 export class HttpClient extends Http {
     public canActive = moduleStart;
     public profile: any;
-    private dlauth: any;
+    private dlLoad: any;
     private alertStatus = false;
-    private loginStatus = false;
     private initParams = {
         'Content-Type': 'application/json',
         'X-Date': '',
@@ -129,7 +129,6 @@ export class HttpClient extends Http {
         });
     }
 
-    //  type =  error, success) {
     private alert(alert, type = 'error') {
         if (!this.alertStatus) {
             this.alertStatus = true;
@@ -139,6 +138,49 @@ export class HttpClient extends Http {
             }, {closeByClickingOutside: true}).subscribe(() => {
                 this.alertStatus = false;
             });
+        }
+    }
+
+    public startLoad(title = 'Loading...') {
+        if (this.dlLoad) {
+            return false;
+        }
+        this.dlLoad = this.dialogService.addDialog(LoadingComponent, {
+            status: title
+        }).subscribe(() => {
+        });
+    }
+
+    public endLoad() {
+        this.dlLoad.unsubscribe();
+        this.dlLoad = null;
+    }
+
+    public checkAccess(fallback: any, passback: any, tk: string, checkRoute, checkLogin) {
+        if (checkRoute) {
+            if (checkLogin) {
+                passback();
+                return Observable.of(true);
+            } else {
+                if (tk !== '') {
+                    const url = pspApiUrl + `sessions`;
+                    const body = JSON.stringify({token: tk});
+                    return this.post(url, body)
+                        .map((res: Response) => {
+                            passback();
+                            return true;
+                        }).catch(() => {
+                            fallback();
+                            return Observable.of(false);
+                        });
+                } else {
+                    fallback();
+                    return Observable.of(false);
+                }
+            }
+        } else {
+            fallback();
+            return Observable.of(false);
         }
     }
 }
