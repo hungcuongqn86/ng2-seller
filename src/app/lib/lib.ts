@@ -35,7 +35,7 @@ export class DsLib {
     }
 
     static checkSession(): boolean {
-        return Cookie.check(btoa(config.cookie_session));
+        return Cookie.check('session_id');
     }
 
     static getProfile(): any {
@@ -45,6 +45,10 @@ export class DsLib {
         } else {
             return null;
         }
+    }
+
+    static getSession() {
+        return Cookie.get('session_id');
     }
 
     static removeToken() {

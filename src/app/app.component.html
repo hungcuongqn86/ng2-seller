@@ -3,11 +3,25 @@
         <div class="mnu-top text-right">
             <div class="container">
                 <ul class="list-inline">
-                    <li>
-                        <a href="javascript: void(0)">{{ 'AUTH.REGISTER' | translate }}</a>
+                    <li *ngIf="PublicService.http.profile" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            {{PublicService.http.profile}} <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-profile" role="menu">
+                            <li>
+                                <a (click)="logout()" href="javascript: void(0)">
+                                    {{ 'COMMON.SIGN_OUT' | translate }}
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="javascript: void(0)">{{ 'AUTH.SIGN_IN' | translate }}</a>
+                    <li *ngIf="!PublicService.http.profile">
+                        <a (click)="authDl('r')" href="javascript: void(0)">{{ 'AUTH.REGISTER' | translate }}</a>
+                    </li>
+                    <li *ngIf="!PublicService.http.profile">
+                        <a (click)="authDl('l')" href="javascript: void(0)">{{ 'AUTH.SIGN_IN' | translate }}</a>
                     </li>
                 </ul>
             </div>
@@ -34,7 +48,7 @@
         </nav>
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 col-md-3 sidebar">
+                <div *ngIf="PublicService.http.profile" class="col-sm-4 col-md-3 sidebar">
                     <div class="mini-submenu">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -71,9 +85,11 @@
                         </a>
                     </div>
                 </div>
+                <div>
+                    <router-outlet></router-outlet>
+                </div>
             </div>
         </div>
-        <router-outlet></router-outlet>
         <footer>
             <div class="col-footer">
                 <div class="container">

@@ -16,8 +16,8 @@ export class HttpClient extends Http {
     private alertStatus = false;
     private loginStatus = false;
     private initParams = {
-        // 'Content-Type': 'application/json',
-        // 'X-Date': '',
+        'Content-Type': 'application/json',
+        'X-Date': '',
         'X-Expires': '3600'
     };
     private timeStamp: Date;
@@ -80,11 +80,11 @@ export class HttpClient extends Http {
         this.initParams['X-Date'] = this.Auth.yyyyMMddTHHmmssZ(this.timeStamp);
         let check = false;
         Object.keys(this.initParams).map((index) => {
-            const rand = Math.floor((Math.random() * 100) + 1);
-            if (rand > 50) {
-                check = true;
-                res[index] = this.initParams[index];
-            }
+            /*const rand = Math.floor((Math.random() * 100) + 1);
+             if (rand > 50) {
+             check = true;
+             res[index] = this.initParams[index];
+             }*/
         });
         if (check) {
             return res;

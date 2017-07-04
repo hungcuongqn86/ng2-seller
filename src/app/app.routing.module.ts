@@ -5,6 +5,14 @@ import {AppGuard} from './app.guard.service';
 const appRoutes: Routes = [
     {path: '', redirectTo: 'storefronts', pathMatch: 'full'},
     {
+        path: 'login',
+        loadChildren: './modules/auth/auth.module#AuthModule'
+    },
+    {
+        path: 'register',
+        loadChildren: './modules/auth/auth.module#AuthModule'
+    },
+    {
         path: 'storefronts',
         loadChildren: './modules/storefronts/storefronts.module#StorefrontsModule',
         canActivate: [AppGuard]

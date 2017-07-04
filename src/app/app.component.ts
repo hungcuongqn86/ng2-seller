@@ -1,8 +1,10 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {Router} from '@angular/router';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {PublicService} from './public/public.service';
 import {Observable} from 'rxjs/Rx';
 import {location} from './app.config';
+import {DsLib} from './lib/lib';
 
 declare const $: any;
 
@@ -13,7 +15,7 @@ declare const $: any;
 })
 export class AppComponent implements OnInit, AfterViewInit {
 
-    constructor(private PublicService: PublicService, private translate: TranslateService) {
+    constructor(public PublicService: PublicService, private translate: TranslateService, private router: Router) {
         translate.addLangs([location]);
         translate.use(location);
     }
@@ -28,6 +30,36 @@ export class AppComponent implements OnInit, AfterViewInit {
                 console.log(data);
             },
             error => {
+                console.error(error.json().message);
+                return Observable.throw(error);
+            }
+        );
+    }
+
+    public authDl(type) {
+        if (type === 'l') {
+            this.router.navigate(['/login']);
+        }
+        if (type === 'r') {
+            this.router.navigate(['/register']);
+        }
+    }
+
+    public logout() {
+        this.PublicService.startLoad();
+        this.PublicService.http.profile = null;
+        DsLib.removeToken();
+        this.removeSession();
+    }
+
+    private removeSession() {
+        const ss = DsLib.getSession();
+        this.PublicService.removeSession(ss).subscribe(
+            () => {
+                this.PublicService.endLoad();
+            },
+            error => {
+                this.PublicService.endLoad();
                 console.error(error.json().message);
                 return Observable.throw(error);
             }
