@@ -7,9 +7,10 @@
     "SAVE": "Save"
   },
   "NAVIGATOR": {
-    "DESIGN": "Products & Designs",
-    "PRICING": "Pricing",
-    "LAUNCHING": "Launching",
-    "FULFILLMENT_LOCATION":"Fulfillment location"
+    "DESIGN": "Products & Designs"
+  },
+  "AUTH": {
+    "REGISTER": "Register",
+    "SIGN_IN": "Sign in"
   }
 }

@@ -13,6 +13,11 @@ const appRoutes: Routes = [
         path: 'campaigns',
         loadChildren: './modules/campaigns/campaigns.module#CampaignsModule',
         canActivate: [AppGuard]
+    },
+    {
+        path: 'promotions',
+        loadChildren: './modules/promotions/promotions.module#PromotionsModule',
+        canActivate: [AppGuard]
     }
 ];
 

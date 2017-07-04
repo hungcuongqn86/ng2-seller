@@ -1,6 +1,8 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {TranslateService} from 'ng2-translate/ng2-translate';
 import {PublicService} from './public/public.service';
 import {Observable} from 'rxjs/Rx';
+import {location} from './app.config';
 
 declare const $: any;
 
@@ -10,10 +12,10 @@ declare const $: any;
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-    title = 'app works!';
 
-    constructor(private PublicService: PublicService) {
-
+    constructor(private PublicService: PublicService, private translate: TranslateService) {
+        translate.addLangs([location]);
+        translate.use(location);
     }
 
     ngOnInit() {

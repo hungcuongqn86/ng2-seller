@@ -3,8 +3,8 @@ import 'rxjs/add/operator/toPromise';
 import {HttpClient} from '../../lib/http';
 
 @Injectable()
-export class CampaignsService {
-    private module = 'campaigns';
+export class PromotionsService {
+    private module = 'promotions';
 
     constructor(private http: HttpClient) {
     }

@@ -10,10 +10,15 @@ import {Auth} from './lib/auth';
 import {PublicService} from './public/public.service';
 import {routing} from './app.routing.module';
 
+import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {AlertComponent} from './public/alert.component';
 import {LoadingComponent} from './public/loading.component';
 import {AuthComponent} from './public/auth.component';
+
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateStaticLoader(http, '/assets/i18n', '.json');
+}
 
 @NgModule({
     declarations: [
@@ -26,6 +31,11 @@ import {AuthComponent} from './public/auth.component';
         BrowserModule,
         FormsModule,
         HttpModule,
+        TranslateModule.forRoot({
+            provide: TranslateLoader,
+            useFactory: (createTranslateLoader),
+            deps: [HttpClient]
+        }),
         BootstrapModalModule,
         routing
     ],
