@@ -8,7 +8,7 @@ import {pspApiUrl} from '../../app.config';
 export class CampaignsService {
     private module = 'campaigns';
 
-    constructor(private http: HttpClient) {
+    constructor(public http: HttpClient) {
     }
 
     public getCampaigns(key) {
@@ -16,5 +16,10 @@ export class CampaignsService {
         const params: URLSearchParams = new URLSearchParams();
         params.set('state', key);
         return this.http.get(url, {search: params}).map((res: Response) => res.json());
+    }
+
+    public getCampaign(id) {
+        const url = pspApiUrl + this.module + `/${id}`;
+        return this.http.get(url).map((res: Response) => res.json());
     }
 }

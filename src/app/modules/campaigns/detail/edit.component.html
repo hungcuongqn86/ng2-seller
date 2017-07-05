@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-sm-7">
+        <h3>Campaign Info</h3>
+        <form novalidate #form="ngForm">
+            <div class="form-group" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">
+                <label for="title">Title</label>
+                <input [(ngModel)]="campaign.title"
+                       #titleVali="ngModel"
+                       name="title" id="title"
+                       [maxLength]="50"
+                       [appCountLeft]="50"
+                       pattern="^[\w\d _.-]+$" required
+                       class="form-control">
+                <div [hidden]="titleVali.valid || titleVali.untouched">
+                                            <span *ngIf="titleVali.errors && titleVali.errors.required"
+                                                  class="help-block alert-warning">
+                                                <i class="fa fa-exclamation-triangle"
+                                                   aria-hidden="true"></i> required!!!
+                                            </span>
+                    <span *ngIf="titleVali.errors && titleVali.errors.pattern" class="help-block alert-warning">
+                                                <i class="fa fa-exclamation-triangle"
+                                                   aria-hidden="true"></i> pattern!!!
+                                            </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <quill-editor #editor [(ngModel)]="campaign.desc" [modules]="quillOption"
+                              [maxLength]="2000"
+                              [appCountLeft]="2000"
+                              (onEditorCreated)="seDescription()" name="desc"
+                              name="desc"
+                              [placeholder]="placeholder">
+                </quill-editor>
+            </div>
+            <div class="form-group">
+                <button type="button" (click)="clickContinue()"
+                        class="btn btn-launch {{form.form.valid? 'btn-primary lightblue': 'btn-default'}}"
+                        [disabled]="!form.form.valid">Launch
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-5 text-center" style="position: relative;">
+        <div id="drawingLaunching"></div>
+        <div class="change-product-button">
+            <span>Change default product or side</span></div>
+    </div>
+</div>

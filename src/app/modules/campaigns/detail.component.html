@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="tab-panel">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#detail">Detail</a></li>
+                <li><a data-toggle="tab" href="#product">Products</a></li>
+                <li><a data-toggle="tab" href="#analytics">Analytics</a></li>
+                <li><a data-toggle="tab" href="#email">Email list</a></li>
+                <li><a data-toggle="tab" href="#coupons">Coupons</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div *ngIf="CampaignData" id="detail" class="tab-pane fade in active">
+                    <app-campaign-detail-edit [campaign]="CampaignData"></app-campaign-detail-edit>
+                </div>
+                <div id="product" class="tab-pane fade">
+                    Products
+                </div>
+                <div id="analytics" class="tab-pane fade">
+                    Analytics
+                </div>
+                <div id="email" class="tab-pane fade">
+                    Email list
+                </div>
+                <div id="coupons" class="tab-pane fade">
+                    Coupons
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

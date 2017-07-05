@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-sm-12">
         <form novalidate #form="ngForm">
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th style="width: 10%;">Campaign</th>
-                    <th style="width: 40%;"></th>
-                    <th>##</th>
-                    <th>##</th>
-                    <th>##</th>
+                    <th style="width: 30%;"></th>
+                    <th>Orders</th>
+                    <th>Unit sales</th>
+                    <th>Total profit</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -18,6 +18,8 @@
                         <div appCampaign [campaign]="camp"></div>
                     </td>
                     <td>
+                        <p>{{camp.title}}</p>
+                        <p><a>{{camp.url}}</a></p>
                     </td>
                     <td>
                     </td>
@@ -26,6 +28,9 @@
                     <td>
                     </td>
                     <td>
+                        <button (click)="goDetail(camp)" class="btn btn-xs btn-default">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
                     </td>
                 </tr>
                 </tbody>
