@@ -124,8 +124,8 @@
         </form>
     </div>
     <div class="col-sm-5 text-center" style="position: relative;">
-        <div id="drawingLaunching"></div>
-        <div class="change-product-button">
+        <div appProduct [product]="product" [face]="face" [mainopt]="mainOpt"></div>
+        <div (click)="changeProduct()" class="change-product-button">
             <span>Change default product or side</span></div>
     </div>
 </div>

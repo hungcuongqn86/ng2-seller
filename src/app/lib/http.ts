@@ -23,7 +23,7 @@ export class HttpClient extends Http {
     };
     private timeStamp: Date;
 
-    constructor(backend: XHRBackend, options: RequestOptions, private Auth: Auth, private dialogService: DialogService) {
+    constructor(backend: XHRBackend, options: RequestOptions, private Auth: Auth, public dialogService: DialogService) {
         super(backend, options);
     }
 

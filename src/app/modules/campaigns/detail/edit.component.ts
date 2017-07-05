@@ -2,6 +2,7 @@ import {Component, Input, ViewChild, OnInit} from '@angular/core';
 import {QuillEditorComponent} from 'ngx-quill/src/quill-editor.component';
 import {Select2OptionData} from 'ng2-select2';
 import {CampaignsService} from '../campaigns.service';
+import {ProductdfComponent} from '../../../public/productdf.component';
 import {Observable} from 'rxjs/Rx';
 import {DsLib} from '../../../lib/lib';
 
@@ -38,6 +39,10 @@ export class EditComponent implements OnInit {
     public timeLength: Array<any>;
     public timeEnd: any = [];
 
+    public product: any;
+    public mainOpt = [];
+    public face = 'front';
+
     constructor(private CampaignsService: CampaignsService) {
     }
 
@@ -46,6 +51,9 @@ export class EditComponent implements OnInit {
         this.getCategories();
         this.timeLength = DsLib.getTimeLength();
         this.setTimeLength(this.timeLength[0]);
+        this.product = this.getProductDefault();
+        this.mainOpt = this.getMainOpt();
+        this.face = this.getFace();
     }
 
     public setTimeLength(timeItem: any) {
@@ -106,6 +114,43 @@ export class EditComponent implements OnInit {
 
     public setVisibility(val) {
         this.campaign.private = val;
+    }
+
+    private getProductDefault(): any {
+        let check = this.campaign.products.findIndex(x => x.default === true);
+        if (check < 0) {
+            check = 0;
+        }
+        return this.campaign.products[check];
+    }
+
+    private getMainOpt(): any {
+        for (let index = 0; index < this.campaign.products.length; index++) {
+            const check = this.campaign.products[index].designs.findIndex(x => x.main === true);
+            if (check >= 0) {
+                return DsLib.getOpt(this.campaign.products[index], 'front');
+            }
+        }
+        return [];
+    }
+
+    private getFace(): any {
+        const check = this.campaign.products.findIndex(x => x.default === true);
+        if (check >= 0) {
+            if (this.campaign.products[check].back_view) {
+                return 'back';
+            }
+        }
+        return 'front';
+    }
+
+    public changeProduct() {
+        this.CampaignsService.http.dialogService.addDialog(ProductdfComponent, {
+            title: 'Select product',
+            campaign: this.campaign
+        }).subscribe((product) => {
+            // this.mergProduct(product);
+        });
     }
 
     public seDescription() {

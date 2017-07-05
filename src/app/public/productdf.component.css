@@ -1,0 +1,45 @@
+.modal-dialog {
+    height: 90%;
+    width: 70%;
+}
+
+.modal-content {
+    height: 95%;
+}
+
+.modal-body {
+    height: 70%;
+}
+
+.prod-list {
+    max-height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: calc(100% - 120px);
+    cursor: pointer;
+}
+
+.prod-list img {
+    max-width: 80px;
+    height: 100px;
+}
+
+input {
+    width: 80px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.color {
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.middle {
+    vertical-align: middle;
+}
+
+.table tr:first-child td {
+    border-top: none;
+}

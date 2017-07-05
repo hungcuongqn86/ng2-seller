@@ -12,6 +12,7 @@ import {EditComponent} from './detail/edit.component';
 import {CampaignsRoutingModule} from './campaigns.routing.module';
 
 import {CampaignDirective} from '../../directive/campaign.directive';
+import {ModuleProductDirective} from '../../directive/product.directive';
 import {CountLeftDirective} from '../../directive/countLeft.directive';
 
 @NgModule({
@@ -21,7 +22,8 @@ import {CountLeftDirective} from '../../directive/countLeft.directive';
         DetailComponent,
         EditComponent,
         CampaignDirective,
-        CountLeftDirective
+        CountLeftDirective,
+        ModuleProductDirective
     ],
     exports: [],
     providers: [

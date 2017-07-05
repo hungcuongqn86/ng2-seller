@@ -14,6 +14,10 @@ import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-trans
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {AlertComponent} from './public/alert.component';
 import {LoadingComponent} from './public/loading.component';
+import {ProductdfComponent} from './public/productdf.component';
+
+import {AppProductDirective} from './directive/product.directive';
+import {ColorDirective} from './directive/color.directive';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateStaticLoader(http, '/assets/i18n', '.json');
@@ -23,7 +27,10 @@ export function createTranslateLoader(http: HttpClient) {
     declarations: [
         AppComponent,
         AlertComponent,
-        LoadingComponent
+        LoadingComponent,
+        AppProductDirective,
+        ColorDirective,
+        ProductdfComponent
     ],
     imports: [
         BrowserModule,
@@ -45,7 +52,8 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     entryComponents: [
         AlertComponent,
-        LoadingComponent
+        LoadingComponent,
+        ProductdfComponent
     ],
     bootstrap: [AppComponent]
 })

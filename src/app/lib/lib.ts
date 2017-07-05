@@ -77,6 +77,10 @@ export class DsLib {
         return parser.pathname;
     }
 
+    static getBaseImgUrl(sFace, base: any) {
+        return config.imgDir + base + '_' + sFace + '.png';
+    }
+
     static getTimeLength(): Array<any> {
         moment.tz.setDefault('America/New_York');
         const now = moment();
@@ -93,6 +97,24 @@ export class DsLib {
             res.push(item);
         }
         return res;
+    }
+
+    static getOpt(product, sFace) {
+        if (sFace === 'front') {
+            return {
+                minX: Number(product.base.printable.front_left)
+                , minY: Number(product.base.printable.front_top)
+                , maxX: Number(product.base.printable.front_left) + Number(product.base.printable.front_width)
+                , maxY: Number(product.base.printable.front_top) + Number(product.base.printable.front_height)
+            };
+        } else {
+            return {
+                minX: Number(product.base.printable.back_left)
+                , minY: Number(product.base.printable.back_top)
+                , maxX: Number(product.base.printable.back_left) + Number(product.base.printable.back_width)
+                , maxY: Number(product.base.printable.back_top) + Number(product.base.printable.back_height)
+            };
+        }
     }
 
     constructor() {
