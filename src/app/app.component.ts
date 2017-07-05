@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private getLocation() {
         this.PublicService.getConfig('product.fulfillment.location').subscribe(
             data => {
-                console.log(data);
+                // console.log(data);
             },
             error => {
                 console.error(error.json().message);

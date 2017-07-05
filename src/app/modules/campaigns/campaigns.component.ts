@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {PublicService} from '../../public/public.service';
+import {CampaignsService} from './campaigns.service';
 import {Observable} from 'rxjs/Rx';
 
 @Component({
@@ -9,11 +9,25 @@ import {Observable} from 'rxjs/Rx';
 })
 
 export class CampaignsComponent implements OnInit {
-    constructor(private PublicService: PublicService) {
+    public CampaignData: any = {};
+
+    constructor(private CampaignsService: CampaignsService) {
 
     }
 
     ngOnInit() {
-        // this.PublicService.startLoad();
+        this.getCampaigns();
+    }
+
+    getCampaigns() {
+        this.CampaignsService.getCampaigns('launching').subscribe(
+            data => {
+                this.CampaignData = data;
+            },
+            error => {
+                console.error(error.json().message);
+                return Observable.throw(error);
+            }
+        );
     }
 }
