@@ -28,8 +28,8 @@ export class DetailComponent implements OnInit {
         this.CampaignsService.http.startLoad();
         this.CampaignsService.getCampaign(this.CampaignId).subscribe(
             data => {
-                console.log(data.desc);
-                // data.desc = decodeURIComponent(decodeURIComponent(data.desc));
+                data.desc = decodeURIComponent(data.desc);
+                data.desc = data.desc.split('%20').join('');
                 this.CampaignData = data;
                 this.CampaignsService.http.endLoad();
             },

@@ -22,4 +22,16 @@ export class CampaignsService {
         const url = pspApiUrl + this.module + `/${id}`;
         return this.http.get(url).map((res: Response) => res.json());
     }
+
+    public getDomains(): any {
+        const url = pspApiUrl + `domains`;
+        return this.http.get(url).map((res: Response) => res.json());
+    }
+
+    public getCategories(visible) {
+        const url = pspApiUrl + `categories`;
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('visible', visible);
+        return this.http.get(url).map((res: Response) => res.json());
+    }
 }

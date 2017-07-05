@@ -77,6 +77,24 @@ export class DsLib {
         return parser.pathname;
     }
 
+    static getTimeLength(): Array<any> {
+        moment.tz.setDefault('America/New_York');
+        const now = moment();
+        const res: Array<any> = [];
+        const timeLength = config.timeLength;
+        for (let i = 0; i < timeLength.length; i++) {
+            const day = moment().add(timeLength[i] - 1, 'day');
+            day.hour(23);
+            day.minute(0);
+            day.seconds(0);
+            const item: any = [];
+            item.number = timeLength[i];
+            item.view = moment.tz(day, moment.tz.guess()).format('dddd, MMMM Do YYYY, h:mm:ss a z');
+            res.push(item);
+        }
+        return res;
+    }
+
     constructor() {
     }
 }
