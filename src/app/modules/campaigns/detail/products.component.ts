@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CampaignsService} from '../campaigns.service';
 import {ColorComponent} from '../../../public/color.component';
 import {AddproductComponent} from '../../../public/addproduct.component';
@@ -56,9 +56,11 @@ export class ProductsComponent implements OnInit {
     }
 
     public openBases() {
+        document.body.style.overflow = 'hidden';
         this.CampaignsService.http.dialogService.addDialog(AddproductComponent, {
             title: ''
         }, {closeByClickingOutside: true}).subscribe((base) => {
+            document.body.style.overflow = 'auto';
             if (base) {
                 this.addProduct(base);
             }
@@ -72,7 +74,6 @@ export class ProductsComponent implements OnInit {
         newProduct.colors.push({id: base.colors[0].id});
         newProduct.position = this.campaign.products.length + 1;
         this.campaign.products.push(newProduct);
-        // console.log(this.campaign);
         this.updateCampaign();
     }
 
@@ -84,7 +85,10 @@ export class ProductsComponent implements OnInit {
         });
         cpU.desc = encodeURIComponent(cpU.desc);
         this.CampaignsService.updateCampaign(cpU).subscribe(
-            () => {
+            (data) => {
+                data.desc = decodeURIComponent(data.desc);
+                data.desc = data.desc.split('%20').join('');
+                this.campaign = data;
                 this.CampaignsService.http.endLoad();
             },
             error => {

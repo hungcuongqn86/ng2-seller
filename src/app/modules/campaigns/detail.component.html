@@ -6,7 +6,6 @@
                 <li class="{{tab==='product'? 'active': ''}}"><a (click)="selectTab('product')">Products</a></li>
                 <li class="{{tab==='analytics'? 'active': ''}}"><a (click)="selectTab('analytics')">Analytics</a></li>
                 <li class="{{tab==='email'? 'active': ''}}"><a (click)="selectTab('email')">Email list</a></li>
-                <li class="{{tab==='coupons'? 'active': ''}}"><a (click)="selectTab('coupons')">Coupons</a></li>
             </ul>
 
             <div class="tab-content">
@@ -25,10 +24,6 @@
                 <div *ngIf="CampaignData&&tab==='product'" id="email"
                      class="tab-pane fade {{tab==='email'? 'in active': ''}}">
                     Email list
-                </div>
-                <div *ngIf="CampaignData&&tab==='product'" id="coupons"
-                     class="tab-pane fade {{tab==='coupons'? 'in active': ''}}">
-                    Coupons
                 </div>
             </div>
         </div>

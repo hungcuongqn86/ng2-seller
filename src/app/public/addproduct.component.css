@@ -1,15 +1,23 @@
 .modal-dialog {
     height: 95%;
-    width: 90%;
+    width: 70%;
 }
 
 .modal-content {
     height: 95%;
 }
 
+.modal-header {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.modal-header .close {
+    margin-top: 10px;
+}
+
 .modal-body {
-    /* 100% = dialog height, 120px = header + footer */
-    max-height: calc(100% - 120px);
+    max-height: calc(100% - 80px);
     overflow-y: scroll;
     overflow-x: hidden;
     min-height: 75%;
@@ -19,6 +27,7 @@
     border: 1px solid #ddd;
     margin-top: 15px;
     cursor: pointer;
+    background-color: beige;
 }
 
 .producs-base-item:hover {
@@ -27,7 +36,7 @@
 
 .producs-base-item img {
     width: 90%;
-    margin: 10px;
+    margin-bottom: 10px;
 }
 
 .producs-base-item .produc-name {

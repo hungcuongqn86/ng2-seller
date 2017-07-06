@@ -15,7 +15,7 @@
                 <div *ngFor='let itemGroup of arrBaseTypes' class="panel panel-default">
                     <div class="panel-heading">{{itemGroup.name}}</div>
                     <div class="panel-body">
-                        <div *ngFor='let item of itemGroup.base_types' class="col-sm-2 text-center">
+                        <div *ngFor='let item of itemGroup.base_types' class="col-sm-3 text-center">
                             <div class="producs-base-item" (click)="loadBase(item)">
                                 <div class="produc-name">
                                     {{item.name}}
@@ -35,7 +35,7 @@
                     <div class="panel-heading">{{baseType.name}}</div>
                     <div class="panel-body">
                         <template ngFor let-item [ngForOf]="arrBase">
-                            <div class="col-sm-2 text-center">
+                            <div class="col-sm-3 text-center">
                                 <div class="producs-base-item"
                                      (click)="selectProductBase(item)">
                                     <div class="produc-name">
