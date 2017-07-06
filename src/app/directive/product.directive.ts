@@ -1,11 +1,11 @@
-import {Directive, OnInit, Input, ElementRef} from '@angular/core';
+import {Directive, OnInit, OnChanges, Input, ElementRef} from '@angular/core';
 import {PublicService} from '../public/public.service';
 import {DsLib} from '../lib/lib';
 import {Observable} from 'rxjs/Rx';
 declare const SVG: any;
 
 @Directive({selector: '[appProduct]'})
-class ProductDirective implements OnInit {
+class ProductDirective implements OnChanges {
     @Input('product')
     public product: any;
     @Input('face')
@@ -18,8 +18,11 @@ class ProductDirective implements OnInit {
     constructor(private el: ElementRef, private PublicService: PublicService) {
     }
 
-    ngOnInit() {
-        this.getBases();
+    ngOnChanges(changes) {
+        if (changes.product) {
+            this.PublicService.http.startLoad();
+            this.getBases();
+        }
     }
 
     private getBases(): any {
@@ -54,9 +57,18 @@ class ProductDirective implements OnInit {
     private genProduct() {
         const myjs = this;
         const sW = this.el.nativeElement.offsetWidth;
-        this.prodDraw = SVG(this.el.nativeElement);
-        const color = this.prodDraw.rect().fill(this.product.colors[0].value);
-        const img = this.prodDraw.image(DsLib.getBaseImgUrl('front', this.product.base.id)).loaded(function (loader) {
+        if (this.prodDraw) {
+            this.prodDraw.clear();
+        } else {
+            this.prodDraw = SVG(this.el.nativeElement);
+        }
+
+        let indexColor = this.product.colors.findIndex(x => x.default === true);
+        if (indexColor < 0) {
+            indexColor = 0;
+        }
+        const color = this.prodDraw.rect().fill(this.product.colors[indexColor].value);
+        const img = this.prodDraw.image(DsLib.getBaseImgUrl(this.face, this.product.base.id)).loaded(function (loader) {
             const sH = sW * loader.height / loader.width;
             this.size(sW, sH);
             myjs.prodDraw.size(sW, sH);
@@ -73,6 +85,7 @@ class ProductDirective implements OnInit {
                 this.addImg(this.product.designs[index], zoom);
             }
         });
+        this.PublicService.http.endLoad();
     }
 
     public addImg(dsrs: any, zoom) {

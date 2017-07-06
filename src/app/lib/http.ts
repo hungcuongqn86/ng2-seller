@@ -152,8 +152,10 @@ export class HttpClient extends Http {
     }
 
     public endLoad() {
-        this.dlLoad.unsubscribe();
-        this.dlLoad = null;
+        if (this.dlLoad) {
+            this.dlLoad.unsubscribe();
+            this.dlLoad = null;
+        }
     }
 
     public checkAccess(fallback: any, passback: any, tk: string, checkRoute, checkLogin) {

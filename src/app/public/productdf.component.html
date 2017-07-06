@@ -1,9 +1,5 @@
 <div class="modal-dialog product-modal-dialog">
     <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" (click)="mdClose()">&times;</button>
-            <h3>Select Default Product</h3>
-        </div>
         <div class="modal-body">
             <div class="col-sm-8 prod-list">
                 <table class="table">
@@ -15,7 +11,8 @@
                         <td style="width: 80%" class="middle" (click)="selectProduct(prod)">
                             <div class="colors">
                                 <div *ngFor='let itemColor of prod.colors' class="color">
-                                    <div appColor [color]="itemColor.value" (click)="changeColor(itemColor)"></div>
+                                    <div appColor [color]="itemColor.value"
+                                         (click)="selectProduct(prod);changeColor(itemColor)"></div>
                                 </div>
                             </div>
                         </td>
@@ -25,6 +22,16 @@
             </div>
             <div class="col-sm-4 text-center prod-view">
                 <div appProduct [product]="product" [face]="face" [mainopt]="mainOpt"></div>
+                <div class="row text-center" style="margin-bottom: 10px;">
+                    <div class="btn-group">
+                        <button type="button" (click)="setFace('front')"
+                                class="btn {{face==='front'? 'btn-primary': 'btn-default'}}">Front
+                        </button>
+                        <button type="button" (click)="setFace('back')"
+                                class="btn {{face==='back'? 'btn-primary': 'btn-default'}}">Back
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 

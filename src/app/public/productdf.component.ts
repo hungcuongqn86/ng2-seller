@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
 import {DsLib} from '../lib/lib';
-import {Observable} from 'rxjs/Rx';
 
 export interface PromptModel {
     title;
@@ -13,8 +12,8 @@ export interface PromptModel {
     styleUrls: ['./productdf.component.css']
 })
 export class ProductdfComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
-    title;
-    campaign: any;
+    public title;
+    public campaign: any;
     public product: any;
     public mainOpt = [];
     public face = 'front';
@@ -41,7 +40,7 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
         for (let index = 0; index < this.campaign.products.length; index++) {
             const check = this.campaign.products[index].designs.findIndex(x => x.main === true);
             if (check >= 0) {
-                return DsLib.getOpt(this.campaign.products[index], 'front');
+                return DsLib.getOpt(this.campaign.products[index], this.face);
             }
         }
         return [];
@@ -58,11 +57,40 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
     }
 
     public selectProduct(prod) {
+        if (this.product.id !== prod.id) {
+            this.product = prod;
+        }
+    }
+
+    public changeColor(itemColor) {
+        const prod: any = [];
+        Object.keys(this.product).map((index) => {
+            prod[index] = this.product[index];
+        });
+
+        Object.keys(prod.colors).map((index) => {
+            if (prod.colors[index].id === itemColor.id) {
+                prod.colors[index].default = true;
+            } else {
+                prod.colors[index].default = false;
+            }
+        });
         this.product = prod;
     }
 
-    public changeColor() {
-
+    public setFace(face) {
+        this.face = face;
+        this.mainOpt = this.getMainOpt();
+        const prod: any = [];
+        Object.keys(this.product).map((index) => {
+            prod[index] = this.product[index];
+        });
+        if (this.face === 'front') {
+            prod.back_view = false;
+        } else {
+            prod.back_view = true;
+        }
+        this.product = prod;
     }
 
     public mdClose() {
@@ -70,7 +98,7 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
     }
 
     public confirm() {
-        this.result = '';
+        this.result = this.product;
         this.close();
     }
 }

@@ -121,7 +121,11 @@ export class EditComponent implements OnInit {
         if (check < 0) {
             check = 0;
         }
-        return this.campaign.products[check];
+        const prod: any = [];
+        Object.keys(this.campaign.products[check]).map((index) => {
+            prod[index] = this.campaign.products[check][index];
+        });
+        return prod;
     }
 
     private getMainOpt(): any {
@@ -149,8 +153,31 @@ export class EditComponent implements OnInit {
             title: 'Select product',
             campaign: this.campaign
         }).subscribe((product) => {
-            // this.mergProduct(product);
+            if (product) {
+                this.mergProduct(product);
+            }
         });
+    }
+
+    private mergProduct(product: any) {
+        if (product) {
+            Object.keys(this.campaign.products).map((index) => {
+                if (this.campaign.products[index].id === product.id) {
+                    this.campaign.products[index].default = true;
+                    this.campaign.products[index].back_view = product.back_view;
+                    this.campaign.products[index].colors = product.colors;
+                } else {
+                    this.campaign.products[index].default = false;
+                }
+            });
+            if (product.back_view) {
+                this.face = 'back';
+            } else {
+                this.face = 'front';
+            }
+            this.mainOpt = this.getMainOpt();
+            this.product = this.getProductDefault();
+        }
     }
 
     public seDescription() {
