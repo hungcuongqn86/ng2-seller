@@ -34,4 +34,10 @@ export class CampaignsService {
         params.set('visible', visible);
         return this.http.get(url).map((res: Response) => res.json());
     }
+
+    public updateCampaign(campaign: any) {
+        const url = pspApiUrl + this.module + `/${campaign.id}`;
+        const body = JSON.stringify(campaign);
+        return this.http.put(url, body).map((res: Response) => res.json());
+    }
 }

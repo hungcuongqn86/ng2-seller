@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Rx';
 declare const SVG: any;
 
 @Directive({selector: '[appProduct]'})
-class ProductDirective implements OnChanges {
+export class ProductDirective implements OnChanges {
     @Input('product')
     public product: any;
     @Input('face')
@@ -119,9 +119,4 @@ class ProductDirective implements OnChanges {
         }
         img.move((optnew.minX + mx) * zoom, (optnew.minY + my) * zoom).size(mW * zoom, mH * zoom);
     }
-}
-
-export class AppProductDirective extends ProductDirective {
-}
-export class ModuleProductDirective extends ProductDirective {
 }

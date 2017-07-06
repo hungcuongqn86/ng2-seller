@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import 'rxjs/add/operator/toPromise';
-import {HttpClient} from '../../public/http';
+import {HttpClient} from '../../lib/http';
 
 @Injectable()
 export class StorefrontsService {

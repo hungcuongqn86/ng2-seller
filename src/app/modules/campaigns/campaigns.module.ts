@@ -9,21 +9,22 @@ import {CampaignsService} from './campaigns.service';
 import {CampaignsComponent} from './campaigns.component';
 import {DetailComponent} from './detail.component';
 import {EditComponent} from './detail/edit.component';
+import {ProductsComponent} from './detail/products.component';
 import {CampaignsRoutingModule} from './campaigns.routing.module';
 
 import {CampaignDirective} from '../../directive/campaign.directive';
-import {ModuleProductDirective} from '../../directive/product.directive';
 import {CountLeftDirective} from '../../directive/countLeft.directive';
+import {SharedModule} from '../../public/shared.module';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, HttpModule, CampaignsRoutingModule, QuillModule, Select2Module],
+    imports: [CommonModule, FormsModule, HttpModule, CampaignsRoutingModule, SharedModule, QuillModule, Select2Module],
     declarations: [
         CampaignsComponent,
         DetailComponent,
         EditComponent,
+        ProductsComponent,
         CampaignDirective,
-        CountLeftDirective,
-        ModuleProductDirective
+        CountLeftDirective
     ],
     exports: [],
     providers: [

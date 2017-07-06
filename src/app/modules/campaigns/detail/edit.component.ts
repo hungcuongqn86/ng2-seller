@@ -215,4 +215,23 @@ export class EditComponent implements OnInit {
             }
         });
     }
+
+    public updateCampaign() {
+        this.CampaignsService.http.startLoad();
+        const cpU: any = {};
+        Object.keys(this.campaign).map((index) => {
+            cpU[index] = this.campaign[index];
+        });
+        cpU.desc = encodeURIComponent(cpU.desc);
+        this.CampaignsService.updateCampaign(cpU).subscribe(
+            () => {
+                this.CampaignsService.http.endLoad();
+            },
+            error => {
+                this.CampaignsService.http.endLoad();
+                console.error(error.json().message);
+                return Observable.throw(error);
+            }
+        );
+    }
 }

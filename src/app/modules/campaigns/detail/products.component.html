@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-sm-12">
+        <form novalidate #form="ngForm">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="width: 15%;">Product
+                        <button class="btn btn-xs btn-default">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        </button>
+                    </th>
+                    <th style="width: 30%;"></th>
+                    <th>Orders</th>
+                    <th>Unit sales</th>
+                    <th>Total profit</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let prod of campaign.products">
+                    <td>
+                        <div appProduct [product]="prod" [face]="face" [mainopt]="mainOpt"></div>
+                    </td>
+                    <td>{{prod.base.name}}
+                        <div class="colors">
+                            <template ngFor let-itemColor [ngForOf]="prod.colors">
+                                <div class="color" appColor [color]="itemColor.value"></div>
+                            </template>
+                            <div class="color" appColor [color]="'#000000'" [type]="'add'"
+                                 (click)="addColor(productItem)"></div>
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td class="middle">
+                        <button class="btn btn-xs btn-default">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

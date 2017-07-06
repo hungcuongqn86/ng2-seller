@@ -1,0 +1,14 @@
+.color {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.color div {
+    display: inline-block;
+}
+
+.middle {
+    vertical-align: middle;
+}

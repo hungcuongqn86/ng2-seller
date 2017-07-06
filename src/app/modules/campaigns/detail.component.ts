@@ -12,6 +12,7 @@ import {Observable} from 'rxjs/Rx';
 export class DetailComponent implements OnInit {
     private CampaignId;
     public CampaignData: any;
+    public tab = 'detail';
     private sub: any;
 
     constructor(private CampaignsService: CampaignsService, private route: ActivatedRoute) {
@@ -24,7 +25,7 @@ export class DetailComponent implements OnInit {
         this.getCampaign();
     }
 
-    getCampaign() {
+    private getCampaign() {
         this.CampaignsService.http.startLoad();
         this.CampaignsService.getCampaign(this.CampaignId).subscribe(
             data => {
@@ -38,5 +39,9 @@ export class DetailComponent implements OnInit {
                 return Observable.throw(error);
             }
         );
+    }
+
+    public selectTab(tab) {
+        this.tab = tab;
     }
 }

@@ -2,27 +2,32 @@
     <div class="col-sm-12">
         <div class="tab-panel">
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#detail">Detail</a></li>
-                <li><a data-toggle="tab" href="#product">Products</a></li>
-                <li><a data-toggle="tab" href="#analytics">Analytics</a></li>
-                <li><a data-toggle="tab" href="#email">Email list</a></li>
-                <li><a data-toggle="tab" href="#coupons">Coupons</a></li>
+                <li class="{{tab==='detail'? 'active': ''}}"><a (click)="selectTab('detail')">Detail</a></li>
+                <li class="{{tab==='product'? 'active': ''}}"><a (click)="selectTab('product')">Products</a></li>
+                <li class="{{tab==='analytics'? 'active': ''}}"><a (click)="selectTab('analytics')">Analytics</a></li>
+                <li class="{{tab==='email'? 'active': ''}}"><a (click)="selectTab('email')">Email list</a></li>
+                <li class="{{tab==='coupons'? 'active': ''}}"><a (click)="selectTab('coupons')">Coupons</a></li>
             </ul>
 
             <div class="tab-content">
-                <div *ngIf="CampaignData" id="detail" class="tab-pane fade in active">
+                <div *ngIf="CampaignData&&tab==='detail'" id="detail"
+                     class="tab-pane fade {{tab==='detail'? 'in active': ''}}">
                     <app-campaign-detail-edit [campaign]="CampaignData"></app-campaign-detail-edit>
                 </div>
-                <div id="product" class="tab-pane fade">
-                    Products
+                <div *ngIf="CampaignData&&tab==='product'" id="product"
+                     class="tab-pane fade {{tab==='product'? 'in active': ''}}">
+                    <app-campaign-detail-products [campaign]="CampaignData"></app-campaign-detail-products>
                 </div>
-                <div id="analytics" class="tab-pane fade">
+                <div *ngIf="CampaignData&&tab==='product'" id="analytics"
+                     class="tab-pane fade {{tab==='analytics'? 'in active': ''}}">
                     Analytics
                 </div>
-                <div id="email" class="tab-pane fade">
+                <div *ngIf="CampaignData&&tab==='product'" id="email"
+                     class="tab-pane fade {{tab==='email'? 'in active': ''}}">
                     Email list
                 </div>
-                <div id="coupons" class="tab-pane fade">
+                <div *ngIf="CampaignData&&tab==='product'" id="coupons"
+                     class="tab-pane fade {{tab==='coupons'? 'in active': ''}}">
                     Coupons
                 </div>
             </div>

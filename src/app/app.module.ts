@@ -16,8 +16,7 @@ import {AlertComponent} from './public/alert.component';
 import {LoadingComponent} from './public/loading.component';
 import {ProductdfComponent} from './public/productdf.component';
 
-import {AppProductDirective} from './directive/product.directive';
-import {ColorDirective} from './directive/color.directive';
+import {SharedModule} from './public/shared.module';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateStaticLoader(http, '/assets/i18n', '.json');
@@ -28,8 +27,6 @@ export function createTranslateLoader(http: HttpClient) {
         AppComponent,
         AlertComponent,
         LoadingComponent,
-        AppProductDirective,
-        ColorDirective,
         ProductdfComponent
     ],
     imports: [
@@ -42,7 +39,8 @@ export function createTranslateLoader(http: HttpClient) {
             deps: [HttpClient]
         }),
         BootstrapModalModule,
-        routing
+        routing,
+        SharedModule.forRoot()
     ],
     providers: [
         AppGuard,
