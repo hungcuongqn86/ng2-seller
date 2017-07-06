@@ -28,4 +28,9 @@ export class PublicService {
         params.set('type_id', type_id);
         return this.http.get(url, {search: params}).map((res: Response) => res.json().bases);
     }
+
+    public getBaseTypes(): any {
+        const url = pspApiUrl + `base_groups`;
+        return this.http.get(url).map((res: Response) => res.json().base_groups);
+    }
 }

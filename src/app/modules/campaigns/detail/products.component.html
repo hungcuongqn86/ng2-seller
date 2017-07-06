@@ -5,7 +5,7 @@
                 <thead>
                 <tr>
                     <th style="width: 15%;">Product
-                        <button class="btn btn-xs btn-default">
+                        <button (click)="openBases()" class="btn btn-xs btn-default">
                             <i class="fa fa-plus-square" aria-hidden="true"></i>
                         </button>
                     </th>
@@ -27,7 +27,7 @@
                                 <div class="color" appColor [color]="itemColor.value"></div>
                             </template>
                             <div class="color" appColor [color]="'#000000'" [type]="'add'"
-                                 (click)="addColor(productItem)"></div>
+                                 (click)="openColors(prod)"></div>
                         </div>
                     </td>
                     <td>

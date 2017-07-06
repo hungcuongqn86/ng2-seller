@@ -15,6 +15,8 @@ import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {AlertComponent} from './public/alert.component';
 import {LoadingComponent} from './public/loading.component';
 import {ProductdfComponent} from './public/productdf.component';
+import {ColorComponent} from './public/color.component';
+import {AddproductComponent} from './public/addproduct.component';
 
 import {SharedModule} from './public/shared.module';
 
@@ -27,7 +29,9 @@ export function createTranslateLoader(http: HttpClient) {
         AppComponent,
         AlertComponent,
         LoadingComponent,
-        ProductdfComponent
+        ProductdfComponent,
+        ColorComponent,
+        AddproductComponent
     ],
     imports: [
         BrowserModule,
@@ -51,7 +55,9 @@ export function createTranslateLoader(http: HttpClient) {
     entryComponents: [
         AlertComponent,
         LoadingComponent,
-        ProductdfComponent
+        ProductdfComponent,
+        ColorComponent,
+        AddproductComponent
     ],
     bootstrap: [AppComponent]
 })

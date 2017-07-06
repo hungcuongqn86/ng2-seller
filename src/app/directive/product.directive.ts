@@ -20,7 +20,6 @@ export class ProductDirective implements OnChanges {
 
     ngOnChanges(changes) {
         if (changes.product) {
-            this.PublicService.http.startLoad();
             this.getBases();
         }
     }
@@ -85,7 +84,6 @@ export class ProductDirective implements OnChanges {
                 this.addImg(this.product.designs[index], zoom);
             }
         });
-        this.PublicService.http.endLoad();
     }
 
     public addImg(dsrs: any, zoom) {

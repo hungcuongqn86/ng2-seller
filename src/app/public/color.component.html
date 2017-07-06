@@ -1,0 +1,32 @@
+<div class="modal-dialog product-modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="panel panel-default produc-box">
+                <div class="panel-body">
+                    <div class="row producs-list">
+                        <div class="col-sm-4">
+                            <div appProduct [product]="oProduct" [face]="face" [mainopt]="mainOpt"></div>
+                        </div>
+                        <div class="col-sm-8 prod-inf">
+                            <div class="colors">
+                                <div class="ColorPicker interactive">
+                                    <div *ngFor='let itemColor of oProduct.base.colors' class="color">
+                                        <div class="color" (click)="selectColor(itemColor)" appColor
+                                             [color]="itemColor.value">
+                                            <i *ngIf="checkColor(itemColor)>=0" style="    position: absolute;
+    margin-left: 5px;
+    margin-top: 3px;"
+                                               [ngStyle]="{ 'color': getContrastYIQ(itemColor.value) }"
+                                               class="fa fa-check"
+                                               aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

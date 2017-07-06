@@ -1,0 +1,42 @@
+.modal-dialog {
+    height: 95%;
+    width: 90%;
+}
+
+.modal-content {
+    height: 95%;
+}
+
+.modal-body {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 120px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: 75%;
+}
+
+.producs-base-item {
+    border: 1px solid #ddd;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.producs-base-item:hover {
+    background-color: #1b6d85;
+}
+
+.producs-base-item img {
+    width: 90%;
+    margin: 10px;
+}
+
+.producs-base-item .produc-name {
+    margin: 5px;
+    margin-top: 15px;
+}
+
+.breadcrumb {
+    background-color: #fff;
+    font-size: 20px;
+    margin-bottom: 0;
+}
