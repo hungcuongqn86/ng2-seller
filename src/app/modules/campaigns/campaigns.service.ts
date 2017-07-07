@@ -32,7 +32,7 @@ export class CampaignsService {
         const url = pspApiUrl + `categories`;
         const params: URLSearchParams = new URLSearchParams();
         params.set('visible', visible);
-        return this.http.get(url).map((res: Response) => res.json());
+        return this.http.get(url, {search: params}).map((res: Response) => res.json());
     }
 
     public updateCampaign(campaign: any) {

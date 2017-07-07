@@ -1,0 +1,14 @@
+.dropdown-amount {
+    min-width: 100%;
+}
+
+.dropdown-promotions {
+    width: calc(100% - 30px);;
+    top: inherit;
+    left: inherit;
+}
+
+.input-group-addon {
+    padding: 0 12px;
+    min-width: 50px;
+}

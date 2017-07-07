@@ -5,6 +5,7 @@ import {HttpModule} from '@angular/http';
 
 import {PromotionsComponent} from './promotions.component';
 import {PromotionsRoutingModule} from './promotions.routing.module';
+import {PromotionsService} from './promotions.service';
 
 @NgModule({
     imports: [CommonModule, FormsModule, HttpModule, PromotionsRoutingModule],
@@ -12,7 +13,7 @@ import {PromotionsRoutingModule} from './promotions.routing.module';
         PromotionsComponent,
     ],
     exports: [],
-    providers: []
+    providers: [PromotionsService]
 })
 export class PromotionsModule {
 }
