@@ -1,4 +1,5 @@
 import {Component, ViewChild, OnInit} from '@angular/core';
+import {ConfirmComponent} from '../../public/confirm.component';
 import {PromotionsService} from './promotions.service';
 import {Observable} from 'rxjs/Rx';
 
@@ -55,6 +56,21 @@ export class PromotionsComponent implements OnInit {
     }
 
     public deletePromotion(item) {
+        const disposable = this.PromotionsService.http.dialogService.addDialog(ConfirmComponent, {
+            title: 'Confirm delete promotion',
+            message: 'You sure want to delete this record!'
+        })
+            .subscribe((isConfirmed) => {
+                if (isConfirmed) {
+                    this.deleteRecord(item);
+                }
+            });
+        setTimeout(() => {
+            disposable.unsubscribe();
+        }, 10000);
+    }
+
+    private deleteRecord(item) {
         this.PromotionsService.http.startLoad();
         this.PromotionsService.deletePromotion(item.id).subscribe(
             res => {

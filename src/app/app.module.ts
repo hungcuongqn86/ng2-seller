@@ -13,6 +13,7 @@ import {routing} from './app.routing.module';
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {AlertComponent} from './public/alert.component';
+import {ConfirmComponent} from './public/confirm.component';
 import {LoadingComponent} from './public/loading.component';
 import {ProductdfComponent} from './public/productdf.component';
 import {ColorComponent} from './public/color.component';
@@ -28,6 +29,7 @@ export function createTranslateLoader(http: HttpClient) {
     declarations: [
         AppComponent,
         AlertComponent,
+        ConfirmComponent,
         LoadingComponent,
         ProductdfComponent,
         ColorComponent,
@@ -54,6 +56,7 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     entryComponents: [
         AlertComponent,
+        ConfirmComponent,
         LoadingComponent,
         ProductdfComponent,
         ColorComponent,
