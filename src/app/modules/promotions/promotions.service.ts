@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {URLSearchParams, Response} from '@angular/http';
+import {Response, URLSearchParams} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {HttpClient} from '../../lib/http';
 import {pspApiUrl} from '../../app.config';
@@ -33,8 +33,21 @@ export class PromotionsService {
         return this.http.post(url, body).map((res: Response) => res.json());
     }
 
+    public updatePromotions(id, promotion) {
+        const url = pspApiUrl + `promotions/${id}`;
+        const body = JSON.stringify(promotion);
+        return this.http.put(url, body).map((res: Response) => res.json());
+    }
+
     public deletePromotion(promotionId) {
         const url = pspApiUrl + this.module + `/${promotionId}`;
         return this.http.delete(url).map((res: Response) => res.json());
+    }
+
+    public checkDupp(code: string): any {
+        const url = pspApiUrl + `promotions`;
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('check', code);
+        return this.http.get(url, {search: params}).map((res: Response) => res.json());
     }
 }

@@ -236,3 +236,7 @@ footer .col-footer {
     border-color: #0489d6;
     color: #fff;
 }
+
+.bootstrap-switch .bootstrap-switch-label {
+    padding-right: 21px !important;
+}

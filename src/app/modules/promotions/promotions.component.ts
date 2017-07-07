@@ -14,9 +14,10 @@ export class PromotionsComponent implements OnInit {
     public promotionsTypeData: any = [];
     public discountTypeData: any = [];
     public promotionsData: any = {};
-    public promotion: any = JSON.parse('{"code":"","type":"","desc":"desc","discount_type":"","discount_value":""}');
+    public promotion: any = JSON.parse('{"code":"","type":"","desc":"desc","discount_type":"","discount_value":"","state":"approved"}');
     public discount_type = '';
     public promotion_type = '';
+    public checkcode: any = JSON.parse('{"code":"","available": true}');
 
     constructor(private PromotionsService: PromotionsService) {
 
@@ -38,6 +39,35 @@ export class PromotionsComponent implements OnInit {
         this.discount_type = item.name;
     }
 
+    public onSwitchChange(e, promotion) {
+        this.PromotionsService.http.startLoad();
+        const promo = JSON.parse('{"code":"","type":"","desc":"desc","discount_type":"","discount_value":"","state":"approved"}');
+        promo.code = promotion.code;
+        promo.type = promotion.type.id;
+        promo.discount_type = promotion.discount.id;
+        promo.discount_value = promotion.discount.value;
+        if (e.currentValue) {
+            promo.state = 'approved';
+        } else {
+            promo.state = 'unapproved';
+        }
+        this.updatePromotions(promotion.id, promo);
+    }
+
+    private updatePromotions(id, promotion) {
+        this.PromotionsService.updatePromotions(id, promotion).subscribe(
+            res => {
+                this.getPromotions();
+                this.PromotionsService.http.endLoad();
+            },
+            error => {
+                this.PromotionsService.http.endLoad();
+                console.error(error.json().message);
+                return Observable.throw(error);
+            }
+        );
+    }
+
     public addPromotion() {
         this.PromotionsService.http.startLoad();
         this.promotion.discount_value = this.promotion.discount_value.toString();
@@ -53,6 +83,22 @@ export class PromotionsComponent implements OnInit {
                 return Observable.throw(error);
             }
         );
+    }
+
+    public checkDupp() {
+        if (this.promotion.code !== '') {
+            this.PromotionsService.checkDupp(this.promotion.code).subscribe(
+                res => {
+                    this.checkcode = res;
+                },
+                error => {
+                    console.error(error.json().message);
+                    return Observable.throw(error);
+                }
+            );
+        } else {
+            this.checkcode = JSON.parse('{"code":"","available": true}');
+        }
     }
 
     public deletePromotion(item) {

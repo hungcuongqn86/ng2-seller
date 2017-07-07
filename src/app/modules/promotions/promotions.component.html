@@ -7,10 +7,11 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group"
-                                 [ngClass]="(code.touched && !code.valid)? 'has-error': ''">
+                                 [ngClass]="((code.touched && !code.valid)||!checkcode.available)? 'has-error': ''">
                                 <label for="code">Promo ID (alphanumeric)</label>
                                 <input [(ngModel)]="promotion.code" #code="ngModel" name="code" id="code"
                                        [maxLength]="50"
+                                       [appDebounce]="800" (onDebounce)="checkDupp()"
                                        pattern="^[\w\d]+$" required
                                        class="form-control">
                             </div>
@@ -61,7 +62,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12">
-                            <div [hidden]="code.valid || code.untouched">
+                            <div [hidden]="checkcode.available && (code.valid || code.untouched)">
                                 <span *ngIf="code.errors && code.errors.required"
                                       class="help-block alert-warning">
                                                 <i class="fa fa-exclamation-triangle"
@@ -70,6 +71,10 @@
                                 <span *ngIf="code.errors && code.errors.pattern" class="help-block alert-warning">
                                                 <i class="fa fa-exclamation-triangle"
                                                    aria-hidden="true"></i> Promo ID pattern!!!
+                                            </span>
+                                <span *ngIf="!checkcode.available" class="help-block alert-warning">
+                                                <i class="fa fa-exclamation-triangle"
+                                                   aria-hidden="true"></i> Code duplicates!!!!
                                             </span>
                             </div>
                             <div [hidden]="amount.valid || amount.untouched">
@@ -110,7 +115,8 @@
                     {{promotion.used}}
                 </td>
                 <td>
-                    {{promotion.state}}
+                    <bSwitch [switch-size]="'mini'" (onChangeState)="onSwitchChange($event, promotion)"
+                             [ngModel]="promotion.state === 'approved'"></bSwitch>
                 </td>
                 <td class="middle">
                     <button (click)="deletePromotion(promotion)" class="btn btn-xs btn-default pull-right">
