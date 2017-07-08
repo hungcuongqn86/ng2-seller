@@ -74,7 +74,7 @@ export class DsLib {
         }
         const parser = document.createElement('a');
         parser.href = url;
-        return parser.pathname;
+        return parser.pathname.replace(config.basename, '');
     }
 
     static getBaseImgUrl(sFace, base: any) {

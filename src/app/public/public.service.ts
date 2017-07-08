@@ -10,11 +10,6 @@ export class PublicService {
 
     }
 
-    public removeSession(id) {
-        const url = pspApiUrl + `sessions/${id}`;
-        return this.http.delete(url).map((res: Response) => res.json());
-    }
-
     public getConfig(key) {
         const url = pspApiUrl + 'preferences';
         const params: URLSearchParams = new URLSearchParams();

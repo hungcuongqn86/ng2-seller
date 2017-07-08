@@ -1,10 +1,8 @@
 import {Component, OnInit, AfterViewInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {TranslateService} from 'ng2-translate/ng2-translate';
 import {PublicService} from './public/public.service';
 import {Observable} from 'rxjs/Rx';
 import {location} from './app.config';
-import {DsLib} from './lib/lib';
 
 declare const $: any;
 
@@ -15,7 +13,7 @@ declare const $: any;
 })
 export class AppComponent implements OnInit, AfterViewInit {
 
-    constructor(public PublicService: PublicService, private translate: TranslateService, private router: Router) {
+    constructor(public PublicService: PublicService, private translate: TranslateService) {
         translate.addLangs([location]);
         translate.use(location);
     }
@@ -37,25 +35,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     public logout() {
-        this.PublicService.http.startLoad();
-        this.PublicService.http.profile = null;
-        DsLib.removeToken();
-        this.removeSession();
-    }
-
-    private removeSession() {
-        const ss = DsLib.getSession();
-        this.PublicService.removeSession(ss).subscribe(
-            () => {
-                this.PublicService.http.endLoad();
-                this.router.navigate(['/auth/login']);
-            },
-            error => {
-                this.PublicService.http.endLoad();
-                console.error(error.json().message);
-                return Observable.throw(error);
-            }
-        );
+        this.PublicService.http.logout();
     }
 
     ngAfterViewInit() {

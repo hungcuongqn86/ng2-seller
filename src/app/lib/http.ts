@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers, RequestOptionsArgs, XHRBackend, RequestOptions, Response} from '@angular/http';
+import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {DialogService} from 'ng2-bootstrap-modal';
 import {AlertComponent} from '../public/alert.component';
@@ -23,7 +24,8 @@ export class HttpClient extends Http {
     };
     private timeStamp: Date;
 
-    constructor(backend: XHRBackend, options: RequestOptions, private Auth: Auth, public dialogService: DialogService) {
+    constructor(public router: Router, backend: XHRBackend, options: RequestOptions,
+                private Auth: Auth, public dialogService: DialogService) {
         super(backend, options);
     }
 
@@ -118,7 +120,7 @@ export class HttpClient extends Http {
                     serv.alert(ms);
                     break;
                 case 401:
-                    // Logout
+                    this.logout();
                     break;
                 case 500:
                     break;
@@ -156,6 +158,33 @@ export class HttpClient extends Http {
             this.dlLoad.unsubscribe();
             this.dlLoad = null;
         }
+    }
+
+    public logout() {
+        this.startLoad();
+        this.profile = null;
+        DsLib.removeToken();
+        this.removeSession();
+    }
+
+    private removeSession() {
+        const ss = DsLib.getSession();
+        this._removeSession(ss).subscribe(
+            () => {
+                this.endLoad();
+                this.router.navigate(['/auth/login']);
+            },
+            error => {
+                this.endLoad();
+                console.error(error.json().message);
+                return Observable.throw(error);
+            }
+        );
+    }
+
+    private _removeSession(id) {
+        const url = pspApiUrl + `sessions/${id}`;
+        return this.delete(url).map((res: Response) => res.json());
     }
 
     public checkAccess(fallback: any, passback: any, tk: string, checkRoute, checkLogin) {

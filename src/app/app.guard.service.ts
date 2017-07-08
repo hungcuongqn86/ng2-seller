@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot} from '@angular/router';
 import {HttpClient} from './lib/http';
-import {Router} from '@angular/router';
 import {DsLib} from './lib/lib';
 
 @Injectable()
 export class AppGuard implements CanActivate {
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient) {
     }
 
     canActivate(route: ActivatedRouteSnapshot) {
@@ -31,7 +30,7 @@ export class AppGuard implements CanActivate {
 
     private canAccessScreen() {
         DsLib.removeToken();
-        this.router.navigate(['/auth/login']);
+        this.http.router.navigate(['/auth/login']);
     }
 
     private pass() {
