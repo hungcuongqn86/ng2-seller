@@ -70,8 +70,17 @@ export class PromotionsComponent implements OnInit {
 
     public addPromotion() {
         this.PromotionsService.http.startLoad();
-        this.promotion.discount_value = this.promotion.discount_value.toString();
-        this.PromotionsService.createPromotions(this.promotion).subscribe(
+        const prU: any = {};
+        Object.keys(this.promotion).map((index) => {
+            prU[index] = this.promotion[index];
+        });
+        if (prU.type === '24yQLTr5bg5f5Cor') {
+            prU.discount_value = prU.discount_value.toString();
+        } else {
+            prU.discount_type = '';
+            prU.discount_value = '';
+        }
+        this.PromotionsService.createPromotions(prU).subscribe(
             res => {
                 this.form.reset();
                 this.getPromotions();

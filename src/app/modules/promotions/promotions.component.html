@@ -11,7 +11,7 @@
                                 <label for="code">Promo ID (alphanumeric)</label>
                                 <input [(ngModel)]="promotion.code" #code="ngModel" name="code" id="code"
                                        [maxLength]="50"
-                                       [appDebounce]="800" (onDebounce)="checkDupp()"
+                                       (change)="checkDupp()"
                                        pattern="^[\w\d]+$" required
                                        class="form-control">
                             </div>
@@ -46,7 +46,7 @@
                                     <input [(ngModel)]="promotion.discount_value" #amount="ngModel" type="number"
                                            class="form-control"
                                            min="0"
-                                           name="amount" id="amount" required>
+                                           name="amount" id="amount" [required]="promotion.type==='24yQLTr5bg5f5Cor'">
                                 </div>
                             </div>
                         </div>
@@ -109,7 +109,8 @@
                     {{promotion.type.name}}
                 </td>
                 <td>
-                    {{promotion.discount.type}}{{promotion.discount.value}}
+                    {{promotion.discount && promotion.discount.type? promotion.discount.type:''}}{{promotion.discount &&
+                    promotion.discount.value? promotion.discount.value:''}}
                 </td>
                 <td>
                     {{promotion.used}}
