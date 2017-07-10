@@ -1,4 +1,4 @@
-import {Directive, OnInit, OnChanges, Input, ElementRef} from '@angular/core';
+import {Directive, OnChanges, Input, ElementRef} from '@angular/core';
 import {PublicService} from '../public/public.service';
 import {DsLib} from '../lib/lib';
 import {Observable} from 'rxjs/Rx';
@@ -12,8 +12,11 @@ export class ProductDirective implements OnChanges {
     public face = 'front';
     @Input('mainopt')
     public mainopt: any;
-    nested: any;
+    @Input('color')
+    public color: any = null;
     prodDraw: any;
+    prodColor: any;
+    nested: any;
 
     constructor(private el: ElementRef, private PublicService: PublicService) {
     }
@@ -22,6 +25,14 @@ export class ProductDirective implements OnChanges {
         if (changes.product) {
             this.getBases();
         }
+
+        if (changes.color) {
+            this.changColor();
+        }
+    }
+
+    private changColor() {
+        this.prodColor.fill(this.color.value);
     }
 
     private getBases(): any {
@@ -62,16 +73,19 @@ export class ProductDirective implements OnChanges {
             this.prodDraw = SVG(this.el.nativeElement);
         }
 
-        let indexColor = this.product.colors.findIndex(x => x.default === true);
-        if (indexColor < 0) {
-            indexColor = 0;
+        if (!this.color) {
+            let indexColor = this.product.colors.findIndex(x => x.default === true);
+            if (indexColor < 0) {
+                indexColor = 0;
+            }
+            this.color = this.product.colors[indexColor];
         }
-        const color = this.prodDraw.rect().fill(this.product.colors[indexColor].value);
+        this.prodColor = this.prodDraw.rect().fill(this.color.value);
         const img = this.prodDraw.image(DsLib.getBaseImgUrl(this.face, this.product.base.id)).loaded(function (loader) {
             const sH = sW * loader.height / loader.width;
             this.size(sW, sH);
             myjs.prodDraw.size(sW, sH);
-            color.size(sW, sH);
+            myjs.prodColor.size(sW, sH);
             const zoom = (sW / myjs.product.base.image.width);
             myjs.genDesign(zoom);
         });
