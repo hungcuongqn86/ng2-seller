@@ -4,7 +4,7 @@
         <form novalidate #form="ngForm">
             <div class="form-group" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">
                 <label for="title">Title</label>
-                <input [(ngModel)]="campaign.title"
+                <input [(ngModel)]="CampaignsService.campaign.title"
                        #titleVali="ngModel"
                        name="title" id="title"
                        [maxLength]="50"
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <quill-editor #editor [(ngModel)]="campaign.desc" [modules]="quillOption"
+                <quill-editor #editor [(ngModel)]="CampaignsService.campaign.desc" [modules]="quillOption"
                               [maxLength]="2000"
                               [appCountLeft]="2000"
                               (onEditorCreated)="seDescription()" name="desc"
@@ -37,7 +37,7 @@
                 <label for="uri">URL</label>
                 <div class="input-group">
                     <span class="input-group-addon">{{domain}}</span>
-                    <input [(ngModel)]="campaign.url" type="text" readonly
+                    <input [(ngModel)]="CampaignsService.campaign.url" type="text" readonly
                            class="form-control" name="uri" id="uri">
                 </div>
             </div>
@@ -48,7 +48,7 @@
             <div class="form-group {{(sel_categories.touched && (!sel_categories.valid))? 'has-error': ''}}">
                 <label>Categories </label>
                 <div>
-                    <input [(ngModel)]="campaign.categories"
+                    <input [(ngModel)]="CampaignsService.campaign.categories"
                            #sel_categories="ngModel"
                            name="sel_categories"
                            value=""
@@ -69,12 +69,14 @@
             <h4>Conversion tracking</h4>
             <div class="form-group">
                 <label>Facebook pixel for this campaign </label>
-                <input title="Facebook pixel for this campaign" [(ngModel)]="campaign.fb_pixel" name="fb_pixel"
+                <input title="Facebook pixel for this campaign" [(ngModel)]="CampaignsService.campaign.fb_pixel"
+                       name="fb_pixel"
                        type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label>Google pixel for this campaign </label>
-                <input title="Google pixel for this campaign" [(ngModel)]="campaign.gg_pixel" name="gg_pixel"
+                <input title="Google pixel for this campaign" [(ngModel)]="CampaignsService.campaign.gg_pixel"
+                       name="gg_pixel"
                        type="text" class="form-control">
             </div>
             <hr>
@@ -107,10 +109,10 @@
                 <div class="col-sm-6 text-right">
                     <div class="btn-group">
                         <button type="button" (click)="setVisibility(false)"
-                                class="btn {{!campaign.private? 'lightblue': 'btn-default'}}">Public
+                                class="btn {{!CampaignsService.campaign.private? 'lightblue': 'btn-default'}}">Public
                         </button>
                         <button type="button" (click)="setVisibility(true)"
-                                class="btn {{campaign.private? 'lightblue': 'btn-default'}}">Private
+                                class="btn {{CampaignsService.campaign.private? 'lightblue': 'btn-default'}}">Private
                         </button>
                     </div>
                 </div>

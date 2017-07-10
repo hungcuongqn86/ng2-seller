@@ -17,7 +17,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let prod of campaign.products">
+                <tr *ngFor="let prod of CampaignsService.campaign.products">
                     <td>
                         <div appProduct [product]="prod" [face]="face" [mainopt]="mainOpt"></div>
                     </td>

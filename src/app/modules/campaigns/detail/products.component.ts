@@ -14,11 +14,10 @@ import {DsLib} from '../../../lib/lib';
 
 export class ProductsComponent implements OnInit {
     @Input('campaign')
-    public campaign: any;
     public mainOpt = [];
     public face = 'front';
 
-    constructor(private CampaignsService: CampaignsService) {
+    constructor(public CampaignsService: CampaignsService) {
     }
 
     ngOnInit() {
@@ -27,19 +26,19 @@ export class ProductsComponent implements OnInit {
     }
 
     private getMainOpt(): any {
-        for (let index = 0; index < this.campaign.products.length; index++) {
-            const check = this.campaign.products[index].designs.findIndex(x => x.main === true);
+        for (let index = 0; index < this.CampaignsService.campaign.products.length; index++) {
+            const check = this.CampaignsService.campaign.products[index].designs.findIndex(x => x.main === true);
             if (check >= 0) {
-                return DsLib.getOpt(this.campaign.products[index], this.face);
+                return DsLib.getOpt(this.CampaignsService.campaign.products[index], this.face);
             }
         }
         return [];
     }
 
     private getFace(): any {
-        const check = this.campaign.products.findIndex(x => x.default === true);
+        const check = this.CampaignsService.campaign.products.findIndex(x => x.default === true);
         if (check >= 0) {
-            if (this.campaign.products[check].back_view) {
+            if (this.CampaignsService.campaign.products[check].back_view) {
                 return 'back';
             }
         }
@@ -61,7 +60,7 @@ export class ProductsComponent implements OnInit {
     public openBases() {
         document.body.style.overflow = 'hidden';
         this.CampaignsService.http.dialogService.addDialog(AddproductComponent, {
-            campaign: this.campaign
+            campaign: this.CampaignsService.campaign
         }, {closeByClickingOutside: true}).subscribe((base) => {
             document.body.style.overflow = 'auto';
             if (base) {
@@ -75,8 +74,8 @@ export class ProductsComponent implements OnInit {
         newProduct.base = {id: base.id};
         newProduct.colors = [];
         newProduct.colors.push({id: base.colors[0].id});
-        newProduct.position = this.campaign.products.length + 1;
-        this.campaign.products.push(newProduct);
+        newProduct.position = this.CampaignsService.campaign.products.length + 1;
+        this.CampaignsService.campaign.products.push(newProduct);
         this.updateCampaign();
     }
 
@@ -96,12 +95,12 @@ export class ProductsComponent implements OnInit {
     }
 
     public deletePro(id) {
-        if (this.campaign.products.length <= 1) {
+        if (this.CampaignsService.campaign.products.length <= 1) {
             return false;
         }
-        for (let index = 0; index < this.campaign.products.length; index++) {
-            if (this.campaign.products[index].base.id === id) {
-                this.campaign.products.splice(index, 1);
+        for (let index = 0; index < this.CampaignsService.campaign.products.length; index++) {
+            if (this.CampaignsService.campaign.products[index].base.id === id) {
+                this.CampaignsService.campaign.products.splice(index, 1);
                 return true;
             }
         }
@@ -110,14 +109,14 @@ export class ProductsComponent implements OnInit {
 
     private deleteRecord(item) {
         if (this.deletePro(item.base.id)) {
-            if (this.campaign.products.findIndex(x => x.default === true) < 0) {
-                this.campaign.products[0].default = true;
+            if (this.CampaignsService.campaign.products.findIndex(x => x.default === true) < 0) {
+                this.CampaignsService.campaign.products[0].default = true;
             }
             // If delete product main
             const optold = this.getMainOpt();
             if (!optold.length) {
-                Object.keys(this.campaign.products[0].designs).map((index) => {
-                    this.campaign.products[0].designs[index].main = true;
+                Object.keys(this.CampaignsService.campaign.products[0].designs).map((index) => {
+                    this.CampaignsService.campaign.products[0].designs[index].main = true;
                 });
             }
             this.updateCampaign();
@@ -127,15 +126,15 @@ export class ProductsComponent implements OnInit {
     public updateCampaign() {
         this.CampaignsService.http.startLoad();
         const cpU: any = {};
-        Object.keys(this.campaign).map((index) => {
-            cpU[index] = this.campaign[index];
+        Object.keys(this.CampaignsService.campaign).map((index) => {
+            cpU[index] = this.CampaignsService.campaign[index];
         });
         cpU.desc = encodeURIComponent(cpU.desc);
         this.CampaignsService.updateCampaign(cpU).subscribe(
             (data) => {
                 data.desc = decodeURIComponent(data.desc);
                 data.desc = data.desc.split('%20').join(' ');
-                this.campaign = data;
+                this.CampaignsService.campaign = data;
                 this.CampaignsService.http.endLoad();
             },
             error => {

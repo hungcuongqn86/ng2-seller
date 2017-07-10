@@ -3,7 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {AppGuard} from './app.guard.service';
 
 const appRoutes: Routes = [
-    {path: '', redirectTo: 'storefronts', pathMatch: 'full'},
+    {path: '', redirectTo: 'campaigns', pathMatch: 'full'},
     {path: 'login', redirectTo: 'auth/login', pathMatch: 'full'},
     {path: 'register', redirectTo: 'auth/register', pathMatch: 'full'},
     {

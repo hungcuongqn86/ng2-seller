@@ -11,15 +11,13 @@ import {Observable} from 'rxjs/Rx';
 
 export class DetailComponent implements OnInit {
     private CampaignId;
-    public CampaignData: any;
     public tab = 'detail';
-    private sub: any;
 
-    constructor(private CampaignsService: CampaignsService, private route: ActivatedRoute) {
+    constructor(public CampaignsService: CampaignsService, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.sub = this.route.params.subscribe(params => {
+        this.route.params.subscribe(params => {
             this.CampaignId = params['id'];
         });
         this.getCampaign();
@@ -31,7 +29,7 @@ export class DetailComponent implements OnInit {
             data => {
                 data.desc = decodeURIComponent(data.desc);
                 data.desc = data.desc.split('%20').join(' ');
-                this.CampaignData = data;
+                this.CampaignsService.campaign = data;
                 this.CampaignsService.http.endLoad();
             },
             error => {

@@ -9,19 +9,19 @@
             </ul>
 
             <div class="tab-content">
-                <div *ngIf="CampaignData&&tab==='detail'" id="detail"
+                <div *ngIf="CampaignsService.campaign&&tab==='detail'" id="detail"
                      class="tab-pane fade {{tab==='detail'? 'in active': ''}}">
-                    <app-campaign-detail-edit [campaign]="CampaignData"></app-campaign-detail-edit>
+                    <app-campaign-detail-edit></app-campaign-detail-edit>
                 </div>
-                <div *ngIf="CampaignData&&tab==='product'" id="product"
+                <div *ngIf="CampaignsService.campaign&&tab==='product'" id="product"
                      class="tab-pane fade {{tab==='product'? 'in active': ''}}">
-                    <app-campaign-detail-products [campaign]="CampaignData"></app-campaign-detail-products>
+                    <app-campaign-detail-products></app-campaign-detail-products>
                 </div>
-                <div *ngIf="CampaignData&&tab==='product'" id="analytics"
+                <div *ngIf="CampaignsService.campaign&&tab==='product'" id="analytics"
                      class="tab-pane fade {{tab==='analytics'? 'in active': ''}}">
                     Analytics
                 </div>
-                <div *ngIf="CampaignData&&tab==='product'" id="email"
+                <div *ngIf="CampaignsService.campaign&&tab==='product'" id="email"
                      class="tab-pane fade {{tab==='email'? 'in active': ''}}">
                     Email list
                 </div>

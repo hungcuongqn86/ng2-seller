@@ -7,6 +7,7 @@ import {pspApiUrl} from '../../app.config';
 @Injectable()
 export class CampaignsService {
     private module = 'campaigns';
+    public campaign: any;
 
     constructor(public http: HttpClient) {
     }
