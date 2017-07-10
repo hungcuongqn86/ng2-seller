@@ -11,6 +11,7 @@ import {Observable} from 'rxjs/Rx';
 
 export class PromotionsComponent implements OnInit {
     @ViewChild('form') form: any;
+    @ViewChild('api') api: any;
     public promotionsTypeData: any = [];
     public discountTypeData: any = [];
     public promotionsData: any = {};
@@ -18,6 +19,7 @@ export class PromotionsComponent implements OnInit {
     public discount_type = '';
     public promotion_type = '';
     public checkcode: any = JSON.parse('{"code":"","available": true}');
+    public searchparam: any = {page_size: 10, page: 1};
 
     constructor(private PromotionsService: PromotionsService) {
 
@@ -130,6 +132,11 @@ export class PromotionsComponent implements OnInit {
         }, 10000);
     }
 
+    public getPage(page: number) {
+        this.searchparam.page = page;
+        this.getPromotions();
+    }
+
     private deleteRecord(item) {
         this.PromotionsService.http.startLoad();
         this.PromotionsService.deletePromotion(item.id).subscribe(
@@ -177,7 +184,7 @@ export class PromotionsComponent implements OnInit {
 
     private getPromotions() {
         this.PromotionsService.http.startLoad();
-        this.PromotionsService.getPromotions().subscribe(
+        this.PromotionsService.getPromotions(this.searchparam).subscribe(
             res => {
                 this.promotionsData = res;
                 this.PromotionsService.http.endLoad();

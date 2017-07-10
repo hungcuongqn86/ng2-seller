@@ -101,7 +101,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let promotion of promotionsData.promotions">
+            <tr *ngFor="let promotion of promotionsData.promotions | paginate: {  itemsPerPage: searchparam.page_size, currentPage: searchparam.page, totalItems: promotionsData.total}">
                 <td>
                     {{promotion.code}}
                 </td>
@@ -127,5 +127,36 @@
             </tr>
             </tbody>
         </table>
+        <div *ngIf="promotionsData.total > searchparam.page_size">
+            <pagination-template #api="paginationApi"
+                                 (pageChange)="getPage($event)">
+                <ul class="pagination">
+                    <li [class.disabled]="api.isFirstPage()">
+                        <a *ngIf="!api.isFirstPage()" (click)="api.previous()" href="javascript:void(0);"><i
+                                class="fa fa-chevron-left"
+                                aria-hidden="true"></i></a>
+                        <a *ngIf="api.isFirstPage()" href="javascript:void(0);"><i
+                                class="fa fa-chevron-left"
+                                aria-hidden="true"></i></a>
+                    </li>
+                    <li *ngFor="let page of api.pages"
+                        [class.active]="api.getCurrent() === page.value">
+                        <a (click)="api.setCurrent(page.value)" *ngIf="api.getCurrent() !== page.value"
+                           href="javascript:void(0);">
+                            <span>{{ page.label }}</span>
+                        </a>
+                        <a *ngIf="api.getCurrent() === page.value" href="javascript:void(0);">{{ page.label }}</a>
+                    </li>
+                    <li [class.disabled]="api.isLastPage()">
+                        <a *ngIf="!api.isLastPage()" (click)="api.next()" href="javascript:void(0);"><i
+                                class="fa fa-chevron-right"
+                                aria-hidden="true"></i></a>
+                        <a *ngIf="api.isLastPage()" href="javascript:void(0);"><i
+                                class="fa fa-chevron-right"
+                                aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+            </pagination-template>
+        </div>
     </div>
 </div>

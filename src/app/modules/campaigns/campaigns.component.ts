@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
 import {Observable} from 'rxjs/Rx';
@@ -10,8 +10,9 @@ import {Observable} from 'rxjs/Rx';
 })
 
 export class CampaignsComponent implements OnInit {
+    @ViewChild('api') api: any;
     public CampaignData: any = {};
-    public search = {title: '', state: 'launching'};
+    public search = {title: '', state: 'launching', page_size: 10, page: 1};
 
     constructor(private CampaignsService: CampaignsService, private router: Router) {
 
@@ -37,5 +38,10 @@ export class CampaignsComponent implements OnInit {
 
     public goDetail(camp) {
         this.router.navigate([`/campaigns/${camp.id}`]);
+    }
+
+    public getPage(page: number) {
+        this.search.page = page;
+        this.getCampaigns();
     }
 }

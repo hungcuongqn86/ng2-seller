@@ -22,9 +22,13 @@ export class PromotionsService {
         return this.http.get(url).map((res: Response) => res.json());
     }
 
-    public getPromotions() {
+    public getPromotions(searchparam) {
         const url = pspApiUrl + this.module;
-        return this.http.get(url).map((res: Response) => res.json());
+        const params: URLSearchParams = new URLSearchParams();
+        Object.keys(searchparam).map((key) => {
+            params.set(key, searchparam[key]);
+        });
+        return this.http.get(url, {search: params}).map((res: Response) => res.json());
     }
 
     public createPromotions(promotion): any {
