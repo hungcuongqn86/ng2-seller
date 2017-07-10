@@ -225,7 +225,9 @@ export class EditComponent implements OnInit {
         cpU.desc = encodeURIComponent(cpU.desc);
         this.CampaignsService.updateCampaign(cpU).subscribe(
             () => {
+                const rout = DsLib.genCampaignDetailUrl(this.campaign.url);
                 this.CampaignsService.http.endLoad();
+                window.open(rout, '_blank');
             },
             error => {
                 this.CampaignsService.http.endLoad();

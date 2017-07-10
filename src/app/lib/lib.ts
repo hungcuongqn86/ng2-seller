@@ -117,6 +117,11 @@ export class DsLib {
         }
     }
 
+    static genCampaignDetailUrl(uri: string): string {
+        const uricv = uri.split('/').join('');
+        return config.campaign_url + uricv;
+    }
+
     constructor() {
     }
 }
