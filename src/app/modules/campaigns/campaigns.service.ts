@@ -12,10 +12,12 @@ export class CampaignsService {
     constructor(public http: HttpClient) {
     }
 
-    public getCampaigns(key) {
+    public getCampaigns(sparams) {
         const url = pspApiUrl + this.module;
         const params: URLSearchParams = new URLSearchParams();
-        params.set('state', key);
+        Object.keys(sparams).map((key) => {
+            params.set(key, sparams[key]);
+        });
         return this.http.get(url, {search: params}).map((res: Response) => res.json());
     }
 

@@ -1,11 +1,12 @@
 <div class="row">
     <div class="col-sm-12">
-        <form novalidate #form="ngForm">
+        <form novalidate (ngSubmit)="getCampaigns()" #form="ngForm">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
                         <input title="Filter by search" placeholder="Search for campaign by URL or title"
-                               name="code" id="code"
+                               [(ngModel)]="search.title"
+                               name="title" id="title"
                                class="form-control">
                     </div>
                 </div>

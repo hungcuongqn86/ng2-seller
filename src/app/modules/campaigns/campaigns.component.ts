@@ -11,6 +11,7 @@ import {Observable} from 'rxjs/Rx';
 
 export class CampaignsComponent implements OnInit {
     public CampaignData: any = {};
+    public search = {title: '', state: 'launching'};
 
     constructor(private CampaignsService: CampaignsService, private router: Router) {
 
@@ -20,9 +21,9 @@ export class CampaignsComponent implements OnInit {
         this.getCampaigns();
     }
 
-    getCampaigns() {
+    public getCampaigns() {
         this.CampaignsService.http.startLoad();
-        this.CampaignsService.getCampaigns('launching').subscribe(
+        this.CampaignsService.getCampaigns(this.search).subscribe(
             data => {
                 this.CampaignData = data;
                 this.CampaignsService.http.endLoad();
@@ -34,7 +35,7 @@ export class CampaignsComponent implements OnInit {
         );
     }
 
-    goDetail(camp) {
+    public goDetail(camp) {
         this.router.navigate([`/campaigns/${camp.id}`]);
     }
 }
