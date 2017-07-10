@@ -30,7 +30,7 @@ export class DetailComponent implements OnInit {
         this.CampaignsService.getCampaign(this.CampaignId).subscribe(
             data => {
                 data.desc = decodeURIComponent(data.desc);
-                data.desc = data.desc.split('%20').join('');
+                data.desc = data.desc.split('%20').join(' ');
                 this.CampaignData = data;
                 this.CampaignsService.http.endLoad();
             },

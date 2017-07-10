@@ -14,6 +14,7 @@ export class ColorComponent extends DialogComponent<PromptModel, string> impleme
     oProduct: any;
     mainOpt: any = [];
     face = 'front';
+    color: any = null;
 
     constructor(dialogService: DialogService) {
         super(dialogService);
@@ -32,27 +33,12 @@ export class ColorComponent extends DialogComponent<PromptModel, string> impleme
         const check = this.checkColor(color);
         if (check < 0) {
             this.oProduct.colors.push(color);
-            Object.keys(this.oProduct.colors).map((index) => {
-                if (this.oProduct.colors[index].id === color.id) {
-                    this.oProduct.colors[index].default = true;
-                } else {
-                    this.oProduct.colors[index].default = false;
-                }
-            });
-            this.reload();
+            this.color = color;
         } else {
             if (this.oProduct.colors.length > 1) {
                 this.oProduct.colors.splice(check, 1);
             }
         }
-    }
-
-    private reload() {
-        const prod: any = {};
-        Object.keys(this.oProduct).map((index) => {
-            prod[index] = this.oProduct[index];
-        });
-        this.oProduct = prod;
     }
 
     public getContrastYIQ(hex) {
