@@ -44,8 +44,13 @@ export class PromotionsComponent implements OnInit {
         const promo = JSON.parse('{"code":"","type":"","desc":"desc","discount_type":"","discount_value":"","state":"approved"}');
         promo.code = promotion.code;
         promo.type = promotion.type.id;
-        promo.discount_type = promotion.discount.id;
-        promo.discount_value = promotion.discount.value;
+        if (promotion.discount) {
+            promo.discount_type = promotion.discount.id;
+            promo.discount_value = promotion.discount.value;
+        } else {
+            promo.discount_type = '';
+            promo.discount_value = '';
+        }
         if (e.currentValue) {
             promo.state = 'approved';
         } else {

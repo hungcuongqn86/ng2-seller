@@ -5,7 +5,7 @@ import {PublicService} from './public.service';
 import {Observable} from 'rxjs/Rx';
 
 export interface PromptModel {
-    title;
+    campaign: any;
 }
 
 @Component({
@@ -13,7 +13,7 @@ export interface PromptModel {
     styleUrls: ['./addproduct.component.css']
 })
 export class AddproductComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
-    title;
+    campaign: any;
     status = 'baseType';
 
     arrBaseTypes: any = [];
@@ -54,6 +54,15 @@ export class AddproductComponent extends DialogComponent<PromptModel, string> im
                 return Observable.throw(error);
             }
         );
+    }
+
+    public hasBase(id) {
+        for (let index = 0; index < this.campaign.products.length; index++) {
+            if (this.campaign.products[index].base.id === id) {
+                return index;
+            }
+        }
+        return -1;
     }
 
     public selectProductBase(objBase) {

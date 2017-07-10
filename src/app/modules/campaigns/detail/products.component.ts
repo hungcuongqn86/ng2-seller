@@ -58,7 +58,7 @@ export class ProductsComponent implements OnInit {
     public openBases() {
         document.body.style.overflow = 'hidden';
         this.CampaignsService.http.dialogService.addDialog(AddproductComponent, {
-            title: ''
+            campaign: this.campaign
         }, {closeByClickingOutside: true}).subscribe((base) => {
             document.body.style.overflow = 'auto';
             if (base) {

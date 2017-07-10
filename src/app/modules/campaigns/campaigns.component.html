@@ -1,40 +1,50 @@
 <div class="row">
     <div class="col-sm-12">
         <form novalidate #form="ngForm">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th style="width: 10%;">Campaign</th>
-                    <th style="width: 30%;"></th>
-                    <th>Orders</th>
-                    <th>Unit sales</th>
-                    <th>Total profit</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let camp of CampaignData.campaigns">
-                    <td>
-                        <div appCampaign [campaign]="camp"></div>
-                    </td>
-                    <td>
-                        <p>{{camp.title}}</p>
-                        <p><a>{{camp.url}}</a></p>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <button (click)="goDetail(camp)" class="btn btn-xs btn-default">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <input title="Filter by search" placeholder="Search for campaign by URL or title"
+                               name="code" id="code"
+                               class="form-control">
+                    </div>
+                </div>
+            </div>
         </form>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width: 10%;">Campaign</th>
+                <th style="width: 30%;"></th>
+                <th>Orders</th>
+                <th>Unit sales</th>
+                <th>Total profit</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let camp of CampaignData.campaigns">
+                <td>
+                    <div appCampaign [campaign]="camp"></div>
+                </td>
+                <td>
+                    <p>{{camp.title}}</p>
+                    <p><a>{{camp.url}}</a></p>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <button (click)="goDetail(camp)" class="btn btn-xs btn-default">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
