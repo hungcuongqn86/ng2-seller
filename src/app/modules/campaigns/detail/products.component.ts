@@ -51,8 +51,10 @@ export class ProductsComponent implements OnInit {
             oProduct: product,
             mainOpt: this.mainOpt,
             face: this.face
-        }, {closeByClickingOutside: true}).subscribe(() => {
-            // this.updateCampaign();
+        }, {closeByClickingOutside: true}).subscribe((check) => {
+            if (check === '1') {
+                this.updateCampaign();
+            }
         });
     }
 

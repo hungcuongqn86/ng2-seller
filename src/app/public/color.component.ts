@@ -30,6 +30,7 @@ export class ColorComponent extends DialogComponent<PromptModel, string> impleme
     }
 
     public selectColor(color) {
+        this.result = '1';
         const check = this.checkColor(color);
         if (check < 0) {
             this.oProduct.colors.push(color);
