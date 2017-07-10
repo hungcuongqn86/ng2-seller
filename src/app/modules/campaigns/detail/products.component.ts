@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CampaignsService} from '../campaigns.service';
 import {ColorComponent} from '../../../public/color.component';
+import {ConfirmComponent} from '../../../public/confirm.component';
 import {AddproductComponent} from '../../../public/addproduct.component';
 import {Observable} from 'rxjs/Rx';
 import {DsLib} from '../../../lib/lib';
@@ -51,7 +52,7 @@ export class ProductsComponent implements OnInit {
             mainOpt: this.mainOpt,
             face: this.face
         }, {closeByClickingOutside: true}).subscribe(() => {
-            this.updateCampaign();
+            // this.updateCampaign();
         });
     }
 
@@ -77,6 +78,50 @@ export class ProductsComponent implements OnInit {
         this.updateCampaign();
     }
 
+    public deleteProduct(item) {
+        const disposable = this.CampaignsService.http.dialogService.addDialog(ConfirmComponent, {
+            title: 'Confirm delete product',
+            message: 'You sure want to delete this record!'
+        })
+            .subscribe((isConfirmed) => {
+                if (isConfirmed) {
+                    this.deleteRecord(item);
+                }
+            });
+        setTimeout(() => {
+            disposable.unsubscribe();
+        }, 10000);
+    }
+
+    public deletePro(id) {
+        if (this.campaign.products.length <= 1) {
+            return false;
+        }
+        for (let index = 0; index < this.campaign.products.length; index++) {
+            if (this.campaign.products[index].base.id === id) {
+                this.campaign.products.splice(index, 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private deleteRecord(item) {
+        if (this.deletePro(item.base.id)) {
+            if (this.campaign.products.findIndex(x => x.default === true) < 0) {
+                this.campaign.products[0].default = true;
+            }
+            // If delete product main
+            const optold = this.getMainOpt();
+            if (!optold.length) {
+                Object.keys(this.campaign.products[0].designs).map((index) => {
+                    this.campaign.products[0].designs[index].main = true;
+                });
+            }
+            this.updateCampaign();
+        }
+    }
+
     public updateCampaign() {
         this.CampaignsService.http.startLoad();
         const cpU: any = {};
@@ -87,7 +132,7 @@ export class ProductsComponent implements OnInit {
         this.CampaignsService.updateCampaign(cpU).subscribe(
             (data) => {
                 data.desc = decodeURIComponent(data.desc);
-                data.desc = data.desc.split('%20').join('');
+                data.desc = data.desc.split('%20').join(' ');
                 this.campaign = data;
                 this.CampaignsService.http.endLoad();
             },

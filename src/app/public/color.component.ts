@@ -41,6 +41,10 @@ export class ColorComponent extends DialogComponent<PromptModel, string> impleme
         }
     }
 
+    public previewColor(color) {
+        this.color = color;
+    }
+
     public getContrastYIQ(hex) {
         const ishex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(hex);
         if (!ishex) {

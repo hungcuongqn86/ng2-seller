@@ -12,7 +12,8 @@
                             <div class="colors">
                                 <div class="ColorPicker interactive">
                                     <div *ngFor='let itemColor of oProduct.base.colors' class="color">
-                                        <div class="color" (click)="selectColor(itemColor)" appColor
+                                        <div class="color" (click)="selectColor(itemColor)"
+                                             (mouseover)="previewColor(itemColor)" appColor
                                              [color]="itemColor.value">
                                             <i *ngIf="checkColor(itemColor)>=0" style="    position: absolute;
     margin-left: 5px;
