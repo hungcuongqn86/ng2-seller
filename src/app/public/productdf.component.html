@@ -5,14 +5,14 @@
                 <table class="table">
                     <tbody>
                     <tr *ngFor="let prod of campaign.products">
-                        <td style="width: 20%" (click)="selectProduct(prod)">
+                        <td style="width: 20%" (click)="changeColor($event,prod,prod.colors[0])">
                             <div appProduct [product]="prod" [face]="face" [mainopt]="mainOpt"></div>
                         </td>
-                        <td style="width: 80%" class="middle" (click)="selectProduct(prod)">
+                        <td style="width: 80%" class="middle" (click)="changeColor($event,prod,prod.colors[0])">
                             <div class="colors">
                                 <div *ngFor='let itemColor of prod.colors' class="color">
                                     <div appColor [color]="itemColor.value"
-                                         (click)="selectProduct(prod);changeColor(itemColor)"></div>
+                                         (click)="changeColor($event,prod,itemColor)"></div>
                                 </div>
                             </div>
                         </td>
@@ -21,7 +21,7 @@
                 </table>
             </div>
             <div class="col-sm-4 text-center prod-view">
-                <div appProduct [product]="product" [face]="face" [mainopt]="mainOpt"></div>
+                <div appProduct [product]="product" [face]="face" [mainopt]="mainOpt" [color]="color"></div>
                 <div class="row text-center" style="margin-bottom: 10px;">
                     <div class="btn-group">
                         <button type="button" (click)="setFace('front')"

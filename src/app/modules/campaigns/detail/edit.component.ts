@@ -40,6 +40,7 @@ export class EditComponent implements OnInit {
     public product: any;
     public mainOpt = [];
     public face = 'front';
+    public color: any = null;
 
     constructor(public CampaignsService: CampaignsService) {
     }
@@ -175,6 +176,11 @@ export class EditComponent implements OnInit {
             }
             this.mainOpt = this.getMainOpt();
             this.product = this.getProductDefault();
+            let indexColor = this.product.colors.findIndex(x => x.default === true);
+            if (indexColor < 0) {
+                indexColor = 0;
+            }
+            this.color = this.product.colors[indexColor];
         }
     }
 

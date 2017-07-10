@@ -17,6 +17,7 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
     public product: any;
     public mainOpt = [];
     public face = 'front';
+    public color: any = null;
 
     constructor(dialogService: DialogService) {
         super(dialogService);
@@ -56,26 +57,23 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
         return 'front';
     }
 
-    public selectProduct(prod) {
+    private selectProduct(prod) {
         if (this.product.id !== prod.id) {
             this.product = prod;
         }
     }
 
-    public changeColor(itemColor) {
-        const prod: any = [];
-        Object.keys(this.product).map((index) => {
-            prod[index] = this.product[index];
-        });
-
-        Object.keys(prod.colors).map((index) => {
-            if (prod.colors[index].id === itemColor.id) {
-                prod.colors[index].default = true;
+    public changeColor(e, prod, itemColor) {
+        e.stopPropagation();
+        this.selectProduct(prod);
+        this.color = itemColor;
+        Object.keys(this.product.colors).map((index) => {
+            if (this.product.colors[index].id === itemColor.id) {
+                this.product.colors[index].default = true;
             } else {
-                prod.colors[index].default = false;
+                this.product.colors[index].default = false;
             }
         });
-        this.product = prod;
     }
 
     public setFace(face) {

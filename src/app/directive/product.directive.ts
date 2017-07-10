@@ -74,7 +74,6 @@ export class ProductDirective implements OnChanges {
         } else {
             this.prodDraw = SVG(this.el.nativeElement);
         }
-
         if (!this.color) {
             let indexColor = this.product.colors.findIndex(x => x.default === true);
             if (indexColor < 0) {
