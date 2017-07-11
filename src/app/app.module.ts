@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
+import {SidebarComponent} from './layouts/sidebar.component';
 import {AppGuard} from './app.guard.service';
 import {HttpClient} from './lib/http';
 import {Auth} from './lib/auth';
@@ -28,6 +29,7 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
     declarations: [
         AppComponent,
+        SidebarComponent,
         AlertComponent,
         ConfirmComponent,
         LoadingComponent,

@@ -6,6 +6,8 @@ import {pspApiUrl} from '../app.config';
 
 @Injectable()
 export class PublicService {
+    showsidebar = true;
+
     constructor(public http: HttpClient) {
 
     }
