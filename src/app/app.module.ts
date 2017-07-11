@@ -5,6 +5,8 @@ import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
 import {SidebarComponent} from './layouts/sidebar.component';
+import {FooterComponent} from './layouts/footer.component';
+import {HeaderComponent} from './layouts/header.component';
 import {AppGuard} from './app.guard.service';
 import {HttpClient} from './lib/http';
 import {Auth} from './lib/auth';
@@ -30,6 +32,8 @@ export function createTranslateLoader(http: HttpClient) {
     declarations: [
         AppComponent,
         SidebarComponent,
+        FooterComponent,
+        HeaderComponent,
         AlertComponent,
         ConfirmComponent,
         LoadingComponent,
