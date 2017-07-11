@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
 export interface PromptModel {
     oProduct: any;
@@ -10,19 +10,27 @@ export interface PromptModel {
     templateUrl: './color.component.html',
     styleUrls: ['./color.component.css']
 })
-export class ColorComponent extends DialogComponent<PromptModel, string> implements PromptModel {
+export class ColorComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
     oProduct: any;
     mainOpt: any = [];
     face = 'front';
     color: any = null;
+    colors: any = [];
+    check = false;
 
     constructor(dialogService: DialogService) {
         super(dialogService);
     }
 
+    ngOnInit() {
+        Object.keys(this.oProduct.colors).map((index) => {
+            this.colors[index] = this.oProduct.colors[index];
+        });
+    }
+
     public checkColor(color: any) {
-        for (let i = 0; i < this.oProduct.colors.length; i++) {
-            if (this.oProduct.colors[i].id === color.id) {
+        for (let i = 0; i < this.colors.length; i++) {
+            if (this.colors[i].id === color.id) {
                 return i;
             }
         }
@@ -30,14 +38,14 @@ export class ColorComponent extends DialogComponent<PromptModel, string> impleme
     }
 
     public selectColor(color) {
-        this.result = '1';
+        this.check = true;
         const check = this.checkColor(color);
         if (check < 0) {
-            this.oProduct.colors.push(color);
+            this.colors.push(color);
             this.color = color;
         } else {
-            if (this.oProduct.colors.length > 1) {
-                this.oProduct.colors.splice(check, 1);
+            if (this.colors.length > 1) {
+                this.colors.splice(check, 1);
             }
         }
     }
@@ -72,5 +80,18 @@ export class ColorComponent extends DialogComponent<PromptModel, string> impleme
     private padZero(str, len = 2) {
         const zeros = new Array(len).join('0');
         return (zeros + str).slice(-len);
+    }
+
+    public mdClose() {
+        this.close();
+    }
+
+    public confirm() {
+        if (this.check) {
+            this.result = this.colors;
+        } else {
+            this.result = null;
+        }
+        this.close();
     }
 }

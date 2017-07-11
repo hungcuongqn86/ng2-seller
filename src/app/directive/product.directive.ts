@@ -32,7 +32,7 @@ export class ProductDirective implements OnChanges {
     }
 
     private changColor() {
-        if (this.color) {
+        if (this.color && this.prodColor) {
             this.prodColor.fill(this.color.value);
         }
     }
