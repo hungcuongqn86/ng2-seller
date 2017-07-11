@@ -53,7 +53,14 @@ export class ProductDirective implements OnChanges {
                 for (let i = 0; i < data.length; i++) {
                     const value = data[i].id;
                     if (value === this.product.base.id) {
-                        this.product.base = data[i];
+                        const base: any = [];
+                        Object.keys(data[i]).map((index) => {
+                            base[index] = data[i][index];
+                        });
+                        Object.keys(this.product.base).map((index) => {
+                            base[index] = this.product.base[index];
+                        });
+                        this.product.base = base;
                         break;
                     }
                 }

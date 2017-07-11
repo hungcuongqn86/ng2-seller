@@ -13,7 +13,6 @@ import {DsLib} from '../../../lib/lib';
 })
 
 export class ProductsComponent implements OnInit {
-    @Input('campaign')
     public mainOpt = [];
     public face = 'front';
 
@@ -23,6 +22,15 @@ export class ProductsComponent implements OnInit {
     ngOnInit() {
         this.mainOpt = this.getMainOpt();
         this.face = this.getFace();
+    }
+
+    public ccProfit(prod) {
+        return ( Number(prod.price) - Number(prod.base.cost)).toFixed(2);
+    }
+
+    public cctProfit(prod) {
+        const profit = ( Number(prod.price) - Number(prod.base.cost)).toFixed(2);
+        return Number((prod.sale_expected * Number(profit)).toFixed(2));
     }
 
     private getMainOpt(): any {
