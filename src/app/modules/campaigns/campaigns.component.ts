@@ -2,6 +2,7 @@ import {Component, ViewChild, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
 import {Observable} from 'rxjs/Rx';
+import {campaign_url} from '../../lib/const';
 
 @Component({
     selector: 'app-campaigns',
@@ -43,5 +44,10 @@ export class CampaignsComponent implements OnInit {
     public getPage(page: number) {
         this.search.page = page;
         this.getCampaigns();
+    }
+
+    public genCampaignDetailUrl(uri) {
+        const uricv = uri.split('/').join('');
+        return campaign_url + uricv;
     }
 }

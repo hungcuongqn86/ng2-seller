@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <form novalidate (ngSubmit)="getCampaigns()" #form="ngForm">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4 col-sm-offset-8">
                     <div class="form-group">
                         <input title="Filter by search" placeholder="Search for campaign by URL or title"
                                [(ngModel)]="search.title"
@@ -31,7 +31,7 @@
                 </td>
                 <td>
                     <p>{{camp.title}}</p>
-                    <p><a>{{camp.url}}</a></p>
+                    <p><a href="{{genCampaignDetailUrl(camp.url)}}">{{genCampaignDetailUrl(camp.url)}}</a></p>
                 </td>
                 <td>
                 </td>

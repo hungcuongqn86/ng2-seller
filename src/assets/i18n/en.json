@@ -1,5 +1,8 @@
 {
   "COMMON": {
+    "CAMPAIGN": "Campaign",
+    "CAMPAIGNS": "Campaigns",
+    "PROMOTIONS": "Promotions",
     "SIGN_OUT": "Logout",
     "DETAL_LABLE": "Detail",
     "ADD_LABLE": "Add",

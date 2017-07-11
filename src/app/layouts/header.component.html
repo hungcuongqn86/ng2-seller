@@ -9,8 +9,18 @@
 
                 <ul class="dropdown-menu dropdown-menu-profile" role="menu">
                     <li>
+                        <a routerLink="campaigns" href="javascript: void(0)">
+                            {{ 'COMMON.CAMPAIGNS' | translate }} <i class="fa fa-server" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="promotions" href="javascript: void(0)">
+                            {{ 'COMMON.PROMOTIONS' | translate }} <i class="fa fa-tags" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li>
                         <a (click)="logout()" href="javascript: void(0)">
-                            {{ 'COMMON.SIGN_OUT' | translate }}
+                            {{ 'COMMON.SIGN_OUT' | translate }} <i class="fa fa-sign-out" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>
