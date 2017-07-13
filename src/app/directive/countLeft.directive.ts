@@ -1,25 +1,25 @@
-import {Directive, OnInit, Input, ElementRef, Renderer} from '@angular/core';
+import {Directive, OnInit, OnDestroy, Input, ElementRef} from '@angular/core';
 import {NgControl} from '@angular/forms';
 
 @Directive({
     selector: '[ngModel][appCountLeft]',
 })
-export class CountLeftDirective implements OnInit {
+export class CountLeftDirective implements OnInit, OnDestroy {
     @Input('appCountLeft')
     public appCountLeft = 0;
     private contendf = ' characters left';
     private modelValue = null;
+    private subs: any;
 
-    constructor(public model: NgControl, private el: ElementRef, private renderer: Renderer) {
+    constructor(public model: NgControl, private el: ElementRef) {
     }
 
     ngOnInit() {
         this.modelValue = this.model.value;
-        // insertAdjacentElement
         const wrapper = document.createElement('label');
         wrapper.classList.add('pull-right');
         this.el.nativeElement.insertAdjacentElement('beforebegin', wrapper);
-        this.model.valueChanges
+        this.subs = this.model.valueChanges
             .distinctUntilChanged()
             .subscribe(mv => {
                 let ilength = 0;
@@ -42,5 +42,11 @@ export class CountLeftDirective implements OnInit {
                 // console.log(this.el);
                 wrapper.textContent = countview.toString() + this.contendf;
             });
+    }
+
+    ngOnDestroy() {
+        if (this.subs) {
+            this.subs.unsubscribe();
+        }
     }
 }

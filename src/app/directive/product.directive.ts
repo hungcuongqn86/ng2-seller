@@ -1,11 +1,11 @@
-import {Directive, OnChanges, Input, ElementRef} from '@angular/core';
+import {Directive, OnChanges, OnDestroy, Input, ElementRef} from '@angular/core';
 import {PublicService} from '../public/public.service';
 import {DsLib} from '../lib/lib';
 import {Observable} from 'rxjs/Rx';
 declare const SVG: any;
 
 @Directive({selector: '[appProduct]'})
-export class ProductDirective implements OnChanges {
+export class ProductDirective implements OnChanges, OnDestroy {
     @Input('product')
     public product: any;
     @Input('face')
@@ -17,6 +17,7 @@ export class ProductDirective implements OnChanges {
     prodDraw: any;
     prodColor: any;
     nested: any;
+    private subs: any;
 
     constructor(private el: ElementRef, private PublicService: PublicService) {
     }
@@ -28,6 +29,12 @@ export class ProductDirective implements OnChanges {
 
         if (changes.color) {
             this.changColor();
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.subs) {
+            this.subs.unsubscribe();
         }
     }
 
@@ -48,7 +55,7 @@ export class ProductDirective implements OnChanges {
         if (baseType === '') {
             return false;
         }
-        this.PublicService.getBases(baseType).subscribe(
+        this.subs = this.PublicService.getBases(baseType).subscribe(
             data => {
                 for (let i = 0; i < data.length; i++) {
                     const value = data[i].id;

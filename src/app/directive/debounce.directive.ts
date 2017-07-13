@@ -1,15 +1,16 @@
-import {Directive, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Directive, OnInit, OnDestroy, Input, Output, EventEmitter} from '@angular/core';
 import {NgControl} from '@angular/forms';
 
 @Directive({
     selector: '[ngModel][appDebounce]',
 })
-export class DebounceDirective implements OnInit {
+export class DebounceDirective implements OnInit, OnDestroy {
     @Output()
     public onDebounce = new EventEmitter<any>();
     @Input('appDebounce')
     public appDebounce = 500;
     private modelValue = null;
+    private subs: any;
 
     constructor(public model: NgControl) {
 
@@ -24,7 +25,7 @@ export class DebounceDirective implements OnInit {
             });
         }
 
-        this.model.valueChanges
+        this.subs = this.model.valueChanges
             .debounceTime(this.appDebounce)
             .distinctUntilChanged()
             .subscribe(mv => {
@@ -33,5 +34,11 @@ export class DebounceDirective implements OnInit {
                     this.onDebounce.emit(mv);
                 }
             });
+    }
+
+    ngOnDestroy() {
+        if (this.subs) {
+            this.subs.unsubscribe();
+        }
     }
 }
