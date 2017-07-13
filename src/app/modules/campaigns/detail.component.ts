@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
 import {Observable} from 'rxjs/Rx';
@@ -9,9 +9,10 @@ import {Observable} from 'rxjs/Rx';
     styleUrls: ['./detail.component.css']
 })
 
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit, OnDestroy {
     private CampaignId;
     public tab = 'detail';
+    private subs: any;
 
     constructor(public CampaignsService: CampaignsService, private route: ActivatedRoute) {
     }
@@ -23,9 +24,15 @@ export class DetailComponent implements OnInit {
         this.getCampaign();
     }
 
+    ngOnDestroy() {
+        if (this.subs) {
+            this.subs.unsubscribe();
+        }
+    }
+
     private getCampaign() {
         this.CampaignsService.http.startLoad();
-        this.CampaignsService.getCampaign(this.CampaignId).subscribe(
+        this.subs = this.CampaignsService.getCampaign(this.CampaignId).subscribe(
             data => {
                 data.desc = decodeURIComponent(data.desc);
                 data.desc = data.desc.split('%20').join(' ');

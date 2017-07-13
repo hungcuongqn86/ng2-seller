@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
 import {Observable} from 'rxjs/Rx';
@@ -10,10 +10,11 @@ import {campaign_url} from '../../lib/const';
     styleUrls: ['./campaigns.component.css']
 })
 
-export class CampaignsComponent implements OnInit {
+export class CampaignsComponent implements OnInit, OnDestroy {
     @ViewChild('api') api: any;
     public CampaignData: any = {};
     public search = {title: '', state: 'launching', page_size: 10, page: 1};
+    private subs: any;
 
     constructor(private CampaignsService: CampaignsService, private router: Router) {
 
@@ -23,9 +24,15 @@ export class CampaignsComponent implements OnInit {
         this.getCampaigns();
     }
 
+    ngOnDestroy() {
+        if (this.subs) {
+            this.subs.unsubscribe();
+        }
+    }
+
     public getCampaigns() {
         this.CampaignsService.http.startLoad();
-        this.CampaignsService.getCampaigns(this.search).subscribe(
+        this.subs = this.CampaignsService.getCampaigns(this.search).subscribe(
             data => {
                 this.CampaignData = data;
                 this.CampaignsService.http.endLoad();

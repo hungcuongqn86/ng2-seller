@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {URLSearchParams, Response} from '@angular/http';
-import 'rxjs/add/operator/toPromise';
 import {HttpClient} from '../../lib/http';
 import {pspApiUrl} from '../../app.config';
 

@@ -53,8 +53,9 @@
                         <div class="col-sm-2 middle">
                             <div class="form-group">
                                 <label style="display: block;">&nbsp;</label>
-                                <button (click)="addPromotion()" [disabled]="!form.form.valid"
-                                        class="btn {{form.form.valid? 'btn-primary': 'btn-default'}}">
+                                <button (click)="addPromotion()"
+                                        [disabled]="!checkcode.available || !form.form.valid"
+                                        class="btn {{checkcode.available && form.form.valid? 'btn-primary': 'btn-default'}}">
                                     Add discount
                                 </button>
                             </div>

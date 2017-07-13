@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {ConfirmComponent} from '../../public/confirm.component';
 import {PromotionsService} from './promotions.service';
 import {Observable} from 'rxjs/Rx';
@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Rx';
     styleUrls: ['./promotions.component.css']
 })
 
-export class PromotionsComponent implements OnInit {
+export class PromotionsComponent implements OnInit, OnDestroy {
     @ViewChild('form') form: any;
     @ViewChild('api') api: any;
     public promotionsTypeData: any = [];
@@ -20,6 +20,7 @@ export class PromotionsComponent implements OnInit {
     public promotion_type = '';
     public checkcode: any = JSON.parse('{"code":"","available": true}');
     public searchparam: any = {page_size: 10, page: 1};
+    private subs: any;
 
     constructor(private PromotionsService: PromotionsService) {
 
@@ -29,6 +30,12 @@ export class PromotionsComponent implements OnInit {
         this.getPromotions();
         this.getPromotionsType();
         this.getDiscountType();
+    }
+
+    ngOnDestroy() {
+        if (this.subs) {
+            this.subs.unsubscribe();
+        }
     }
 
     public setPromotionType(item) {
@@ -62,7 +69,7 @@ export class PromotionsComponent implements OnInit {
     }
 
     private updatePromotions(id, promotion) {
-        this.PromotionsService.updatePromotions(id, promotion).subscribe(
+        this.subs = this.PromotionsService.updatePromotions(id, promotion).subscribe(
             res => {
                 this.getPromotions();
                 this.PromotionsService.http.endLoad();
@@ -87,7 +94,7 @@ export class PromotionsComponent implements OnInit {
             prU.discount_type = '';
             prU.discount_value = '';
         }
-        this.PromotionsService.createPromotions(prU).subscribe(
+        this.subs = this.PromotionsService.createPromotions(prU).subscribe(
             res => {
                 this.form.reset();
                 this.getPromotions();
@@ -103,7 +110,7 @@ export class PromotionsComponent implements OnInit {
 
     public checkDupp() {
         if (this.promotion.code !== '') {
-            this.PromotionsService.checkDupp(this.promotion.code).subscribe(
+            this.subs = this.PromotionsService.checkDupp(this.promotion.code).subscribe(
                 res => {
                     this.checkcode = res;
                 },
@@ -139,7 +146,7 @@ export class PromotionsComponent implements OnInit {
 
     private deleteRecord(item) {
         this.PromotionsService.http.startLoad();
-        this.PromotionsService.deletePromotion(item.id).subscribe(
+        this.subs = this.PromotionsService.deletePromotion(item.id).subscribe(
             res => {
                 this.getPromotions();
                 this.PromotionsService.http.endLoad();
@@ -153,7 +160,7 @@ export class PromotionsComponent implements OnInit {
     }
 
     private getDiscountType() {
-        this.PromotionsService.getDiscountType().subscribe(
+        this.subs = this.PromotionsService.getDiscountType().subscribe(
             res => {
                 this.discountTypeData = res.types;
                 if (this.discountTypeData.length) {
@@ -168,7 +175,7 @@ export class PromotionsComponent implements OnInit {
     }
 
     private getPromotionsType() {
-        this.PromotionsService.getPromotionsType().subscribe(
+        this.subs = this.PromotionsService.getPromotionsType().subscribe(
             res => {
                 this.promotionsTypeData = res.types;
                 if (this.promotionsTypeData.length) {
@@ -184,7 +191,7 @@ export class PromotionsComponent implements OnInit {
 
     private getPromotions() {
         this.PromotionsService.http.startLoad();
-        this.PromotionsService.getPromotions(this.searchparam).subscribe(
+        this.subs = this.PromotionsService.getPromotions(this.searchparam).subscribe(
             res => {
                 this.promotionsData = res;
                 this.PromotionsService.http.endLoad();

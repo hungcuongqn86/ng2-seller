@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, OnInit} from '@angular/core';
+import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {QuillEditorComponent} from 'ngx-quill/src/quill-editor.component';
 import {Select2OptionData} from 'ng2-select2';
 import {CampaignsService} from '../campaigns.service';
@@ -12,7 +12,7 @@ import {DsLib} from '../../../lib/lib';
     styleUrls: ['./edit.component.css']
 })
 
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
     @ViewChild('form') form: any;
     @ViewChild('editor') editor: QuillEditorComponent;
     public quillOption = {
@@ -42,6 +42,9 @@ export class EditComponent implements OnInit {
     public face = 'front';
     public color: any = null;
 
+    private subs: any;
+    private DialogSubs: any;
+
     constructor(public CampaignsService: CampaignsService) {
     }
 
@@ -55,13 +58,19 @@ export class EditComponent implements OnInit {
         this.face = this.getFace();
     }
 
+    ngOnDestroy() {
+        if (this.subs) {
+            this.subs.unsubscribe();
+        }
+    }
+
     public setTimeLength(timeItem: any) {
         this.timeEnd = timeItem;
         this.CampaignsService.campaign.length = this.timeEnd.number;
     }
 
     private getDomains() {
-        this.CampaignsService.getDomains().subscribe(
+        this.subs = this.CampaignsService.getDomains().subscribe(
             res => {
                 this.arrDomains = res.domains;
                 if (this.arrDomains) {
@@ -90,7 +99,7 @@ export class EditComponent implements OnInit {
     }
 
     private getCategories() {
-        this.CampaignsService.getCategories(true).subscribe(
+        this.subs = this.CampaignsService.getCategories(true).subscribe(
             res => {
                 this.arrCategories = this.convertCat(res.categories);
                 if (this.CampaignsService.campaign.categories) {
@@ -148,13 +157,14 @@ export class EditComponent implements OnInit {
     }
 
     public changeProduct() {
-        this.CampaignsService.http.dialogService.addDialog(ProductdfComponent, {
+        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(ProductdfComponent, {
             title: 'Select product',
             campaign: this.CampaignsService.campaign
         }).subscribe((product) => {
             if (product) {
                 this.mergProduct(product);
             }
+            this.DialogSubs.unsubscribe();
         });
     }
 
@@ -227,11 +237,9 @@ export class EditComponent implements OnInit {
             cpU[index] = this.CampaignsService.campaign[index];
         });
         cpU.desc = encodeURIComponent(cpU.desc);
-        this.CampaignsService.updateCampaign(cpU).subscribe(
+        this.subs = this.CampaignsService.updateCampaign(cpU).subscribe(
             () => {
-                // const rout = DsLib.genCampaignDetailUrl(this.CampaignsService.campaign.url);
                 this.CampaignsService.http.endLoad();
-                // window.open(rout, '_blank');
             },
             error => {
                 this.CampaignsService.http.endLoad();

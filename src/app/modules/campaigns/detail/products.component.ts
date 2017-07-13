@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {CampaignsService} from '../campaigns.service';
 import {ColorComponent} from '../../../public/color.component';
 import {ConfirmComponent} from '../../../public/confirm.component';
@@ -12,9 +12,11 @@ import {DsLib} from '../../../lib/lib';
     styleUrls: ['./products.component.css']
 })
 
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
     public mainOpt = [];
     public face = 'front';
+    private subs: any;
+    private DialogSubs: any;
 
     constructor(public CampaignsService: CampaignsService) {
     }
@@ -22,6 +24,12 @@ export class ProductsComponent implements OnInit {
     ngOnInit() {
         this.mainOpt = this.getMainOpt();
         this.face = this.getFace();
+    }
+
+    ngOnDestroy() {
+        if (this.subs) {
+            this.subs.unsubscribe();
+        }
     }
 
     public ccProfit(prod) {
@@ -54,7 +62,7 @@ export class ProductsComponent implements OnInit {
     }
 
     public openColors(product) {
-        this.CampaignsService.http.dialogService.addDialog(ColorComponent, {
+        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(ColorComponent, {
             oProduct: product,
             mainOpt: this.mainOpt,
             face: this.face
@@ -63,18 +71,20 @@ export class ProductsComponent implements OnInit {
                 product.colors = colors;
                 this.updateCampaign();
             }
+            this.DialogSubs.unsubscribe();
         });
     }
 
     public openBases() {
         document.body.style.overflow = 'hidden';
-        this.CampaignsService.http.dialogService.addDialog(AddproductComponent, {
+        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(AddproductComponent, {
             campaign: this.CampaignsService.campaign
         }, {closeByClickingOutside: true}).subscribe((base) => {
             document.body.style.overflow = 'auto';
             if (base) {
                 this.addProduct(base);
             }
+            this.DialogSubs.unsubscribe();
         });
     }
 
@@ -89,7 +99,7 @@ export class ProductsComponent implements OnInit {
     }
 
     public deleteProduct(item) {
-        const disposable = this.CampaignsService.http.dialogService.addDialog(ConfirmComponent, {
+        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(ConfirmComponent, {
             title: 'Confirm delete product',
             message: 'You sure want to delete this record!'
         })
@@ -97,9 +107,10 @@ export class ProductsComponent implements OnInit {
                 if (isConfirmed) {
                     this.deleteRecord(item);
                 }
+                this.DialogSubs.unsubscribe();
             });
         setTimeout(() => {
-            disposable.unsubscribe();
+            this.DialogSubs.unsubscribe();
         }, 10000);
     }
 
@@ -132,14 +143,14 @@ export class ProductsComponent implements OnInit {
         }
     }
 
-    public updateCampaign() {
+    private updateCampaign() {
         this.CampaignsService.http.startLoad();
         const cpU: any = {};
         Object.keys(this.CampaignsService.campaign).map((index) => {
             cpU[index] = this.CampaignsService.campaign[index];
         });
         cpU.desc = encodeURIComponent(cpU.desc);
-        this.CampaignsService.updateCampaign(cpU).subscribe(
+        this.subs = this.CampaignsService.updateCampaign(cpU).subscribe(
             (data) => {
                 data.desc = decodeURIComponent(data.desc);
                 data.desc = data.desc.split('%20').join(' ');
