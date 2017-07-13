@@ -5,7 +5,7 @@ import {AppGuard} from './app.guard.service';
 const appRoutes: Routes = [
     {path: '', redirectTo: 'campaigns', pathMatch: 'full'},
     {path: 'login', redirectTo: 'auth/login', pathMatch: 'full'},
-    {path: 'register', redirectTo: 'auth/register', pathMatch: 'full'},
+    // {path: 'register', redirectTo: 'auth/register', pathMatch: 'full'},
     {
         path: 'auth',
         loadChildren: './modules/auth/auth.module#AuthModule'

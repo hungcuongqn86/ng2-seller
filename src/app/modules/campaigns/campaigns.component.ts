@@ -41,6 +41,10 @@ export class CampaignsComponent implements OnInit {
         this.router.navigate([`/campaigns/${camp.id}`]);
     }
 
+    public goView(camp) {
+        window.open(this.genCampaignDetailUrl(camp.url), '_blank');
+    }
+
     public getPage(page: number) {
         this.search.page = page;
         this.getCampaigns();

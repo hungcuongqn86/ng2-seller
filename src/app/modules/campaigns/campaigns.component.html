@@ -31,7 +31,9 @@
                 </td>
                 <td>
                     <p>{{camp.title}}</p>
-                    <p><a href="{{genCampaignDetailUrl(camp.url)}}">{{genCampaignDetailUrl(camp.url)}}</a></p>
+
+                    <p><a (click)="goView(camp)"
+                          href="javascript:void(0);">{{genCampaignDetailUrl(camp.url)}}</a></p>
                 </td>
                 <td>
                 </td>
