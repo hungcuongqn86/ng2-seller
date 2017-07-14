@@ -43,3 +43,11 @@ input {
 .table tr:first-child td {
     border-top: none;
 }
+
+.modal-footer {
+    padding: 8px;
+}
+
+.modal-footer .btn {
+    margin: 5px !important;
+}
