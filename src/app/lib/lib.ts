@@ -78,7 +78,11 @@ export class DsLib {
     }
 
     static getBaseImgUrl(sFace, base: any) {
-        return config.imgDir + base + '_' + sFace + '.png';
+        if (sFace) {
+            return base.image[sFace];
+        } else {
+            return '';
+        }
     }
 
     static getTimeLength(): Array<any> {

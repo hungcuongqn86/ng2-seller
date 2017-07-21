@@ -17,7 +17,12 @@ export class CampaignDirective implements OnInit {
             indexdf = 0;
         }
         const product = this.campaign.products[indexdf];
-        const img = campDraw.image(product.variants[0].image.front).loaded(function (loader) {
+        indexdf = product.variants.findIndex(x => x.default === true);
+        if (indexdf < 0) {
+            indexdf = 0;
+        }
+        const variants = product.variants[indexdf];
+        campDraw.image(variants.image.front).loaded(function (loader) {
             const sH = sW * loader.height / loader.width;
             this.size(sW, sH);
             campDraw.size(sW, sH);

@@ -1,11 +1,9 @@
-import {Directive, OnChanges, OnDestroy, Input, ElementRef} from '@angular/core';
-import {PublicService} from '../public/public.service';
+import {Directive, OnChanges, Input, ElementRef} from '@angular/core';
 import {DsLib} from '../lib/lib';
-import {Observable} from 'rxjs/Rx';
 declare const SVG: any;
 
 @Directive({selector: '[appProduct]'})
-export class ProductDirective implements OnChanges, OnDestroy {
+export class ProductDirective implements OnChanges {
     @Input('product')
     public product: any;
     @Input('face')
@@ -17,14 +15,15 @@ export class ProductDirective implements OnChanges, OnDestroy {
     prodDraw: any;
     prodColor: any;
     nested: any;
-    private subs: any;
 
-    constructor(private el: ElementRef, private PublicService: PublicService) {
+    constructor(private el: ElementRef) {
     }
 
     ngOnChanges(changes) {
         if (changes.product) {
-            this.getBases();
+            if (this.product.base.image) {
+                this.genProduct();
+            }
         }
 
         if (changes.color) {
@@ -32,52 +31,10 @@ export class ProductDirective implements OnChanges, OnDestroy {
         }
     }
 
-    ngOnDestroy() {
-        if (this.subs) {
-            this.subs.unsubscribe();
-        }
-    }
-
     private changColor() {
         if (this.color && this.prodColor) {
             this.prodColor.fill(this.color.value);
         }
-    }
-
-    private getBases(): any {
-        let baseType = '';
-        if (this.product.base.type_id) {
-            baseType = this.product.base.type_id;
-        }
-        if (this.product.base.type && this.product.base.type.id && this.product.base.type.id !== '' && baseType === '') {
-            baseType = this.product.base.type.id;
-        }
-        if (baseType === '') {
-            return false;
-        }
-        this.subs = this.PublicService.getBases(baseType).subscribe(
-            data => {
-                for (let i = 0; i < data.length; i++) {
-                    const value = data[i].id;
-                    if (value === this.product.base.id) {
-                        const base: any = [];
-                        Object.keys(data[i]).map((index) => {
-                            base[index] = data[i][index];
-                        });
-                        Object.keys(this.product.base).map((index) => {
-                            base[index] = this.product.base[index];
-                        });
-                        this.product.base = base;
-                        break;
-                    }
-                }
-                this.genProduct();
-            },
-            error => {
-                console.error(error.json().message);
-                return Observable.throw(error);
-            }
-        );
     }
 
     private genProduct() {
@@ -96,7 +53,7 @@ export class ProductDirective implements OnChanges, OnDestroy {
             this.color = this.product.colors[indexColor];
         }
         this.prodColor = this.prodDraw.rect().fill(this.color.value);
-        const img = this.prodDraw.image(DsLib.getBaseImgUrl(this.face, this.product.base.id)).loaded(function (loader) {
+        this.prodDraw.image(DsLib.getBaseImgUrl(this.face, this.product.base)).loaded(function (loader) {
             const sH = sW * loader.height / loader.width;
             this.size(sW, sH);
             myjs.prodDraw.size(sW, sH);
