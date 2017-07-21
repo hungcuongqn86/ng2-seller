@@ -13,7 +13,7 @@ import {campaign_url, design_url} from '../../lib/const';
 export class CampaignsComponent implements OnInit, OnDestroy {
     @ViewChild('api') api: any;
     public CampaignData: any = {};
-    public search = {title: '', state: 'launching', page_size: 10, page: 1};
+    public search = {title: '', private: -1, state: 'launching', page_size: 10, page: 1};
     private subs: any;
 
     constructor(private CampaignsService: CampaignsService, private router: Router) {
