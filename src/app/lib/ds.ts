@@ -3,12 +3,14 @@ export class Ds {
         let res = {status: false, minX: 0, minY: 0, maxX: 0, maxY: 0};
         const typeGroup = Ds.getBaseGroup(arrBaseTypes, type);
         for (let index = 0; index < campaign.products.length; index++) {
-            const typeGroupIndex = Ds.getBaseGroup(arrBaseTypes, campaign.products[index].base.type.id);
-            const check = campaign.products[index].designs.findIndex(x => ((x.main === true) && (typeGroupIndex === typeGroup)));
-            if (check >= 0) {
-                res = Ds.getOpt(face, campaign.products[index]);
-                res.status = true;
-                return res;
+            if (campaign.products[index].base.type) {
+                const typeGroupIndex = Ds.getBaseGroup(arrBaseTypes, campaign.products[index].base.type.id);
+                const check = campaign.products[index].designs.findIndex(x => ((x.main === true) && (typeGroupIndex === typeGroup)));
+                if (check >= 0) {
+                    res = Ds.getOpt(face, campaign.products[index]);
+                    res.status = true;
+                    return res;
+                }
             }
         }
         return res;

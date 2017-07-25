@@ -136,7 +136,11 @@ export class EditComponent implements OnInit, OnDestroy {
     }
 
     public getOldOpt(product): any {
-        return Ds._getMainOpt(product.base.type.id, 'front', this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign);
+        if (product.base.type) {
+            return Ds._getMainOpt(product.base.type.id, this.face, this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign);
+        } else {
+            return null;
+        }
     }
 
     private getFace(): any {

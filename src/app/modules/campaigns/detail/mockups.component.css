@@ -1,0 +1,17 @@
+.dropdown-promotions {
+    width: calc(100% - 30px);;
+    top: inherit;
+    left: inherit;
+}
+
+.form-control {
+    box-shadow: none;
+}
+
+.variants {
+    margin: 10px 0;
+}
+
+.variants img {
+    width: 100%;
+}

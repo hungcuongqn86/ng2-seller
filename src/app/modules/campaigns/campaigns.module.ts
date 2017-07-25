@@ -11,6 +11,7 @@ import {CampaignsComponent} from './campaigns.component';
 import {DetailComponent} from './detail.component';
 import {EditComponent} from './detail/edit.component';
 import {ProductsComponent} from './detail/products.component';
+import {MockupsComponent} from './detail/mockups.component';
 import {CampaignsRoutingModule} from './campaigns.routing.module';
 
 import {CampaignDirective} from '../../directive/campaign.directive';
@@ -24,6 +25,7 @@ import {SharedModule} from '../../public/shared.module';
         DetailComponent,
         EditComponent,
         ProductsComponent,
+        MockupsComponent,
         CampaignDirective,
         CountLeftDirective
     ],
