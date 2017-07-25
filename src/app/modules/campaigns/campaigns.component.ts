@@ -2,7 +2,8 @@ import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
 import {Observable} from 'rxjs/Rx';
-import {campaign_url, design_url} from '../../lib/const';
+import {campaign_url} from '../../lib/const';
+import {DsLib} from '../../lib/lib';
 
 @Component({
     selector: 'app-campaigns',
@@ -45,7 +46,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     }
 
     public addCampaign() {
-        window.open(design_url, '_blank');
+        DsLib.addCampaign();
     }
 
     public goDetail(camp) {

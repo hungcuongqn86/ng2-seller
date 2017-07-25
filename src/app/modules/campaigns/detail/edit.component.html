@@ -126,7 +126,7 @@
         </form>
     </div>
     <div class="col-sm-5 text-center" style="position: relative;">
-        <div appProduct [product]="product" [face]="face" [mainopt]="mainOpt" [color]="color"></div>
+        <div appProduct [product]="product" [face]="face" [mainopt]="getOldOpt(product)" [color]="color"></div>
         <div (click)="changeProduct()" class="change-product-button">
             <span>Change default product or side</span></div>
     </div>

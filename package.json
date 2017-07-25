@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host cuongnh.30usd.com --port 80 --proxy-config proxy.conf.json",
-    "build": "ng build --prod --base-href \"/dashboard/\"",
+    "build": "ng build --prod --base-href \"/dashboard/\" --output-hashing none & gulp",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

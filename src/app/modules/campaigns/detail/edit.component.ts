@@ -4,6 +4,7 @@ import {Select2OptionData} from 'ng2-select2';
 import {CampaignsService} from '../campaigns.service';
 import {ProductdfComponent} from '../../../public/productdf.component';
 import {Observable} from 'rxjs/Rx';
+import {Ds} from '../../../lib/ds';
 import {DsLib} from '../../../lib/lib';
 
 @Component({
@@ -38,7 +39,6 @@ export class EditComponent implements OnInit, OnDestroy {
     public timeEnd: any = [];
 
     public product: any;
-    public mainOpt = [];
     public face = 'front';
     public color: any = null;
 
@@ -54,7 +54,6 @@ export class EditComponent implements OnInit, OnDestroy {
         this.timeLength = DsLib.getTimeLength();
         this.setTimeLength(this.timeLength[0]);
         this.product = this.getProductDefault();
-        this.mainOpt = this.getMainOpt();
         this.face = this.getFace();
     }
 
@@ -136,14 +135,8 @@ export class EditComponent implements OnInit, OnDestroy {
         return prod;
     }
 
-    private getMainOpt(): any {
-        for (let index = 0; index < this.CampaignsService.campaign.products.length; index++) {
-            const check = this.CampaignsService.campaign.products[index].designs.findIndex(x => x.main === true);
-            if (check >= 0) {
-                return DsLib.getOpt(this.CampaignsService.campaign.products[index], 'front');
-            }
-        }
-        return [];
+    public getOldOpt(product): any {
+        return Ds._getMainOpt(product.base.type.id, 'front', this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign);
     }
 
     private getFace(): any {
@@ -159,7 +152,8 @@ export class EditComponent implements OnInit, OnDestroy {
     public changeProduct() {
         this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(ProductdfComponent, {
             title: 'Select product',
-            campaign: this.CampaignsService.campaign
+            campaign: this.CampaignsService.campaign,
+            arrbasetypes: this.CampaignsService.arrBaseTypes
         }).subscribe((product) => {
             if (product) {
                 this.mergProduct(product);
@@ -184,7 +178,6 @@ export class EditComponent implements OnInit, OnDestroy {
             } else {
                 this.face = 'front';
             }
-            this.mainOpt = this.getMainOpt();
             this.product = this.getProductDefault();
             let indexColor = this.product.colors.findIndex(x => x.default === true);
             if (indexColor < 0) {

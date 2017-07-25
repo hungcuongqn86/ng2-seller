@@ -7,6 +7,7 @@ import {pspApiUrl} from '../../app.config';
 export class CampaignsService {
     private module = 'campaigns';
     public campaign: any;
+    public arrBaseTypes: any = [];
 
     constructor(public http: HttpClient) {
     }
@@ -41,5 +42,10 @@ export class CampaignsService {
         const url = pspApiUrl + this.module + `/${campaign.id}`;
         const body = JSON.stringify(campaign);
         return this.http.put(url, body).map((res: Response) => res.json());
+    }
+
+    public getBaseTypes(): any {
+        const url = pspApiUrl + `base_groups`;
+        return this.http.get(url).map((res: Response) => res.json().base_groups);
     }
 }

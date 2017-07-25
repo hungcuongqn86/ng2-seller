@@ -4,7 +4,7 @@ import {ColorComponent} from '../../../public/color.component';
 import {ConfirmComponent} from '../../../public/confirm.component';
 import {AddproductComponent} from '../../../public/addproduct.component';
 import {Observable} from 'rxjs/Rx';
-import {DsLib} from '../../../lib/lib';
+import {Ds} from '../../../lib/ds';
 
 @Component({
     selector: 'app-campaign-detail-products',
@@ -13,7 +13,6 @@ import {DsLib} from '../../../lib/lib';
 })
 
 export class ProductsComponent implements OnInit, OnDestroy {
-    public mainOpt = [];
     public face = 'front';
     private subs: any;
     private DialogSubs: any;
@@ -22,7 +21,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.mainOpt = this.getMainOpt();
         this.face = this.getFace();
     }
 
@@ -41,14 +39,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
         return Number((prod.sale_expected * Number(profit)).toFixed(2));
     }
 
-    private getMainOpt(): any {
-        for (let index = 0; index < this.CampaignsService.campaign.products.length; index++) {
-            const check = this.CampaignsService.campaign.products[index].designs.findIndex(x => x.main === true);
-            if (check >= 0) {
-                return DsLib.getOpt(this.CampaignsService.campaign.products[index], this.face);
-            }
-        }
-        return [];
+    public getOldOpt(product): any {
+        return Ds._getMainOpt(product.base.type.id, this.face, this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign);
     }
 
     private getFace(): any {
@@ -64,7 +56,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     public openColors(product) {
         this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(ColorComponent, {
             oProduct: product,
-            mainOpt: this.mainOpt,
+            mainOpt: Ds._getMainOpt(product.base.type.id, 'front', this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign),
             face: this.face
         }, {closeByClickingOutside: true}).subscribe((colors) => {
             if (colors) {
@@ -133,12 +125,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
                 this.CampaignsService.campaign.products[0].default = true;
             }
             // If delete product main
-            const optold = this.getMainOpt();
-            if (!optold.length) {
-                Object.keys(this.CampaignsService.campaign.products[0].designs).map((index) => {
-                    this.CampaignsService.campaign.products[0].designs[index].main = true;
-                });
-            }
+            /*const optold = Ds._getMainOpt(item.base.type.id, 'front', this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign);
+             if (!optold.status) {
+             Object.keys(this.CampaignsService.campaign.products[0].designs).map((index) => {
+             this.CampaignsService.campaign.products[0].designs[index].main = true;
+             });
+             }*/
             this.updateCampaign();
         }
     }

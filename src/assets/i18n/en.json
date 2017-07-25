@@ -1,4 +1,9 @@
 {
+  "HEADER": {
+    "START_DESIGNING": "Start Designing",
+    "REGISTER": "Register",
+    "SIGN_IN": "Sign in"
+  },
   "COMMON": {
     "CAMPAIGN": "Campaign",
     "CAMPAIGNS": "Campaigns",

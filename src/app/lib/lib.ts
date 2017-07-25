@@ -103,27 +103,13 @@ export class DsLib {
         return res;
     }
 
-    static getOpt(product, sFace) {
-        if (sFace === 'front') {
-            return {
-                minX: Number(product.base.printable.front_left)
-                , minY: Number(product.base.printable.front_top)
-                , maxX: Number(product.base.printable.front_left) + Number(product.base.printable.front_width)
-                , maxY: Number(product.base.printable.front_top) + Number(product.base.printable.front_height)
-            };
-        } else {
-            return {
-                minX: Number(product.base.printable.back_left)
-                , minY: Number(product.base.printable.back_top)
-                , maxX: Number(product.base.printable.back_left) + Number(product.base.printable.back_width)
-                , maxY: Number(product.base.printable.back_top) + Number(product.base.printable.back_height)
-            };
-        }
-    }
-
     static genCampaignDetailUrl(uri: string): string {
         const uricv = uri.split('/').join('');
         return config.campaign_url + uricv;
+    }
+
+    static addCampaign() {
+        window.open(config.design_url, '_blank');
     }
 
     constructor() {

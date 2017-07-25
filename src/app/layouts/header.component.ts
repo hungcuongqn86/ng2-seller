@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {PublicService} from '../public/public.service';
+import {DsLib} from '../lib/lib';
 
 @Component({
     selector: 'app-layouts-header',
@@ -9,6 +10,10 @@ import {PublicService} from '../public/public.service';
 
 export class HeaderComponent {
     constructor(public PublicService: PublicService) {
+    }
+
+    public addCampaign() {
+        DsLib.addCampaign();
     }
 
     public logout() {

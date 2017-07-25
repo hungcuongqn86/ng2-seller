@@ -25,7 +25,7 @@ import {AddproductComponent} from './public/addproduct.component';
 import {SharedModule} from './public/shared.module';
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateStaticLoader(http, '/assets/i18n', '.json');
+    return new TranslateStaticLoader(http, '/assets/i18n', '.json?v=1.0.1');
 }
 
 @NgModule({

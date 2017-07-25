@@ -21,6 +21,7 @@ export class DetailComponent implements OnInit, OnDestroy {
         this.route.params.subscribe(params => {
             this.CampaignId = params['id'];
         });
+        this.getBaseTypes();
         this.getCampaign();
     }
 
@@ -48,5 +49,19 @@ export class DetailComponent implements OnInit, OnDestroy {
 
     public selectTab(tab) {
         this.tab = tab;
+    }
+
+    private getBaseTypes() {
+        const sub = this.CampaignsService.getBaseTypes().subscribe(
+            data => {
+                this.CampaignsService.arrBaseTypes = data;
+                sub.unsubscribe();
+            },
+            error => {
+                sub.unsubscribe();
+                console.error(error.json().message);
+                return Observable.throw(error);
+            }
+        );
     }
 }

@@ -1,5 +1,6 @@
 import {Directive, OnChanges, Input, ElementRef} from '@angular/core';
 import {DsLib} from '../lib/lib';
+import {Ds} from '../lib/ds';
 declare const SVG: any;
 
 @Directive({selector: '[appProduct]'})
@@ -82,7 +83,7 @@ export class ProductDirective implements OnChanges {
     }
 
     private resizeImg(img: any, dsrs: any, zoom) {
-        const optnew = DsLib.getOpt(this.product, this.face);
+        const optnew = Ds.getOpt(this.face, this.product);
         const optold = this.mainopt;
         const tlX: number = (optnew.maxX - optnew.minX) / (optold.maxX - optold.minX);
         const tlY: number = (optnew.maxY - optnew.minY) / (optold.maxY - optold.minY);

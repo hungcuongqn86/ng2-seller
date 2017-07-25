@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
-import {DsLib} from '../lib/lib';
+import {Ds} from '../lib/ds';
 
 export interface PromptModel {
     title;
     campaign;
+    arrbasetypes;
 }
 
 @Component({
@@ -15,7 +16,7 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
     public title;
     public campaign: any;
     public product: any;
-    public mainOpt = [];
+    public arrbasetypes: any;
     public face = 'front';
     public color: any = null;
 
@@ -25,7 +26,6 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
 
     ngOnInit() {
         this.product = this.getProductDefault();
-        this.mainOpt = this.getMainOpt();
         this.face = this.getFace();
     }
 
@@ -37,14 +37,8 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
         return this.campaign.products[check];
     }
 
-    private getMainOpt(): any {
-        for (let index = 0; index < this.campaign.products.length; index++) {
-            const check = this.campaign.products[index].designs.findIndex(x => x.main === true);
-            if (check >= 0) {
-                return DsLib.getOpt(this.campaign.products[index], this.face);
-            }
-        }
-        return [];
+    public getOldOpt(product): any {
+        return Ds._getMainOpt(product.base.type.id, 'front', this.arrbasetypes, this.campaign);
     }
 
     private getFace(): any {
@@ -78,7 +72,6 @@ export class ProductdfComponent extends DialogComponent<PromptModel, string> imp
 
     public setFace(face) {
         this.face = face;
-        this.mainOpt = this.getMainOpt();
         const prod: any = [];
         Object.keys(this.product).map((index) => {
             prod[index] = this.product[index];

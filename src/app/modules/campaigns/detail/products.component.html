@@ -21,7 +21,7 @@
                 <tbody>
                 <tr *ngFor="let prod of CampaignsService.campaign.products">
                     <td>
-                        <div appProduct [product]="prod" [face]="face" [mainopt]="mainOpt"></div>
+                        <div appProduct [product]="prod" [face]="face" [mainopt]="getOldOpt(prod)"></div>
                     </td>
                     <td>{{prod.base.name}}
                         <div class="colors">
