@@ -32,6 +32,45 @@ export class MockupsComponent implements OnInit, OnDestroy {
         }
     }
 
+    private convertMockup() {
+        for (let index = 0; index < this.product.variants.length; index++) {
+            this.product.variants[index].mockupsConvert = [];
+            this.product.variants[index].mockupsConvert.push({
+                id: 'f',
+                type: 'ds',
+                'url': this.product.variants[index].image.front
+            });
+            if (this.product.variants[index].image.back !== '') {
+                this.product.variants[index].mockupsConvert.push({
+                    id: 'b',
+                    type: 'ds',
+                    'url': this.product.variants[index].image.back
+                });
+            }
+            if (this.product.variants[index].mockups) {
+                for (let i = 0; i < this.product.variants[index].mockups.length; i++) {
+                    this.product.variants[index].mockupsConvert.push({
+                        id: this.product.variants[index].mockups[i].id,
+                        type: 'mup',
+                        'url': this.product.variants[index].mockups[i].image.url
+                    });
+                }
+            }
+
+            const len = this.product.variants[index].mockupsConvert.length;
+            const max = 4;
+            if (len < max) {
+                for (let j = len; j < max; j++) {
+                    this.product.variants[index].mockupsConvert.push({
+                        id: '',
+                        type: 'add',
+                        'url': ''
+                    });
+                }
+            }
+        }
+    }
+
     ngOnDestroy() {
         this.unsubscribe();
     }
@@ -44,6 +83,7 @@ export class MockupsComponent implements OnInit, OnDestroy {
 
     public setProduct(item) {
         this.product = item;
+        this.convertMockup();
     }
 
     public selectVariant(variant) {
@@ -100,7 +140,7 @@ export class MockupsComponent implements OnInit, OnDestroy {
                 this.CampaignsService.campaign = data;
                 for (let index = 0; index < this.CampaignsService.campaign.products.length; index++) {
                     if (this.CampaignsService.campaign.products[index].id === this.product.id) {
-                        this.product = this.CampaignsService.campaign.products[index];
+                        this.setProduct(this.CampaignsService.campaign.products[index]);
                         break;
                     }
                 }

@@ -56,7 +56,6 @@ h4 {
     display: inline-block;
     font-size: 2em;
     color: steelblue;
-    margin: 5px;
     margin-top: calc(50% - 10px);
 }
 
@@ -79,4 +78,23 @@ h4 {
 
 .ctr-add i:hover {
     color: olive;
+}
+
+.action-del {
+    display: inline-block;
+    position: absolute;
+    top: 6px;
+    right: 2px;
+    font-size: 6px;
+    cursor: pointer;
+}
+
+.variant-fl {
+    display: inline-block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: #fff url('../../../../assets/img/tri.png') no-repeat;
+    height: 18px;
+    width: 18px;
 }

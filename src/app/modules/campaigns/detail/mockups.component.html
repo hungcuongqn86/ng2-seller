@@ -26,29 +26,25 @@
             <div class="panel-heading"><strong>Variants</strong></div>
             <div class="panel-body">
                 <div *ngFor="let variant of product.variants" class="row row-eq-height variants">
-                    <div class="col-sm-3 ctr-add">
-                        <img src="{{variant.image.front}}">
-                    </div>
-                    <div class="col-sm-3 ctr-add">
-                        <img src="{{variant.image.back}}">
-                    </div>
-                    <div *ngFor="let mockup of variant.mockups" class="col-sm-3 ctr-add">
-                        <img src="{{mockup.image.url}}">
-                    </div>
-                    <div class="col-sm-3 ctr-add">
-                        <div>
-                            <label (click)="selectVariant(variant)" for="filePicker"><i title="Add new"
-                                                                                        class="fa fa-upload"
-                                                                                        aria-hidden="true"></i></label>
-                        </div>
-                    </div>
                     <!--<div class="col-sm-3 ctr-add">
-                        <div>
+                        <img src="{{variant.image.front}}">
+                        <span class="variant-fl"></span>
+                    </div>
+                    <div *ngIf="variant.image.back!==''" class="col-sm-3 ctr-add">
+                        <img src="{{variant.image.back}}">
+                        <span class="variant-fl"></span>
+                    </div>-->
+                    <div *ngFor="let mockup of variant.mockupsConvert" class="col-sm-3 ctr-add">
+                        <img *ngIf="mockup.type !== 'add'" src="{{mockup.url}}">
+                        <span *ngIf="mockup.type === 'ds'" class="variant-fl"></span>
+                        <span *ngIf="mockup.type === 'mup'" class="action-del"><i class="fa fa-times-circle"
+                                                                                  aria-hidden="true"></i></span>
+                        <div *ngIf="mockup.type === 'add'">
                             <label (click)="selectVariant(variant)" for="filePicker"><i title="Add new"
                                                                                         class="fa fa-upload"
                                                                                         aria-hidden="true"></i></label>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </div>
         </div>
