@@ -7,6 +7,7 @@ import {Select2Module} from 'ng2-select2';
 import {Ng2PaginationModule} from 'ng2-pagination';
 
 import {CampaignsService} from './campaigns.service';
+import {UploadService} from '../../public/upload.service';
 import {CampaignsComponent} from './campaigns.component';
 import {DetailComponent} from './detail.component';
 import {EditComponent} from './detail/edit.component';
@@ -31,7 +32,8 @@ import {SharedModule} from '../../public/shared.module';
     ],
     exports: [],
     providers: [
-        CampaignsService
+        CampaignsService,
+        UploadService
     ]
 })
 export class CampaignsModule {

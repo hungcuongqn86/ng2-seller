@@ -16,22 +16,39 @@
 </div>
 <div class="row">
     <div class="col-sm-12">
+        <form #form="ngForm">
+            <input [(ngModel)]="fMockup.file" #filePicker="ngModel" style="display: none;"
+                   type="file" id="filePicker" name="filePicker"
+                   class="form-control"
+                   (change)="handleFileSelect($event)">
+        </form>
         <div class="panel panel-default">
             <div class="panel-heading"><strong>Variants</strong></div>
             <div class="panel-body">
-                <div *ngFor="let variant of product.variants" class="col-sm-12 variants">
-                    <div class="col-sm-3">
+                <div *ngFor="let variant of product.variants" class="row row-eq-height variants">
+                    <div class="col-sm-3 ctr-add">
                         <img src="{{variant.image.front}}">
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 ctr-add">
                         <img src="{{variant.image.back}}">
                     </div>
-                    <div class="col-sm-3">
-                        {{variant.name}}
+                    <div *ngFor="let mockup of variant.mockups" class="col-sm-3 ctr-add">
+                        <img src="{{mockup.image.url}}">
                     </div>
-                    <div class="col-sm-3">
-                        {{variant.name}}
+                    <div class="col-sm-3 ctr-add">
+                        <div>
+                            <label (click)="selectVariant(variant)" for="filePicker"><i title="Add new"
+                                                                                        class="fa fa-upload"
+                                                                                        aria-hidden="true"></i></label>
+                        </div>
                     </div>
+                    <!--<div class="col-sm-3 ctr-add">
+                        <div>
+                            <label (click)="selectVariant(variant)" for="filePicker"><i title="Add new"
+                                                                                        class="fa fa-upload"
+                                                                                        aria-hidden="true"></i></label>
+                        </div>
+                    </div>-->
                 </div>
             </div>
         </div>

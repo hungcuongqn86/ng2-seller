@@ -10,7 +10,6 @@ import {moduleStart} from './const';
 import {DsLib} from './lib';
 import {Auth} from './auth';
 
-
 @Injectable()
 export class HttpClient extends Http {
     public canActive = moduleStart;
@@ -131,7 +130,7 @@ export class HttpClient extends Http {
         });
     }
 
-    private alert(alert, type = 'error') {
+    public alert(alert, type = 'error') {
         if (!this.alertStatus) {
             this.alertStatus = true;
             this.dialogService.addDialog(AlertComponent, {

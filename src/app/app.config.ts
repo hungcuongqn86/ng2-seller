@@ -1,5 +1,6 @@
 export const pspApiUrl = './psp/api/v1/';  // URL to web api
 export const aspApiUrl = './asp/api/v1/';  // URL to web api
+export const ispApiUrl = './isp/api/v1/';  // URL to web api
 
 export const serviceName = 'psp';
 export const serviceRegion = 'leadsgen';
