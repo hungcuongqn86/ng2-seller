@@ -147,9 +147,25 @@ export class MockupsComponent implements OnInit, OnDestroy {
                 this.CampaignsService.http.endLoad();
             },
             error => {
+                this.CampaignsService.http.endLoad();
                 console.error(error.json().message);
                 return Observable.throw(error);
             }
         );
+    }
+
+    public deleteMockup(mockup) {
+        this.CampaignsService.http.startLoad();
+        if (mockup.id && mockup.type === 'mup') {
+            this.subs = this.CampaignsService.deleteMockup(mockup.id).subscribe(
+                data => {
+                    this.getCampaign();
+                },
+                error => {
+                    console.error(error.json().message);
+                    return Observable.throw(error);
+                }
+            );
+        }
     }
 }

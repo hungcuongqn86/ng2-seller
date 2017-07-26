@@ -23,9 +23,10 @@ import {ColorComponent} from './public/color.component';
 import {AddproductComponent} from './public/addproduct.component';
 
 import {SharedModule} from './public/shared.module';
+import {environment} from '../environments/environment';
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateStaticLoader(http, '/assets/i18n', '.json?v=1.0.1');
+    return new TranslateStaticLoader(http, environment.basename + '/assets/i18n', '.json?v=1.0.1');
 }
 
 @NgModule({

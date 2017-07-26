@@ -54,4 +54,9 @@ export class CampaignsService {
         const body = JSON.stringify({variants: variants, image: image, type: 'front'});
         return this.http.post(url, body).map((res: Response) => res.json());
     }
+
+    public deleteMockup(id) {
+        const url = pspApiUrl + `mockups/${id}`;
+        return this.http.delete(url).map((res: Response) => res.json());
+    }
 }

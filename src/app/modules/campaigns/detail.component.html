@@ -4,11 +4,7 @@
             <ul class="nav nav-tabs">
                 <li class="{{tab==='detail'? 'active': ''}}"><a (click)="selectTab('detail')">Detail</a></li>
                 <li class="{{tab==='product'? 'active': ''}}"><a (click)="selectTab('product')">Products</a></li>
-                <li class="{{tab==='mockups'? 'active': ''}}"><a (click)="selectTab('mockups')">Mockups
-                    <button *ngIf="CampaignsService.campaign&&tab==='mockups'" class="btn btn-xs btn-default">
-                        <i class="fa fa-plus-square" aria-hidden="true"></i>
-                    </button>
-                </a></li>
+                <li class="{{tab==='mockups'? 'active': ''}}"><a (click)="selectTab('mockups')">Mockups</a></li>
             </ul>
 
             <div class="tab-content">
