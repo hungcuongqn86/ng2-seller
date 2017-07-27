@@ -33,7 +33,7 @@ export class UploadService {
 
         this.dlLoad = this.dialogService.addDialog(LoadingComponent, {
             status: ''
-            // , progress: this.progressObj
+            , progress: this.progressObj
         }).subscribe(() => {
         });
     }

@@ -26,9 +26,7 @@ export class MockupsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (!this.product.id) {
-            this.setProduct(this.CampaignsService.campaign.products[0]);
-        }
+        this.getCampaign();
     }
 
     private convertMockup() {
@@ -158,10 +156,14 @@ export class MockupsComponent implements OnInit, OnDestroy {
                 data.desc = decodeURIComponent(data.desc);
                 data.desc = data.desc.split('%20').join(' ');
                 this.CampaignsService.campaign = data;
-                for (let index = 0; index < this.CampaignsService.campaign.products.length; index++) {
-                    if (this.CampaignsService.campaign.products[index].id === this.product.id) {
-                        this.setProduct(this.CampaignsService.campaign.products[index]);
-                        break;
+                if (!this.product.id) {
+                    this.setProduct(this.CampaignsService.campaign.products[0]);
+                } else {
+                    for (let index = 0; index < this.CampaignsService.campaign.products.length; index++) {
+                        if (this.CampaignsService.campaign.products[index].id === this.product.id) {
+                            this.setProduct(this.CampaignsService.campaign.products[index]);
+                            break;
+                        }
                     }
                 }
                 this.CampaignsService.http.endLoad();

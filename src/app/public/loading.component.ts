@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
 export interface PromptModel {
     status: string;
+    progress: any;
 }
 
 @Component({
@@ -10,6 +11,7 @@ export interface PromptModel {
 })
 export class LoadingComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
     status: string;
+    progress: any = {'progress': 0};
 
     constructor(dialogService: DialogService) {
         super(dialogService);

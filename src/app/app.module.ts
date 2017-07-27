@@ -14,6 +14,7 @@ import {PublicService} from './public/public.service';
 import {routing} from './app.routing.module';
 
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import {ProgressBarModule} from 'ngx-progress-bar';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {AlertComponent} from './public/alert.component';
 import {ConfirmComponent} from './public/confirm.component';
@@ -54,6 +55,7 @@ export function createTranslateLoader(http: HttpClient) {
             deps: [HttpClient]
         }),
         BootstrapModalModule,
+        ProgressBarModule,
         routing,
         SharedModule.forRoot()
     ],
