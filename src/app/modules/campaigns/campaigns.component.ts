@@ -2,8 +2,7 @@ import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
 import {Observable} from 'rxjs/Rx';
-import {campaign_url} from '../../lib/const';
-import {DsLib} from '../../lib/lib';
+import {AppService} from '../../app.service';
 
 @Component({
     selector: 'app-campaigns',
@@ -17,7 +16,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     public search = {title: '', private: -1, state: 'launching', page_size: 10, page: 1};
     private subs: any;
 
-    constructor(private CampaignsService: CampaignsService, private router: Router) {
+    constructor(private CampaignsService: CampaignsService, public AppService: AppService, private router: Router) {
 
     }
 
@@ -45,10 +44,6 @@ export class CampaignsComponent implements OnInit, OnDestroy {
         );
     }
 
-    public addCampaign() {
-        DsLib.addCampaign();
-    }
-
     public goDetail(camp) {
         this.router.navigate([`/campaigns/${camp.id}`]);
     }
@@ -63,7 +58,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     }
 
     public genCampaignDetailUrl(uri) {
-        const uricv = uri.split('/').join('');
-        return campaign_url + uricv;
+        return 'http://' + this.AppService.svConfig['system.ecomerce.domain.name']
+            + this.AppService.svConfig['campaign.detail.uri.prefix']
+            + '/' + uri.split('/').join('');
     }
 }

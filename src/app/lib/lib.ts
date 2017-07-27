@@ -1,4 +1,5 @@
 import {Cookie} from 'ng2-cookies';
+import {environment} from '../../environments/environment';
 import * as config from '../lib/const';
 
 import {
@@ -60,21 +61,13 @@ export class DsLib {
         Cookie.delete(cookieName, '/');
     }
 
-    static getServerConfig() {
-        return config.serverConfig;
-    }
-
-    static getTimeFomat(date: Date): string {
-        return format(date, 'YYYYMMDDThhmmss') + 'Z';
-    }
-
     static getUri(url) {
         if (!url) {
             return '';
         }
         const parser = document.createElement('a');
         parser.href = url;
-        return parser.pathname.replace(config.basename, '');
+        return parser.pathname.replace(environment.basename, '');
     }
 
     static getBaseImgUrl(sFace, base: any) {
@@ -87,7 +80,6 @@ export class DsLib {
 
     static getTimeLength(): Array<any> {
         moment.tz.setDefault('America/New_York');
-        const now = moment();
         const res: Array<any> = [];
         const timeLength = config.timeLength;
         for (let i = 0; i < timeLength.length; i++) {
@@ -101,15 +93,6 @@ export class DsLib {
             res.push(item);
         }
         return res;
-    }
-
-    static genCampaignDetailUrl(uri: string): string {
-        const uricv = uri.split('/').join('');
-        return config.campaign_url + uricv;
-    }
-
-    static addCampaign() {
-        window.open(config.design_url, '_blank');
     }
 
     constructor() {

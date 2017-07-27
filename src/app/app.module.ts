@@ -11,6 +11,7 @@ import {AppGuard} from './app.guard.service';
 import {HttpClient} from './lib/http';
 import {Auth} from './lib/auth';
 import {PublicService} from './public/public.service';
+import {AppService} from './app.service';
 import {routing} from './app.routing.module';
 
 import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
@@ -63,7 +64,8 @@ export function createTranslateLoader(http: HttpClient) {
         AppGuard,
         HttpClient,
         Auth,
-        PublicService
+        PublicService,
+        AppService
     ],
     entryComponents: [
         AlertComponent,

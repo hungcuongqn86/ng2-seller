@@ -2,7 +2,7 @@
     <div class="container">
         <ul class="list-inline">
             <li *ngIf="PublicService.http.profile" style="cursor: pointer;">
-                <a (click)="addCampaign()">{{ 'HEADER.START_DESIGNING' | translate }}
+                <a (click)="AppService.addCampaign()">{{ 'HEADER.START_DESIGNING' | translate }}
                 </a></li>
             <li *ngIf="PublicService.http.profile" class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
