@@ -19,6 +19,7 @@ import {AlertComponent} from './public/alert.component';
 import {ConfirmComponent} from './public/confirm.component';
 import {LoadingComponent} from './public/loading.component';
 import {ProductdfComponent} from './public/productdf.component';
+import {VariantsComponent} from './public/variants.component';
 import {ColorComponent} from './public/color.component';
 import {AddproductComponent} from './public/addproduct.component';
 
@@ -39,6 +40,7 @@ export function createTranslateLoader(http: HttpClient) {
         ConfirmComponent,
         LoadingComponent,
         ProductdfComponent,
+        VariantsComponent,
         ColorComponent,
         AddproductComponent
     ],
@@ -66,6 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
         ConfirmComponent,
         LoadingComponent,
         ProductdfComponent,
+        VariantsComponent,
         ColorComponent,
         AddproductComponent
     ],

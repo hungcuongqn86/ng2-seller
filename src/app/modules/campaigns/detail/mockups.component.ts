@@ -2,11 +2,9 @@ import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {NgModel} from '@angular/forms';
 import {CampaignsService} from '../campaigns.service';
 import {UploadService} from '../../../public/upload.service';
-import {ColorComponent} from '../../../public/color.component';
+import {VariantsComponent} from '../../../public/variants.component';
 import {ConfirmComponent} from '../../../public/confirm.component';
-import {AddproductComponent} from '../../../public/addproduct.component';
 import {Observable} from 'rxjs/Rx';
-import {Ds} from '../../../lib/ds';
 
 @Component({
     selector: 'app-campaign-detail-mockups',
@@ -22,6 +20,7 @@ export class MockupsComponent implements OnInit, OnDestroy {
     public product: any = {base: {name: ''}};
     public fMockup = {};
     private variants = [];
+    private multi = false;
 
     constructor(public CampaignsService: CampaignsService, private UploadService: UploadService) {
     }
@@ -87,8 +86,13 @@ export class MockupsComponent implements OnInit, OnDestroy {
     }
 
     public selectVariant(variant) {
+        this.multi = false;
         this.variants = [];
         this.variants.push(variant.id);
+    }
+
+    public setSelectMulti() {
+        this.multi = true;
     }
 
     public handleFileSelect(evt) {
@@ -97,8 +101,12 @@ export class MockupsComponent implements OnInit, OnDestroy {
         if (files) {
             this.subs = this.UploadService.makeFileRequest(files).subscribe(
                 (data) => {
-                    // console.log(this.variants);
-                    this.addMockup(this.variants, data);
+                    if (this.multi) {
+                        this.openVariants(data);
+                    } else {
+                        const listVar = this.variants.join(',');
+                        this.addMockup(listVar, data);
+                    }
                     this.UploadService.endLoad();
                     this.unsubscribe();
                     this.form['controls']['filePicker'].reset();
@@ -116,11 +124,23 @@ export class MockupsComponent implements OnInit, OnDestroy {
         }
     }
 
+    private openVariants(data) {
+        document.body.style.overflow = 'hidden';
+        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(VariantsComponent, {
+            variants: this.product.variants
+        }).subscribe((variants) => {
+            if (variants) {
+                this.addMockup(variants, data);
+            }
+            document.body.style.overflow = 'auto';
+            this.DialogSubs.unsubscribe();
+        });
+    }
+
     private addMockup(variants, file) {
         this.CampaignsService.http.startLoad();
-        const listVar = variants.join(',');
         const image = {'url': file.url};
-        this.CampaignsService.addMockup(listVar, image).subscribe(
+        this.CampaignsService.addMockup(variants, image).subscribe(
             (data) => {
                 this.getCampaign();
                 this.CampaignsService.http.endLoad();
@@ -154,7 +174,23 @@ export class MockupsComponent implements OnInit, OnDestroy {
         );
     }
 
-    public deleteMockup(mockup) {
+    public deleteMockup(item) {
+        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(ConfirmComponent, {
+            title: 'Confirm delete mockup',
+            message: 'You sure want to delete this record!'
+        })
+            .subscribe((isConfirmed) => {
+                if (isConfirmed) {
+                    this._deleteMockup(item);
+                }
+                this.DialogSubs.unsubscribe();
+            });
+        setTimeout(() => {
+            this.DialogSubs.unsubscribe();
+        }, 10000);
+    }
+
+    public _deleteMockup(mockup) {
         this.CampaignsService.http.startLoad();
         if (mockup.id && mockup.type === 'mup') {
             this.subs = this.CampaignsService.deleteMockup(mockup.id).subscribe(
