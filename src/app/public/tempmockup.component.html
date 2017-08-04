@@ -34,12 +34,10 @@
             </div>
         </div>
         <div class="modal-body">
-            <div class="box-body">
-                <div *ngIf="arrTemplate" class="row row-eq-height">
-                    <div *ngFor="let temp of arrTemplate" (click)="selectTemp(temp)" class="col-sm-2 template">
-                        <img src="{{temp.image.front.url}}">
-                        <p>{{temp.name}}</p>
-                    </div>
+            <div *ngFor="let rowtemp of arrTemplate" class="row row-eq-height">
+                <div *ngFor="let temp of rowtemp" (click)="selectTemp(temp)" class="col-sm-2 template">
+                    <img src="{{temp.url}}">
+                    <p>{{temp.name}}</p>
                 </div>
             </div>
         </div>

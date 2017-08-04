@@ -149,7 +149,7 @@ export class MockupsComponent implements OnInit, OnDestroy {
                         'url': this.CampaignsService.campaign.url
                     },
                     variants: variants.join(','),
-                    type: 'front',
+                    type: data.type,
                     template: {
                         id: data.id
                     }
@@ -187,7 +187,6 @@ export class MockupsComponent implements OnInit, OnDestroy {
 
     private addMockup(mockup) {
         this.CampaignsService.http.startLoad();
-        // const image = {'url': file.url};
         this.CampaignsService.addMockup(mockup).subscribe(
             (data) => {
                 this.getCampaign();

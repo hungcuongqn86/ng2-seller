@@ -26,44 +26,64 @@ export class TempmockupComponent extends DialogComponent<PromptModel, string> im
     }
 
     ngOnInit() {
-        this.getMockupCategories();
-        this.getMockupTypes();
-        this.getTemplates();
+        this.setupdata();
     }
 
-    private getMockupCategories() {
-        this.PublicService.getMockupCategories().subscribe(
-            data => {
-                this.arrMockupCategories = data;
-                if (this.arrMockupCategories.length) {
-                    this.categories = this.arrMockupCategories[0];
+    private setupdata() {
+        this.PublicService.http.startLoad();
+        const subs = this.getData().subscribe(
+            () => {
+                if (this.categories.id && this.type.id) {
+                    this.getTemplates();
+                    subs.unsubscribe();
+                    this.PublicService.http.endLoad();
                 }
             },
             error => {
-                console.error(error.json().message);
-                return Observable.throw(error);
+                console.log(error);
+                subs.unsubscribe();
+                this.PublicService.http.endLoad();
             }
         );
+    }
+
+    private getData(): Observable<any> {
+        return Observable.create(observer => {
+            const sub1 = this.PublicService.getMockupCategories().subscribe(
+                data => {
+                    this.arrMockupCategories = data;
+                    if (this.arrMockupCategories.length) {
+                        this.categories = this.arrMockupCategories[0];
+                    }
+                    observer.next();
+                    sub1.unsubscribe();
+                },
+                error => {
+                    observer.error(error);
+                    sub1.unsubscribe();
+                }
+            );
+
+            const sub2 = this.PublicService.getMockupTypes().subscribe(
+                data => {
+                    this.arrTypes = data;
+                    if (this.arrTypes.length) {
+                        this.type = this.arrTypes[0];
+                    }
+                    observer.next();
+                    sub2.unsubscribe();
+                },
+                error => {
+                    observer.error(error);
+                    sub2.unsubscribe();
+                }
+            );
+        });
     }
 
     public setCategories(categories) {
         this.categories = categories;
         this.getTemplates();
-    }
-
-    private getMockupTypes() {
-        this.PublicService.getMockupTypes().subscribe(
-            data => {
-                this.arrTypes = data;
-                if (this.arrTypes.length) {
-                    this.type = this.arrTypes[0];
-                }
-            },
-            error => {
-                console.error(error.json().message);
-                return Observable.throw(error);
-            }
-        );
     }
 
     public setType(type) {
@@ -74,13 +94,47 @@ export class TempmockupComponent extends DialogComponent<PromptModel, string> im
     public getTemplates() {
         this.PublicService.getMockupTemplates(this.type.id, this.categories.id).subscribe(
             data => {
-                this.arrTemplate = data;
+                this.arrTemplate = this.convertData(data);
+                console.log(this.arrTemplate);
             },
             error => {
                 console.error(error.json().message);
                 return Observable.throw(error);
             }
         );
+    }
+
+    private convertData(data: any) {
+        const res: any = [];
+        let row: any = [];
+        for (let index = 0; index < data.length; index++) {
+            if (data[index].image.front.url !== '') {
+                row.push({
+                    id: data[index].id,
+                    name: data[index].name,
+                    type: 'front',
+                    url: data[index].image.front.url
+                });
+            }
+            if (row.length === 6) {
+                res.push(row);
+                row = [];
+            }
+            if (data[index].image.back.url !== '') {
+                row.push({
+                    id: data[index].id,
+                    name: data[index].name,
+                    type: 'back',
+                    url: data[index].image.back.url
+                });
+            }
+            if (row.length === 6) {
+                res.push(row);
+                row = [];
+            }
+        }
+        res.push(row);
+        return res;
     }
 
     public selectTemp(temp) {
