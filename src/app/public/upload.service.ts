@@ -43,7 +43,7 @@ export class UploadService {
         this.progressObj.progress = 0;
     }
 
-    public makeFileRequest(files: File[]): Observable<any> {
+    public makeFileRequest(files: File[], type: string): Observable<any> {
         return Observable.create(observer => {
             const url = ispApiUrl + `storev2`;
             const formData: FormData = new FormData(),
@@ -52,6 +52,8 @@ export class UploadService {
             for (let i = 0; i < files.length; i++) {
                 formData.append('uploads[]', files[i], files[i].name);
             }
+
+            formData.append('type', type);
 
             xhr.onreadystatechange = () => {
                 if (xhr.readyState === 4) {

@@ -24,6 +24,7 @@ import {ProductdfComponent} from './public/productdf.component';
 import {VariantsComponent} from './public/variants.component';
 import {ColorComponent} from './public/color.component';
 import {AddproductComponent} from './public/addproduct.component';
+import {TempmockupComponent} from './public/tempmockup.component';
 
 import {SharedModule} from './public/shared.module';
 import {environment} from '../environments/environment';
@@ -44,7 +45,8 @@ export function createTranslateLoader(http: HttpClient) {
         ProductdfComponent,
         VariantsComponent,
         ColorComponent,
-        AddproductComponent
+        AddproductComponent,
+        TempmockupComponent
     ],
     imports: [
         BrowserModule,
@@ -74,7 +76,8 @@ export function createTranslateLoader(http: HttpClient) {
         ProductdfComponent,
         VariantsComponent,
         ColorComponent,
-        AddproductComponent
+        AddproductComponent,
+        TempmockupComponent
     ],
     bootstrap: [AppComponent]
 })

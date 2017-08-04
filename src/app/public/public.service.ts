@@ -29,4 +29,22 @@ export class PublicService {
         const url = pspApiUrl + `base_groups`;
         return this.http.get(url).map((res: Response) => res.json().base_groups);
     }
+
+    public getMockupCategories(): any {
+        const url = pspApiUrl + `mockup_categories`;
+        return this.http.get(url).map((res: Response) => res.json().mockup_categories);
+    }
+
+    public getMockupTypes(): any {
+        const url = pspApiUrl + `mockup_types`;
+        return this.http.get(url).map((res: Response) => res.json().mockup_types);
+    }
+
+    public getMockupTemplates(type, cat) {
+        const url = pspApiUrl + `mockup_templates`;
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('type', type);
+        params.set('categories', cat);
+        return this.http.get(url, {search: params}).map((res: Response) => res.json().templates);
+    }
 }

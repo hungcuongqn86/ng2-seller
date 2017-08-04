@@ -55,7 +55,6 @@ h4 {
     text-align: center;
     display: inline-block;
     font-size: 2em;
-    color: steelblue;
     margin-top: calc(50% - 10px);
 }
 
@@ -83,18 +82,21 @@ h4 {
 .action-del {
     display: inline-block;
     position: absolute;
-    top: 6px;
-    right: 2px;
+    top: 7px;
+    right: 3px;
     font-size: 6px;
     cursor: pointer;
 }
 
 .variant-fl {
+    color: olive;
     display: inline-block;
     position: absolute;
     bottom: 0;
-    left: 0;
-    background: #fff url('../../../../assets/img/tri.png') no-repeat;
-    height: 18px;
-    width: 18px;
+    left: 4px;
+    font-size: 8px;
+}
+
+.margin {
+    margin-left: 5px;
 }

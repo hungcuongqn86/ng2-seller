@@ -122,9 +122,11 @@ export class HttpClient extends Http {
                     this.logout();
                     break;
                 case 500:
+                    ms = err.json().message;
+                    serv.alert(ms);
                     break;
                 default:
-                    ms = err._body;
+                    serv.alert(ms);
             }
             return Observable.throw(err);
         });

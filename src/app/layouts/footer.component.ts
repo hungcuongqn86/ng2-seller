@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {PublicService} from '../public/public.service';
+import {AppService} from '../app.service';
 
 @Component({
     selector: 'app-layouts-footer',
@@ -8,6 +8,6 @@ import {PublicService} from '../public/public.service';
 })
 
 export class FooterComponent {
-    constructor(public PublicService: PublicService) {
+    constructor(public AppService: AppService) {
     }
 }

@@ -4,6 +4,7 @@ import {CampaignsService} from '../campaigns.service';
 import {UploadService} from '../../../public/upload.service';
 import {VariantsComponent} from '../../../public/variants.component';
 import {ConfirmComponent} from '../../../public/confirm.component';
+import {TempmockupComponent} from '../../../public/tempmockup.component';
 import {Observable} from 'rxjs/Rx';
 
 @Component({
@@ -97,13 +98,23 @@ export class MockupsComponent implements OnInit, OnDestroy {
         this.UploadService.startLoad();
         const files = evt.target.files;
         if (files) {
-            this.subs = this.UploadService.makeFileRequest(files).subscribe(
+            this.subs = this.UploadService.makeFileRequest(files, 'mockup').subscribe(
                 (data) => {
                     if (this.multi) {
                         this.openVariants(data);
                     } else {
-                        const listVar = this.variants.join(',');
-                        this.addMockup(listVar, data);
+                        const mockup = {
+                            campaign: {
+                                'id': this.CampaignsService.campaign.id,
+                                'url': this.CampaignsService.campaign.url
+                            },
+                            variants: this.variants.join(','),
+                            type: 'front',
+                            image: {
+                                url: data.url
+                            }
+                        };
+                        this.addMockup(mockup);
                     }
                     this.UploadService.endLoad();
                     this.unsubscribe();
@@ -122,23 +133,62 @@ export class MockupsComponent implements OnInit, OnDestroy {
         }
     }
 
-    private openVariants(data) {
+    public openTemplate() {
         document.body.style.overflow = 'hidden';
-        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(VariantsComponent, {
-            variants: this.product.variants
-        }).subscribe((variants) => {
-            if (variants) {
-                this.addMockup(variants, data);
+        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(TempmockupComponent, {
+            campaign: this.CampaignsService.campaign
+        }).subscribe((data: any) => {
+            if (data) {
+                const variants: Array<string> = [];
+                for (let index = 0; index < this.product.variants.length; index++) {
+                    variants.push(this.product.variants[index].id);
+                }
+                const mockup = {
+                    campaign: {
+                        'id': this.CampaignsService.campaign.id,
+                        'url': this.CampaignsService.campaign.url
+                    },
+                    variants: variants.join(','),
+                    type: 'front',
+                    template: {
+                        id: data.id
+                    }
+                };
+                this.addMockup(mockup);
             }
             document.body.style.overflow = 'auto';
             this.DialogSubs.unsubscribe();
         });
     }
 
-    private addMockup(variants, file) {
+    private openVariants(data) {
+        document.body.style.overflow = 'hidden';
+        this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(VariantsComponent, {
+            variants: this.product.variants
+        }).subscribe((variants) => {
+            if (variants) {
+                const mockup = {
+                    campaign: {
+                        'id': this.CampaignsService.campaign.id,
+                        'url': this.CampaignsService.campaign.url
+                    },
+                    variants: variants,
+                    type: 'front',
+                    image: {
+                        url: data.url
+                    }
+                };
+                this.addMockup(mockup);
+            }
+            document.body.style.overflow = 'auto';
+            this.DialogSubs.unsubscribe();
+        });
+    }
+
+    private addMockup(mockup) {
         this.CampaignsService.http.startLoad();
-        const image = {'url': file.url};
-        this.CampaignsService.addMockup(variants, image).subscribe(
+        // const image = {'url': file.url};
+        this.CampaignsService.addMockup(mockup).subscribe(
             (data) => {
                 this.getCampaign();
                 this.CampaignsService.http.endLoad();

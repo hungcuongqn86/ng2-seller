@@ -2,37 +2,39 @@
     <div class="col-footer">
         <div class="container">
             <div class="col-md-3 col-xs-12 col-item-foooter marketplace">
-                <h3>Marketplace</h3>
+                <h3>{{ 'FOOTER.MARKETPLACE' | translate }}</h3>
                 <ul>
-                    <li><a href="#">Shop</a></li>
-                    <li><a href="#">Open a shop</a></li>
-                    <li><a href="#">How it works</a></li>
-                    <li><a href="#">Gettings Started</a></li>
-                    <li><a href="#">New Cloth Acadeny</a></li>
+                    <li><a href="#">{{ 'FOOTER.SHOP' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.OPEN_A_SHOP' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.HOW_IT_WORKS' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.GETTINGS_STARTED' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.NEW_CLOTH_ACADENY' | translate }}</a></li>
                 </ul>
             </div>
             <div class="col-md-3 col-xs-12 col-item-foooter col-help">
-                <h3>Help</h3>
+                <h3>{{ 'FOOTER.HELP' | translate }}</h3>
                 <ul>
-                    <li><a href="#">Track order</a></li>
-                    <li><a href="#">Help center</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Returns</a></li>
-                    <li><a href="#">Contact us</a></li>
+                    <li><a href="#">{{ 'FOOTER.TRACK_ORDER' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.HELP_CENTER' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.FAQ' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.RETURNS' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.CONTACT_US' | translate }}</a></li>
                 </ul>
             </div>
             <div class="col-md-3 col-xs-12 col-item-foooter col-company">
-                <h3>Company</h3>
+                <h3>{{ 'FOOTER.COMPANY' | translate }}</h3>
                 <ul>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="http://30usd.com/privacy">Privacy</a></li>
-                    <li><a href="http://30usd.com/terms">Terms</a></li>
-                    <li><a href="#">Carrers</a></li>
-                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">{{ 'FOOTER.ABOUT_US' | translate }}</a></li>
+                    <li><a href="http://{{AppService.svConfig['system.ecomerce.domain.name']}}/privacy">{{
+                        'FOOTER.PRIVACY' | translate}}</a></li>
+                    <li><a href="http://{{AppService.svConfig['system.ecomerce.domain.name']}}/terms">{{ 'FOOTER.TERMS' | translate }}</a>
+                    </li>
+                    <li><a href="#">{{ 'FOOTER.CARRERS' | translate }}</a></li>
+                    <li><a href="#">{{ 'FOOTER.PARTNERS' | translate }}</a></li>
                 </ul>
             </div>
             <div class="col-md-3 col-xs-12 col-item-foooter col-follow">
-                <h3>Follow us</h3>
+                <h3>{{ 'FOOTER.FOLLOW_US' | translate }}</h3>
                 <ul class="list-inline">
                     <li><a href="#"><i class="fa fa-facebook-square  fa-2x" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a></li>

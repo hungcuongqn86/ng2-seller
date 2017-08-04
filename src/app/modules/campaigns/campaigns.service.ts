@@ -49,9 +49,9 @@ export class CampaignsService {
         return this.http.get(url).map((res: Response) => res.json().base_groups);
     }
 
-    public addMockup(variants, image) {
+    public addMockup(mockup) {
         const url = pspApiUrl + `mockups`;
-        const body = JSON.stringify({variants: variants, image: image, type: 'front'});
+        const body = JSON.stringify(mockup);
         return this.http.post(url, body).map((res: Response) => res.json());
     }
 
