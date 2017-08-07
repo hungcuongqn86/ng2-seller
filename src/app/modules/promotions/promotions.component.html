@@ -131,7 +131,7 @@
         <div *ngIf="promotionsData.total > searchparam.page_size">
             <pagination-template #api="paginationApi"
                                  (pageChange)="getPage($event)">
-                <ul class="pagination">
+                <ul class="pagination pagination-sm">
                     <li [class.disabled]="api.isFirstPage()">
                         <a *ngIf="!api.isFirstPage()" (click)="api.previous()" href="javascript:void(0);"><i
                                 class="fa fa-chevron-left"

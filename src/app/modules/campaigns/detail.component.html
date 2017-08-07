@@ -1,6 +1,9 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="tab-panel">
+            <button (click)="goBack()" class="btn btn-default btn-xs btn-back">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>
             <ul class="nav nav-tabs">
                 <li class="{{tab==='detail'? 'active': ''}}"><a (click)="selectTab('detail')">Detail</a></li>
                 <li class="{{tab==='product'? 'active': ''}}"><a (click)="selectTab('product')">Products</a></li>

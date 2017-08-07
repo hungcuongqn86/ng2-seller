@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
-import {Observable} from 'rxjs/Rx';
 
 @Component({
     selector: 'app-campaign-detail',
@@ -14,7 +13,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     public tab = 'detail';
     private subs: any;
 
-    constructor(public CampaignsService: CampaignsService, private route: ActivatedRoute) {
+    constructor(public CampaignsService: CampaignsService, private route: ActivatedRoute, private router: Router) {
     }
 
     ngOnInit() {
@@ -41,8 +40,7 @@ export class DetailComponent implements OnInit, OnDestroy {
                 this.CampaignsService.http.endLoad();
             },
             error => {
-                console.error(error.json().message);
-                return Observable.throw(error);
+                this.subs.unsubscribe();
             }
         );
     }
@@ -59,9 +57,11 @@ export class DetailComponent implements OnInit, OnDestroy {
             },
             error => {
                 sub.unsubscribe();
-                console.error(error.json().message);
-                return Observable.throw(error);
             }
         );
+    }
+
+    public goBack() {
+        this.router.navigate([`/campaigns`]);
     }
 }
