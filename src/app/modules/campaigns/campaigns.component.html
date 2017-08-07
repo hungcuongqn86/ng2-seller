@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-sm-12">
-        <form novalidate (ngSubmit)="getCampaigns()" #form="ngForm">
+        <form novalidate (ngSubmit)="searchCampaigns()" #form="ngForm">
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-8">
                     <div class="form-group">
                         <input title="Filter by search" placeholder="Search for campaign by URL or title"
-                               [(ngModel)]="search.title"
+                               [(ngModel)]="CampaignsService.search.title"
                                name="title" id="title"
                                class="form-control">
                     </div>
@@ -29,7 +29,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let camp of CampaignData.campaigns | paginate: {  itemsPerPage: search.page_size, currentPage: search.page, totalItems: CampaignData.total}">
+            <tr *ngFor="let camp of CampaignData.campaigns | paginate: {  itemsPerPage: CampaignsService.search.page_size, currentPage: CampaignsService.search.page, totalItems: CampaignData.total}">
                 <td>
                     <div appCampaign [campaign]="camp"></div>
                 </td>
@@ -53,7 +53,7 @@
             </tr>
             </tbody>
         </table>
-        <div *ngIf="CampaignData.total > search.page_size">
+        <div *ngIf="CampaignData.total > CampaignsService.search.page_size">
             <pagination-template #api="paginationApi"
                                  (pageChange)="getPage($event)">
                 <ul class="pagination pagination-sm">

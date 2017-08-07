@@ -14,6 +14,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     private subs: any;
 
     constructor(public CampaignsService: CampaignsService, private route: ActivatedRoute, private router: Router) {
+
     }
 
     ngOnInit() {

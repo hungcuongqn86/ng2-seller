@@ -5,11 +5,14 @@ import {pspApiUrl} from '../../app.config';
 
 @Injectable()
 export class CampaignsService {
+    static instance: CampaignsService;
     private module = 'campaigns';
     public campaign: any;
     public arrBaseTypes: any = [];
+    public search = {title: '', private: -1, state: 'launching', page_size: 10, page: 1};
 
     constructor(public http: HttpClient) {
+        return CampaignsService.instance = CampaignsService.instance || this;
     }
 
     public getCampaigns(sparams) {

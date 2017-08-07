@@ -13,11 +13,10 @@ import {AppService} from '../../app.service';
 export class CampaignsComponent implements OnInit, OnDestroy {
     @ViewChild('api') api: any;
     public CampaignData: any = {};
-    public search = {title: '', private: -1, state: 'launching', page_size: 10, page: 1};
     private subs: any;
 
-    constructor(private CampaignsService: CampaignsService, public AppService: AppService, private router: Router) {
-
+    constructor(public CampaignsService: CampaignsService, public AppService: AppService, private router: Router) {
+        this.CampaignsService.campaign = null;
     }
 
     ngOnInit() {
@@ -30,9 +29,14 @@ export class CampaignsComponent implements OnInit, OnDestroy {
         }
     }
 
+    public searchCampaigns() {
+        this.CampaignsService.search.page = 1;
+        this.getCampaigns();
+    }
+
     public getCampaigns() {
         this.CampaignsService.http.startLoad();
-        this.subs = this.CampaignsService.getCampaigns(this.search).subscribe(
+        this.subs = this.CampaignsService.getCampaigns(this.CampaignsService.search).subscribe(
             data => {
                 this.CampaignData = data;
                 this.CampaignsService.http.endLoad();
@@ -53,7 +57,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     }
 
     public getPage(page: number) {
-        this.search.page = page;
+        this.CampaignsService.search.page = page;
         this.getCampaigns();
     }
 
