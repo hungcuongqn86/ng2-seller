@@ -95,7 +95,7 @@ export class TempmockupComponent extends DialogComponent<PromptModel, string> im
         this.PublicService.getMockupTemplates(this.type.id, this.categories.id).subscribe(
             data => {
                 this.arrTemplate = this.convertData(data);
-                console.log(this.arrTemplate);
+                // console.log(this.arrTemplate);
             },
             error => {
                 console.error(error.json().message);
@@ -105,6 +105,7 @@ export class TempmockupComponent extends DialogComponent<PromptModel, string> im
     }
 
     private convertData(data: any) {
+        const rowLength = 5;
         const res: any = [];
         let row: any = [];
         for (let index = 0; index < data.length; index++) {
@@ -116,7 +117,7 @@ export class TempmockupComponent extends DialogComponent<PromptModel, string> im
                     url: data[index].image.front.url
                 });
             }
-            if (row.length === 6) {
+            if (row.length === rowLength) {
                 res.push(row);
                 row = [];
             }
@@ -128,7 +129,7 @@ export class TempmockupComponent extends DialogComponent<PromptModel, string> im
                     url: data[index].image.back.url
                 });
             }
-            if (row.length === 6) {
+            if (row.length === rowLength) {
                 res.push(row);
                 row = [];
             }
