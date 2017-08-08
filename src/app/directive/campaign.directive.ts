@@ -22,7 +22,11 @@ export class CampaignDirective implements OnInit {
             indexdf = 0;
         }
         const variants = product.variants[indexdf];
-        campDraw.image(variants.image.front).loaded(function (loader) {
+        let img = variants.image.front;
+        if (product.back_view) {
+            img = variants.image.back;
+        }
+        campDraw.image(img).loaded(function (loader) {
             const sH = sW * loader.height / loader.width;
             this.size(sW, sH);
             campDraw.size(sW, sH);

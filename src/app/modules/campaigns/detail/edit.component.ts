@@ -51,8 +51,13 @@ export class EditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getDomains();
         this.getCategories();
-        this.timeLength = DsLib.getTimeLength();
-        this.setTimeLength(this.timeLength[0]);
+        this.timeLength = DsLib.getTimeLength(this.CampaignsService.campaign.start_time);
+        for (let i = 0; i < this.timeLength.length; i++) {
+            if (this.timeLength[i].format === this.CampaignsService.campaign.end_time) {
+                this.setTimeLength(this.timeLength[i]);
+                break;
+            }
+        }
         this.product = this.getProductDefault();
         this.face = this.getFace();
     }
@@ -227,6 +232,15 @@ export class EditComponent implements OnInit, OnDestroy {
         });
     }
 
+    public onSwitchChange(e) {
+        if (e.currentValue) {
+            this.CampaignsService.campaign.state = 'launching';
+        } else {
+            this.CampaignsService.campaign.state = 'end';
+        }
+        this.updateCampaign();
+    }
+
     public updateCampaign() {
         this.CampaignsService.http.startLoad();
         const cpU: any = {};
@@ -240,8 +254,6 @@ export class EditComponent implements OnInit, OnDestroy {
             },
             error => {
                 this.CampaignsService.http.endLoad();
-                console.error(error.json().message);
-                return Observable.throw(error);
             }
         );
     }

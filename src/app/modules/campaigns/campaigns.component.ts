@@ -1,8 +1,8 @@
 import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
-import {Observable} from 'rxjs/Rx';
 import {AppService} from '../../app.service';
+import {states} from '../../lib/const';
 
 @Component({
     selector: 'app-campaigns',
@@ -14,6 +14,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     @ViewChild('api') api: any;
     public CampaignData: any = {};
     private subs: any;
+    public states = states;
+    public stateName = '';
 
     constructor(public CampaignsService: CampaignsService, public AppService: AppService, private router: Router) {
         this.CampaignsService.campaign = null;
@@ -21,6 +23,11 @@ export class CampaignsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.getCampaigns();
+        for (let i = 0; i < this.states.length; i++) {
+            if (this.states[i].id === this.CampaignsService.search.state) {
+                this.selState(this.states[i]);
+            }
+        }
     }
 
     ngOnDestroy() {
@@ -42,8 +49,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
                 this.CampaignsService.http.endLoad();
             },
             error => {
-                console.error(error.json().message);
-                return Observable.throw(error);
+                this.CampaignsService.http.endLoad();
             }
         );
     }
@@ -65,5 +71,11 @@ export class CampaignsComponent implements OnInit, OnDestroy {
         return 'http://' + this.AppService.svConfig['system.ecomerce.domain.name']
             + this.AppService.svConfig['campaign.detail.uri.prefix']
             + '/' + uri.split('/').join('');
+    }
+
+    public selState(state) {
+        this.stateName = state.name;
+        this.CampaignsService.search.state = state.id;
+        this.getCampaigns();
     }
 }

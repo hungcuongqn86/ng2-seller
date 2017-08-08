@@ -78,18 +78,20 @@ export class DsLib {
         }
     }
 
-    static getTimeLength(): Array<any> {
+    static getTimeLength(start): Array<any> {
         moment.tz.setDefault('America/New_York');
         const res: Array<any> = [];
         const timeLength = config.timeLength;
         for (let i = 0; i < timeLength.length; i++) {
-            const day = moment().add(timeLength[i] - 1, 'day');
-            day.hour(23);
-            day.minute(0);
-            day.seconds(0);
+            const nday = moment(start, 'YYYYMMDDTHHmmss').add(timeLength[i] - 1, 'day');
+            nday.hour(23);
+            nday.minute(0);
+            nday.seconds(0);
             const item: any = [];
             item.number = timeLength[i];
-            item.view = moment.tz(day, moment.tz.guess()).format('dddd, MMMM Do YYYY, h:mm:ss a z');
+            item.format = nday.format('YYYYMMDDTHHmmss') + 'Z';
+            item.view = nday.format('dddd, MMMM Do YYYY, h:mm:ss a z');
+            // item.view = moment.tz(nday, moment.tz.guess()).format('dddd, MMMM Do YYYY, h:mm:ss a z');
             res.push(item);
         }
         return res;
