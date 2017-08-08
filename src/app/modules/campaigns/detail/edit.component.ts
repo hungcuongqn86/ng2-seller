@@ -232,15 +232,6 @@ export class EditComponent implements OnInit, OnDestroy {
         });
     }
 
-    public onSwitchChange(e) {
-        if (e.currentValue) {
-            this.CampaignsService.campaign.state = 'launching';
-        } else {
-            this.CampaignsService.campaign.state = 'end';
-        }
-        this.updateCampaign();
-    }
-
     public updateCampaign() {
         this.CampaignsService.http.startLoad();
         const cpU: any = {};

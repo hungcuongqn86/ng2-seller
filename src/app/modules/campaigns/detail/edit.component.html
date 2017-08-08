@@ -1,12 +1,6 @@
 <div class="row">
     <div class="col-sm-7">
-        <h3>Campaign Info
-            <span class="pull-right">
-                <bSwitch [switch-size]="'mini'"
-                         (onChangeState)="onSwitchChange($event, promotion)"
-                         [ngModel]="CampaignsService.campaign.state !== 'end'"></bSwitch>
-            </span>
-        </h3>
+        <h3>Campaign Info</h3>
         <form novalidate #form="ngForm">
             <div class="form-group" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">
                 <label for="title">Title<span class="label-red">*</span></label>
