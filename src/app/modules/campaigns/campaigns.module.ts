@@ -16,26 +16,24 @@ import {MockupsComponent} from './detail/mockups.component';
 import {CampaignsRoutingModule} from './campaigns.routing.module';
 
 import {CampaignDirective} from '../../directive/campaign.directive';
-import {CountLeftDirective} from '../../directive/countLeft.directive';
 import {SharedModule} from '../../public/shared.module';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, HttpModule, CampaignsRoutingModule, SharedModule, QuillModule,
-        Select2Module, Ng2PaginationModule],
-    declarations: [
-        CampaignsComponent,
-        DetailComponent,
-        EditComponent,
-        ProductsComponent,
-        MockupsComponent,
-        CampaignDirective,
-        CountLeftDirective
-    ],
-    exports: [],
-    providers: [
-        CampaignsService,
-        UploadService
-    ]
+  imports: [CommonModule, FormsModule, HttpModule, CampaignsRoutingModule, SharedModule, QuillModule,
+    Select2Module, Ng2PaginationModule],
+  declarations: [
+    CampaignsComponent,
+    DetailComponent,
+    EditComponent,
+    ProductsComponent,
+    MockupsComponent,
+    CampaignDirective
+  ],
+  exports: [],
+  providers: [
+    CampaignsService,
+    UploadService
+  ]
 })
 export class CampaignsModule {
 }

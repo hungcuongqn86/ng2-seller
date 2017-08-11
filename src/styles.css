@@ -240,3 +240,7 @@ footer .col-footer {
 .bootstrap-switch .bootstrap-switch-label {
     padding-right: 21px !important;
 }
+
+.label-red {
+  color: red;
+}

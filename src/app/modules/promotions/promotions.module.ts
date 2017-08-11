@@ -5,20 +5,18 @@ import {HttpModule} from '@angular/http';
 import {JWBootstrapSwitchModule} from 'jw-bootstrap-switch-ng2';
 import {Ng2PaginationModule} from 'ng2-pagination';
 
-import {DebounceDirective} from '../../directive/debounce.directive';
-
 import {PromotionsComponent} from './promotions.component';
 import {PromotionsRoutingModule} from './promotions.routing.module';
 import {PromotionsService} from './promotions.service';
+import {SharedModule} from '../../public/shared.module';
 
 @NgModule({
-    imports: [CommonModule, FormsModule, HttpModule, PromotionsRoutingModule, JWBootstrapSwitchModule, Ng2PaginationModule],
-    declarations: [
-        PromotionsComponent,
-        DebounceDirective
-    ],
-    exports: [],
-    providers: [PromotionsService]
+  imports: [CommonModule, FormsModule, HttpModule, PromotionsRoutingModule, JWBootstrapSwitchModule, Ng2PaginationModule, SharedModule],
+  declarations: [
+    PromotionsComponent
+  ],
+  exports: [],
+  providers: [PromotionsService]
 })
 export class PromotionsModule {
 }

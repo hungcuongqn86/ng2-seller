@@ -1,13 +1,33 @@
-<div class="container">
-    <div class="row">
-        <div class="col-sm-3">
-
-        </div>
-        <div class="col-sm-6">
-
-        </div>
-        <div class="col-sm-3">
-
-        </div>
-    </div>
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th style="width: 30%;">Storefronts
+          <button (click)="addStorefront()" class="btn btn-xs btn-default">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+          </button>
+        </th>
+        <th>Url</th>
+        <th style="width: 10%;">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let store of StorefrontsData.stores | paginate: {  itemsPerPage: StorefrontsService.search.page_size, currentPage: StorefrontsService.search.page, totalItems: StorefrontsData.total}">
+        <td>
+          {{store.title}}
+        </td>
+        <td>
+          {{store.url}}
+        </td>
+        <td>
+          <button class="btn btn-xs btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

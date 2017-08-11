@@ -17,19 +17,21 @@ export class CampaignDirective implements OnInit {
             indexdf = 0;
         }
         const product = this.campaign.products[indexdf];
-        indexdf = product.variants.findIndex(x => x.default === true);
-        if (indexdf < 0) {
-            indexdf = 0;
+        if (product.variants && product.variants.length) {
+            indexdf = product.variants.findIndex(x => x.default === true);
+            if (indexdf < 0) {
+                indexdf = 0;
+            }
+            const variants = product.variants[indexdf];
+            let img = variants.image.front;
+            if (product.back_view) {
+                img = variants.image.back;
+            }
+            campDraw.image(img).loaded(function (loader) {
+                const sH = sW * loader.height / loader.width;
+                this.size(sW, sH);
+                campDraw.size(sW, sH);
+            });
         }
-        const variants = product.variants[indexdf];
-        let img = variants.image.front;
-        if (product.back_view) {
-            img = variants.image.back;
-        }
-        campDraw.image(img).loaded(function (loader) {
-            const sH = sW * loader.height / loader.width;
-            this.size(sW, sH);
-            campDraw.size(sW, sH);
-        });
     }
 }
