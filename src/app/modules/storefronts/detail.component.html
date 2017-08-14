@@ -1,6 +1,10 @@
 <div class="row">
   <div class="col-sm-12">
-    <h3>Storefront Info</h3>
+    <h3>Storefront Info
+      <button (click)="goBack()" class="btn btn-default btn-xs pull-right">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </button>
+    </h3>
     <form novalidate #form="ngForm">
       <div class="form-group" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">
         <label for="title">Title<span class="label-red">*</span></label>
@@ -41,7 +45,7 @@
                         <span data-toggle="dropdown" class="input-group-addon">{{url}}<i style="margin-left: 8px;"
                                                                                          class="fa fa-caret-down"
                                                                                          aria-hidden="true"></i></span>
-          <ul *ngIf="arrDomains.length" class="dropdown-menu">
+          <ul *ngIf="arrDomains.length&&!StorefrontId" class="dropdown-menu">
             <li *ngFor='let itemDm of arrDomains'><a (click)="setDomain(itemDm)"
                                                      href="javascript:void(0)">{{itemDm.name}}</a>
             </li>
@@ -49,6 +53,7 @@
           <input [(ngModel)]="StorefrontsService.storefront.url.uri" [appDebounce]="800"
                  (onDebounce)="checkSuggestion()"
                  type="text" #uriVali="ngModel"
+                 [readonly]="StorefrontId"
                  class="form-control" name="uri" id="uri" required>
         </div>
         <div [hidden]="uri.available && (uriVali.valid || uriVali.untouched)">
@@ -89,10 +94,10 @@
       <h4>Campaigns</h4>
       <div class="row">
         <div class="col-sm-6">
-          <span>0 campaigns selected</span>
+          <span>{{StorefrontsService.storefront.campaigns.split(',').length}} campaigns selected</span>
         </div>
         <div class="col-sm-6 text-right">
-          <button type="button" class="btn btn-default add-campaign">Add campaign
+          <button type="button" (click)="changeCampaigns()" class="btn btn-default add-campaign">Add campaign
           </button>
         </div>
       </div>

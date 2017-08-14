@@ -15,7 +15,6 @@ import {ProductsComponent} from './detail/products.component';
 import {MockupsComponent} from './detail/mockups.component';
 import {CampaignsRoutingModule} from './campaigns.routing.module';
 
-import {CampaignDirective} from '../../directive/campaign.directive';
 import {SharedModule} from '../../public/shared.module';
 
 @NgModule({
@@ -26,8 +25,7 @@ import {SharedModule} from '../../public/shared.module';
     DetailComponent,
     EditComponent,
     ProductsComponent,
-    MockupsComponent,
-    CampaignDirective
+    MockupsComponent
   ],
   exports: [],
   providers: [

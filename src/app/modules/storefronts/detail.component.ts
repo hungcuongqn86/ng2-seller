@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Rx';
 import {UploadService} from '../../public/upload.service';
 import {StorefrontsService} from './storefronts.service';
 import {QuillEditorComponent} from 'ngx-quill/src/quill-editor.component';
+import {CampaignsdlComponent} from '../../public/campaigns.component';
 import {coverSize} from '../../lib/const';
 
 @Component({
@@ -20,6 +21,8 @@ export class DetailComponent implements OnInit, OnDestroy {
   private StorefrontId;
   public tab = 'detail';
   private subs: any;
+  private DialogSubs: any;
+  private campaigns: Array<any> = [];
 
   @ViewChild('editor') editor: QuillEditorComponent;
   public quillOption = {
@@ -81,9 +84,7 @@ export class DetailComponent implements OnInit, OnDestroy {
         }
 
         if (this.StorefrontsService.storefront.banner !== '') {
-          const w = this.coverbg.nativeElement.offsetWidth;
-          const h = (coverSize.w / w) * coverSize.h;
-          this.renderer.setElementStyle(this.coverbg.nativeElement, 'height', h + 'px');
+          this.resizeCover();
         }
         this.StorefrontsService.http.endLoad();
       },
@@ -92,6 +93,12 @@ export class DetailComponent implements OnInit, OnDestroy {
         this.StorefrontsService.http.endLoad();
       }
     );
+  }
+
+  private resizeCover() {
+    const w = this.coverbg.nativeElement.offsetWidth;
+    const h = (coverSize.w / w) * coverSize.h;
+    this.renderer.setElementStyle(this.coverbg.nativeElement, 'height', h + 'px');
   }
 
   private getData(): Observable<any> {
@@ -108,28 +115,31 @@ export class DetailComponent implements OnInit, OnDestroy {
         }
       );
 
-      const sub2 = this.StorefrontsService.getDetail(this.StorefrontId).subscribe(
-        data => {
-          data.desc = decodeURIComponent(data.desc);
-          data.desc = data.desc.split('%20').join(' ');
-          data.url = {
-            domain: data.domain_id,
-            uri: data.url.split('/').join('')
-          };
-          const camp = [];
-          for (let i = 0; i < data.campaigns.length; i++) {
-            camp.push(data.campaigns[i].id);
+      if (this.StorefrontId) {
+        const sub2 = this.StorefrontsService.getDetail(this.StorefrontId).subscribe(
+          data => {
+            data.desc = decodeURIComponent(data.desc);
+            data.desc = data.desc.split('%20').join(' ');
+            data.url = {
+              domain: data.domain_id,
+              uri: data.url.split('/').join('')
+            };
+            const camp = [];
+            this.campaigns = data.campaigns;
+            for (let i = 0; i < data.campaigns.length; i++) {
+              camp.push(data.campaigns[i].id);
+            }
+            data.campaigns = camp.join(',');
+            this.StorefrontsService.storefront = data;
+            observer.next();
+            sub2.unsubscribe();
+          },
+          error => {
+            observer.error(error);
+            sub2.unsubscribe();
           }
-          data.campaigns = camp.join(',');
-          this.StorefrontsService.storefront = data;
-          observer.next();
-          sub2.unsubscribe();
-        },
-        error => {
-          observer.error(error);
-          sub2.unsubscribe();
-        }
-      );
+        );
+      }
     });
   }
 
@@ -157,6 +167,9 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.subs = this.UploadService.makeFileRequest(files, 'store').subscribe(
         (data) => {
           this.StorefrontsService.storefront.banner = data.url;
+          if (this.StorefrontsService.storefront.banner !== '') {
+            this.resizeCover();
+          }
           this.UploadService.endLoad();
           this.unsubscribe();
           this.form['controls']['filePicker'].reset();
@@ -183,7 +196,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   public suggestion() {
-    if (this.StorefrontsService.storefront.title !== '') {
+    if (this.StorefrontsService.storefront.id === '' && this.StorefrontsService.storefront.title !== '') {
       this.StorefrontsService.suggestion(this.StorefrontsService.storefront.title).subscribe(
         res => {
           this.uri = res;
@@ -197,6 +210,19 @@ export class DetailComponent implements OnInit, OnDestroy {
     } else {
       this.uri = {uri: '', available: true};
     }
+  }
+
+  public changeCampaigns() {
+    this.DialogSubs = this.StorefrontsService.http.dialogService.addDialog(CampaignsdlComponent, {
+      Campaigns: this.campaigns,
+    }).subscribe((campaigns_sl) => {
+      this.StorefrontsService.storefront.campaigns = campaigns_sl;
+      this.DialogSubs.unsubscribe();
+    });
+  }
+
+  public goBack() {
+    this.router.navigate([`/storefronts`]);
   }
 
   public updateStorefront() {

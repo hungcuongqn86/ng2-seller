@@ -19,6 +19,8 @@
   display: block;
   width: 100%;
   max-height: 360px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .action-del {

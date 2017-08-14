@@ -25,61 +25,64 @@ import {VariantsComponent} from './public/variants.component';
 import {ColorComponent} from './public/color.component';
 import {AddproductComponent} from './public/addproduct.component';
 import {TempmockupComponent} from './public/tempmockup.component';
+import {CampaignsdlComponent} from './public/campaigns.component';
 
 import {SharedModule} from './public/shared.module';
 import {environment} from '../environments/environment';
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateStaticLoader(http, environment.basename + '/assets/i18n', '.json?v=1.0.1');
+  return new TranslateStaticLoader(http, environment.basename + '/assets/i18n', '.json?v=1.0.1');
 }
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        SidebarComponent,
-        FooterComponent,
-        HeaderComponent,
-        AlertComponent,
-        ConfirmComponent,
-        LoadingComponent,
-        ProductdfComponent,
-        VariantsComponent,
-        ColorComponent,
-        AddproductComponent,
-        TempmockupComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpModule,
-        TranslateModule.forRoot({
-            provide: TranslateLoader,
-            useFactory: (createTranslateLoader),
-            deps: [HttpClient]
-        }),
-        BootstrapModalModule,
-        ProgressBarModule,
-        routing,
-        SharedModule.forRoot()
-    ],
-    providers: [
-        AppGuard,
-        HttpClient,
-        Auth,
-        PublicService,
-        AppService
-    ],
-    entryComponents: [
-        AlertComponent,
-        ConfirmComponent,
-        LoadingComponent,
-        ProductdfComponent,
-        VariantsComponent,
-        ColorComponent,
-        AddproductComponent,
-        TempmockupComponent
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    SidebarComponent,
+    FooterComponent,
+    HeaderComponent,
+    AlertComponent,
+    ConfirmComponent,
+    LoadingComponent,
+    ProductdfComponent,
+    VariantsComponent,
+    ColorComponent,
+    AddproductComponent,
+    TempmockupComponent,
+    CampaignsdlComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    TranslateModule.forRoot({
+      provide: TranslateLoader,
+      useFactory: (createTranslateLoader),
+      deps: [HttpClient]
+    }),
+    BootstrapModalModule,
+    ProgressBarModule,
+    routing,
+    SharedModule.forRoot()
+  ],
+  providers: [
+    AppGuard,
+    HttpClient,
+    Auth,
+    PublicService,
+    AppService
+  ],
+  entryComponents: [
+    AlertComponent,
+    ConfirmComponent,
+    LoadingComponent,
+    ProductdfComponent,
+    VariantsComponent,
+    ColorComponent,
+    AddproductComponent,
+    TempmockupComponent,
+    CampaignsdlComponent
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

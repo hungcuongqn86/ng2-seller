@@ -1,0 +1,25 @@
+.modal-dialog {
+  width: 60%;
+}
+
+.margin {
+  margin: 5px;
+}
+
+.variant {
+  display: inline-block;
+  width: 100%;
+  margin: 10px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.variant-chk {
+  display: inline-block;
+  position: absolute;
+  bottom: 40px;
+  left: 30px;
+  cursor: pointer;
+  color: darkblue;
+  font-size: 24px;
+}
