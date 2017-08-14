@@ -1,11 +1,11 @@
-import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {Component, ElementRef, Renderer, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {NgModel} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
 import {UploadService} from '../../public/upload.service';
 import {StorefrontsService} from './storefronts.service';
-import {ConfirmComponent} from '../../public/confirm.component';
 import {QuillEditorComponent} from 'ngx-quill/src/quill-editor.component';
+import {coverSize} from '../../lib/const';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -14,11 +14,12 @@ import {QuillEditorComponent} from 'ngx-quill/src/quill-editor.component';
 })
 
 export class DetailComponent implements OnInit, OnDestroy {
+  @ViewChild('coverbg')
+  coverbg: ElementRef;
   @ViewChild('form') form: NgModel;
   private StorefrontId;
   public tab = 'detail';
   private subs: any;
-  private DialogSubs: any;
 
   @ViewChild('editor') editor: QuillEditorComponent;
   public quillOption = {
@@ -32,15 +33,22 @@ export class DetailComponent implements OnInit, OnDestroy {
   };
 
   public arrDomains: any = [];
-  public domain = '';
   uri: any = {'uri': '', 'available': true};
   url: string;
 
+  btnUpdateTitle = 'Create storefront';
+
   constructor(public StorefrontsService: StorefrontsService, private route: ActivatedRoute,
-              private router: Router, private UploadService: UploadService) {
+              private router: Router, private UploadService: UploadService, private renderer: Renderer) {
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.StorefrontId = params['id'];
+    });
+    if (this.StorefrontId) {
+      this.btnUpdateTitle = 'Update storefront';
+    }
     this.setupdata();
   }
 
@@ -71,6 +79,12 @@ export class DetailComponent implements OnInit, OnDestroy {
             });
           }
         }
+
+        if (this.StorefrontsService.storefront.banner !== '') {
+          const w = this.coverbg.nativeElement.offsetWidth;
+          const h = (coverSize.w / w) * coverSize.h;
+          this.renderer.setElementStyle(this.coverbg.nativeElement, 'height', h + 'px');
+        }
         this.StorefrontsService.http.endLoad();
       },
       error => {
@@ -91,6 +105,29 @@ export class DetailComponent implements OnInit, OnDestroy {
         error => {
           observer.error(error);
           sub1.unsubscribe();
+        }
+      );
+
+      const sub2 = this.StorefrontsService.getDetail(this.StorefrontId).subscribe(
+        data => {
+          data.desc = decodeURIComponent(data.desc);
+          data.desc = data.desc.split('%20').join(' ');
+          data.url = {
+            domain: data.domain_id,
+            uri: data.url.split('/').join('')
+          };
+          const camp = [];
+          for (let i = 0; i < data.campaigns.length; i++) {
+            camp.push(data.campaigns[i].id);
+          }
+          data.campaigns = camp.join(',');
+          this.StorefrontsService.storefront = data;
+          observer.next();
+          sub2.unsubscribe();
+        },
+        error => {
+          observer.error(error);
+          sub2.unsubscribe();
         }
       );
     });
@@ -181,7 +218,15 @@ export class DetailComponent implements OnInit, OnDestroy {
         }
       );
     } else {
-      //
+      this.subs = this.StorefrontsService.updateStorefronts(sfU).subscribe(
+        () => {
+          this.StorefrontsService.http.endLoad();
+          this.router.navigate([`/storefronts`]);
+        },
+        error => {
+          this.StorefrontsService.http.endLoad();
+        }
+      );
     }
   }
 

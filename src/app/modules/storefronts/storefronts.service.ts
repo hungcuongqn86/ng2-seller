@@ -19,7 +19,7 @@ export class StorefrontsService {
     campaigns: ''
   };
 
-  public search = {title: '', private: -1, state: '', page_size: 10, page: 1};
+  public search = {title: '', page_size: 10, page: 1};
   private module = 'stores';
 
   constructor(public http: HttpClient) {
@@ -38,6 +38,11 @@ export class StorefrontsService {
     return this.http.get(url).map((res: Response) => res.json().domains);
   }
 
+  getDetail(id): any {
+    const url = pspApiUrl + this.module + `/${id}`;
+    return this.http.get(url).map((res: Response) => res.json());
+  }
+
   suggestion(suggestion: string): any {
     const url = pspApiUrl + `uri`;
     const params: URLSearchParams = new URLSearchParams();
@@ -49,6 +54,15 @@ export class StorefrontsService {
     const url = pspApiUrl + this.module;
     const body = JSON.stringify(storefront);
     return this.http.post(url, body).map((res: Response) => res.json());
+  }
+
+  updateStorefronts(storefront: any) {
+    const url = pspApiUrl + this.module + `/${storefront.id}`;
+    delete storefront.id;
+    delete storefront.state;
+    delete storefront.user_id;
+    const body = JSON.stringify(storefront);
+    return this.http.put(url, body).map((res: Response) => res.json());
   }
 
   getStorefronts(sparams) {

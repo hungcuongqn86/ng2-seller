@@ -77,11 +77,12 @@
                  class="form-control">
         </div>
       </div>
-      <div *ngIf="StorefrontsService.storefront.banner!==''" class="row">
+      <div class="row">
         <div class="col-sm-12 banner">
           <span title="Delete" (click)="removeBanner()" class="action-del"><i class="fa fa-times-circle"
                                                                               aria-hidden="true"></i></span>
-          <img src="{{StorefrontsService.storefront.banner}}">
+          <div #coverbg class="cover-bg"
+               [ngStyle]="{ 'background-image': 'url(' + StorefrontsService.storefront.banner + ')'}"></div>
         </div>
       </div>
       <hr>
@@ -116,7 +117,7 @@
       <div class="form-group">
         <button type="button" (click)="updateStorefront()"
                 class="btn btn-launch {{form.form.valid? 'btn-primary lightblue': 'btn-default'}}"
-                [disabled]="!form.form.valid">Create storefront
+                [disabled]="!form.form.valid">{{btnUpdateTitle}}
         </button>
       </div>
     </form>

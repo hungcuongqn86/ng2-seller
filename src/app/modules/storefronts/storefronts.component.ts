@@ -34,6 +34,10 @@ export class StorefrontsComponent implements OnInit {
     );
   }
 
+  public goDetail(store) {
+    this.router.navigate([`/storefronts/${store.id}`]);
+  }
+
   public addStorefront() {
     this.router.navigate([`/storefronts/add`]);
   }
