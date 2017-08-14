@@ -3,7 +3,17 @@
     <div class="modal-body">
       <div class="row">
         <div class="col-sm-7" style="border-right: 1px solid #ddd;">
-          <p><strong>Select storefront campaigns</strong></p>
+          <div class="col-sm-12">
+            <form novalidate (ngSubmit)="getCampaigns()">
+              <div style="margin: 10px">
+                <p><strong>Select storefront campaigns</strong></p>
+                <input title="Filter by search" placeholder="Search for campaign by URL or title"
+                       [(ngModel)]="search.title"
+                       name="title" id="title"
+                       class="form-control">
+              </div>
+            </form>
+          </div>
           <div *ngFor="let camp of CampaignData.campaigns" class="col-sm-3">
             <div (click)="selectCampaign(camp)" class="variant">
               <div appCampaign [campaign]="camp"></div>
@@ -18,9 +28,9 @@
           <table class="table table-hover">
             <thead>
             <tr>
-              <th style="width: 20%;">
+              <th style="width: 15%;">
               </th>
-              <th style="width: 65%;"></th>
+              <th style="width: 80%;"></th>
               <th style="width: 5%;"></th>
             </tr>
             </thead>

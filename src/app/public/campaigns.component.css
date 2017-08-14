@@ -17,9 +17,8 @@
 .variant-chk {
   display: inline-block;
   position: absolute;
-  bottom: 40px;
-  left: 30px;
+  top: 10px;
+  right: 10px;
   cursor: pointer;
   color: darkblue;
-  font-size: 24px;
 }

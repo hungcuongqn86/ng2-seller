@@ -59,6 +59,11 @@ export class CampaignsdlComponent extends DialogComponent<PromptModel, string> i
   }
 
   public mdClose() {
+    const res = [];
+    for (let i = 0; i < this.Campaigns.length; i++) {
+      res.push(this.Campaigns[i].id);
+    }
+    this.result = res.join(',');
     this.close();
   }
 }
