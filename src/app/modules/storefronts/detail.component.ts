@@ -22,7 +22,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   public tab = 'detail';
   private subs: any;
   private DialogSubs: any;
-  private campaigns: Array<any> = [];
+  public campaigns: Array<any> = [];
 
   @ViewChild('editor') editor: QuillEditorComponent;
   public quillOption = {
@@ -215,8 +215,15 @@ export class DetailComponent implements OnInit, OnDestroy {
   public changeCampaigns() {
     this.DialogSubs = this.StorefrontsService.http.dialogService.addDialog(CampaignsdlComponent, {
       Campaigns: this.campaigns,
-    }).subscribe((campaigns_sl) => {
-      this.StorefrontsService.storefront.campaigns = campaigns_sl;
+    }).subscribe((campaigns_sl: any) => {
+      if (campaigns_sl) {
+        this.campaigns = campaigns_sl;
+        const camp = [];
+        for (let i = 0; i < this.campaigns.length; i++) {
+          camp.push(this.campaigns[i].id);
+        }
+        this.StorefrontsService.storefront.campaigns = camp.join(',');
+      }
       this.DialogSubs.unsubscribe();
     });
   }

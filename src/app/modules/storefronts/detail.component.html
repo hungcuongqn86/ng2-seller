@@ -94,7 +94,7 @@
       <h4>Campaigns</h4>
       <div class="row">
         <div class="col-sm-6">
-          <span>{{StorefrontsService.storefront.campaigns.split(',').length}} campaigns selected</span>
+          <span>{{StorefrontsService.storefront.campaigns? StorefrontsService.storefront.campaigns.split(',').length: 0}} campaigns selected</span>
         </div>
         <div class="col-sm-6 text-right">
           <button type="button" (click)="changeCampaigns()" class="btn btn-default add-campaign">Add campaign

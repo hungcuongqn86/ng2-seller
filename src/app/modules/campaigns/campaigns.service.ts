@@ -41,6 +41,15 @@ export class CampaignsService {
     return this.http.get(url, {search: params}).map((res: Response) => res.json());
   }
 
+  public getStorefronts(sparams) {
+    const url = pspApiUrl + 'stores';
+    const params: URLSearchParams = new URLSearchParams();
+    Object.keys(sparams).map((key) => {
+      params.set(key, sparams[key]);
+    });
+    return this.http.get(url, {search: params}).map((res: Response) => res.json());
+  }
+
   public updateCampaign(campaign: any) {
     const url = pspApiUrl + this.module + `/${campaign.id}`;
     const body = JSON.stringify(campaign);

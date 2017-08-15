@@ -11,8 +11,8 @@ export interface PromptModel {
   styleUrls: ['./campaigns.component.css']
 })
 export class CampaignsdlComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
-  Campaigns: any;
-  public campaigns_sl = [];
+  Campaigns: any = [];
+  public campaigns_sl: any = [];
   public campaignsid_sl = [];
   private subs: any;
   private search = {title: '', private: -1, state: 'launching', page_size: 10, page: 1};
@@ -54,16 +54,11 @@ export class CampaignsdlComponent extends DialogComponent<PromptModel, string> i
   }
 
   public confirm() {
-    this.result = this.campaignsid_sl.join(',');
+    this.result = this.campaigns_sl;
     this.close();
   }
 
   public mdClose() {
-    const res = [];
-    for (let i = 0; i < this.Campaigns.length; i++) {
-      res.push(this.Campaigns[i].id);
-    }
-    this.result = res.join(',');
     this.close();
   }
 }

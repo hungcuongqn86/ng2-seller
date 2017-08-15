@@ -1,133 +1,143 @@
 <div class="row">
-    <div class="col-sm-7">
-        <h3>Campaign Info</h3>
-        <form novalidate #form="ngForm">
-            <div class="form-group" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">
-                <label for="title">Title<span class="label-red">*</span></label>
-                <input [(ngModel)]="CampaignsService.campaign.title"
-                       #titleVali="ngModel"
-                       name="title" id="title"
-                       [maxLength]="50"
-                       [appCountLeft]="50"
-                       pattern="^[\w\d _.-]+$" required
-                       class="form-control">
-                <div [hidden]="titleVali.valid || titleVali.untouched">
+  <div class="col-sm-7">
+    <h3>Campaign Info</h3>
+    <form novalidate #form="ngForm">
+      <div class="form-group" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">
+        <label for="title">Title<span class="label-red">*</span></label>
+        <input [(ngModel)]="CampaignsService.campaign.title"
+               #titleVali="ngModel"
+               name="title" id="title"
+               [maxLength]="50"
+               [appCountLeft]="50"
+               pattern="^[\w\d _.-]+$" required
+               class="form-control">
+        <div [hidden]="titleVali.valid || titleVali.untouched">
                                             <span *ngIf="titleVali.errors && titleVali.errors.required"
                                                   class="help-block alert-warning">
                                                 <i class="fa fa-exclamation-triangle"
                                                    aria-hidden="true"></i> required!!!
                                             </span>
-                    <span *ngIf="titleVali.errors && titleVali.errors.pattern" class="help-block alert-warning">
+          <span *ngIf="titleVali.errors && titleVali.errors.pattern" class="help-block alert-warning">
                                                 <i class="fa fa-exclamation-triangle"
                                                    aria-hidden="true"></i> pattern!!!
                                             </span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <quill-editor #editor [(ngModel)]="CampaignsService.campaign.desc" [modules]="quillOption"
-                              [maxLength]="2000"
-                              [appCountLeft]="2000"
-                              (onEditorCreated)="seDescription()" name="desc"
-                              name="desc"
-                              [placeholder]="placeholder">
-                </quill-editor>
-            </div>
-            <div class="form-group">
-                <label for="uri">URL<span class="label-red">*</span></label>
-                <div class="input-group">
-                    <span class="input-group-addon">{{domain}}</span>
-                    <input [(ngModel)]="CampaignsService.campaign.url" type="text" readonly
-                           class="form-control" name="uri" id="uri">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Storefront</label>
-                <input type="text" class="form-control">
-            </div>
-            <div class="form-group {{(sel_categories.touched && (!sel_categories.valid))? 'has-error': ''}}">
-                <label>Categories<span class="label-red">*</span></label>
-                <div>
-                    <input [(ngModel)]="CampaignsService.campaign.categories"
-                           #sel_categories="ngModel"
-                           name="sel_categories"
-                           value=""
-                           type="hidden" required>
-                    <select2 [data]="arrCategories" [options]="options"
-                             [value]="arrCatValue"
-                             (click)="touchedCat()"
-                             (valueChanged)="categoriesSelect($event)"></select2>
-                </div>
-                <div [hidden]="sel_categories.valid || sel_categories.untouched">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <quill-editor #editor [(ngModel)]="CampaignsService.campaign.desc" [modules]="quillOption"
+                      [maxLength]="2000"
+                      [appCountLeft]="2000"
+                      (onEditorCreated)="seDescription()" name="desc"
+                      name="desc"
+                      [placeholder]="placeholder">
+        </quill-editor>
+      </div>
+      <div class="form-group">
+        <label for="uri">URL<span class="label-red">*</span></label>
+        <div class="input-group">
+          <span class="input-group-addon">{{domain}}</span>
+          <input [(ngModel)]="CampaignsService.campaign.url" type="text" readonly
+                 class="form-control" name="uri" id="uri">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Storefront</label>
+        <div>
+          <input [(ngModel)]="CampaignsService.campaign.stores"
+                 #sel_stores="ngModel"
+                 name="sel_stores"
+                 value=""
+                 type="hidden">
+          <select2 [data]="arrStores" [options]="options"
+                   [value]="arrStoresValue"
+                   (click)="touchedStores()"
+                   (valueChanged)="storesSelect($event)"></select2>
+        </div>
+      </div>
+      <div class="form-group {{(sel_categories.touched && (!sel_categories.valid))? 'has-error': ''}}">
+        <label>Categories<span class="label-red">*</span></label>
+        <div>
+          <input [(ngModel)]="CampaignsService.campaign.categories"
+                 #sel_categories="ngModel"
+                 name="sel_categories"
+                 value=""
+                 type="hidden" required>
+          <select2 [data]="arrCategories" [options]="options"
+                   [value]="arrCatValue"
+                   (click)="touchedCat()"
+                   (valueChanged)="categoriesSelect($event)"></select2>
+        </div>
+        <div [hidden]="sel_categories.valid || sel_categories.untouched">
                                 <span *ngIf="sel_categories.errors && sel_categories.errors.required"
                                       class="help-block alert-warning"><i class="fa fa-exclamation-triangle"
                                                                           aria-hidden="true"></i>
                                     Please select categories!</span>
-                </div>
-            </div>
-            <hr>
-            <h4>Conversion tracking</h4>
-            <div class="form-group">
-                <label>Facebook pixel for this campaign </label>
-                <input title="Facebook pixel for this campaign" [(ngModel)]="CampaignsService.campaign.fb_pixel"
-                       name="fb_pixel"
-                       type="text" class="form-control">
-            </div>
-            <div class="form-group">
-                <label>Google tag manager for this campaign </label>
-                <input title="Google pixel for this campaign" [(ngModel)]="CampaignsService.campaign.gg_pixel"
-                       name="gg_pixel"
-                       type="text" class="form-control">
-            </div>
-            <hr>
-            <h4>Time length</h4>
-            <div class="form-group">
-                <div class="input-group">
+        </div>
+      </div>
+      <hr>
+      <h4>Conversion tracking</h4>
+      <div class="form-group">
+        <label>Facebook pixel for this campaign </label>
+        <input title="Facebook pixel for this campaign" [(ngModel)]="CampaignsService.campaign.fb_pixel"
+               name="fb_pixel"
+               type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Google tag manager for this campaign </label>
+        <input title="Google pixel for this campaign" [(ngModel)]="CampaignsService.campaign.gg_pixel"
+               name="gg_pixel"
+               type="text" class="form-control">
+      </div>
+      <hr>
+      <h4>Time length</h4>
+      <div class="form-group">
+        <div class="input-group">
                         <span style="width: 100%;height: 35px;background: #fff;text-align: left;" data-toggle="dropdown"
                               class="input-group-addon">{{timeEnd.number}}
                                 days - {{timeEnd.view}}</span>
-                    <ul style="width: 100%;" class="dropdown-menu">
-                        <li *ngFor='let itemTime of timeLength'
-                            [ngClass]="(timeEnd&&timeEnd.number === itemTime.number)? 'active': ''"><a
-                                (click)="setTimeLength(itemTime)"
-                                href="javascript:void(0)">{{itemTime.number}}
-                            days - {{itemTime.view}}</a>
-                        </li>
-                    </ul>
-                    <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-caret-down"
-                                                                              aria-hidden="true"></i></span>
-                </div>
-            </div>
-            <h4>Visibility</h4>
-            <div class="row">
-                <div class="col-sm-6">
+          <ul style="width: 100%;" class="dropdown-menu">
+            <li *ngFor='let itemTime of timeLength'
+                [ngClass]="(timeEnd&&timeEnd.number === itemTime.number)? 'active': ''"><a
+              (click)="setTimeLength(itemTime)"
+              href="javascript:void(0)">{{itemTime.number}}
+              days - {{itemTime.view}}</a>
+            </li>
+          </ul>
+          <span class="input-group-addon" data-toggle="dropdown"><i class="fa fa-caret-down"
+                                                                    aria-hidden="true"></i></span>
+        </div>
+      </div>
+      <h4>Visibility</h4>
+      <div class="row">
+        <div class="col-sm-6">
                         <span>Public campaigns will be visible on marketplace and searchable on the web.
                             Public
                             Private
                         </span>
-                </div>
-                <div class="col-sm-6 text-right">
-                    <div class="btn-group">
-                        <button type="button" (click)="setVisibility(false)"
-                                class="btn {{!CampaignsService.campaign.private? 'lightblue': 'btn-default'}}">Public
-                        </button>
-                        <button type="button" (click)="setVisibility(true)"
-                                class="btn {{CampaignsService.campaign.private? 'lightblue': 'btn-default'}}">Private
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="button" (click)="updateCampaign()"
-                        class="btn btn-launch {{form.form.valid? 'btn-primary lightblue': 'btn-default'}}"
-                        [disabled]="!form.form.valid">Update
-                </button>
-            </div>
-        </form>
-    </div>
-    <div class="col-sm-5 text-center" style="position: relative;">
-        <div appProduct [product]="product" [face]="face" [mainopt]="getOldOpt(product)" [color]="color"></div>
-        <div (click)="changeProduct()" class="change-product-button">
-            <span>Change default product or side</span></div>
-    </div>
+        </div>
+        <div class="col-sm-6 text-right">
+          <div class="btn-group">
+            <button type="button" (click)="setVisibility(false)"
+                    class="btn {{!CampaignsService.campaign.private? 'lightblue': 'btn-default'}}">Public
+            </button>
+            <button type="button" (click)="setVisibility(true)"
+                    class="btn {{CampaignsService.campaign.private? 'lightblue': 'btn-default'}}">Private
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="button" (click)="updateCampaign()"
+                class="btn btn-launch {{form.form.valid? 'btn-primary lightblue': 'btn-default'}}"
+                [disabled]="!form.form.valid">Update
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-sm-5 text-center" style="position: relative;">
+    <div appProduct [product]="product" [face]="face" [mainopt]="getOldOpt(product)" [color]="color"></div>
+    <div (click)="changeProduct()" class="change-product-button">
+      <span>Change default product or side</span></div>
+  </div>
 </div>
