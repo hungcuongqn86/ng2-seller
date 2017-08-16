@@ -22,9 +22,10 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    for (let i = 0; i < this.states.length; i++) {
-      if (this.states[i].id === this.CampaignsService.search.state) {
-        this.stateName = this.states[i].name;
+    for (const item of this.states) {
+      if (item.id === this.CampaignsService.search.state) {
+        this.stateName = item.name;
+        break;
       }
     }
     this.getCampaigns();
@@ -54,24 +55,16 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     );
   }
 
-  public goDetail(camp) {
-    this.router.navigate([`/campaigns/${camp.id}`]);
-  }
-
-  public goView(camp) {
-    window.open(this.genCampaignDetailUrl(camp.url), '_blank');
-  }
+  public goDetail = camp => this.router.navigate([`/campaigns/${camp.id}`]);
+  public goView = camp => window.open(this.genCampaignDetailUrl(camp.url), '_blank');
 
   public getPage(page: number) {
     this.CampaignsService.search.page = page;
     this.getCampaigns();
   }
 
-  public genCampaignDetailUrl(uri) {
-    return 'http://' + this.AppService.svConfig['system.ecomerce.domain.name']
-      + this.AppService.svConfig['campaign.detail.uri.prefix']
-      + '/' + uri.split('/').join('');
-  }
+  public genCampaignDetailUrl = uri => 'http://' + this.AppService.svConfig['system.ecomerce.domain.name']
+    + this.AppService.svConfig['campaign.detail.uri.prefix'] + '/' + uri.split('/').join('');
 
   public selState(state) {
     this.stateName = state.name;

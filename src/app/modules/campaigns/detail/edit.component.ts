@@ -1,4 +1,4 @@
-import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {QuillEditorComponent} from 'ngx-quill/src/quill-editor.component';
 import {Select2OptionData} from 'ng2-select2';
 import {CampaignsService} from '../campaigns.service';
@@ -55,9 +55,9 @@ export class EditComponent implements OnInit, OnDestroy {
     this.getCategories();
     this.getStores();
     this.timeLength = DsLib.getTimeLength(this.CampaignsService.campaign.start_time);
-    for (let i = 0; i < this.timeLength.length; i++) {
-      if (this.timeLength[i].format === this.CampaignsService.campaign.end_time) {
-        this.setTimeLength(this.timeLength[i]);
+    for (const item of this.timeLength) {
+      if (item.format === this.CampaignsService.campaign.end_time) {
+        this.setTimeLength(item);
         break;
       }
     }
@@ -97,26 +97,15 @@ export class EditComponent implements OnInit, OnDestroy {
     );
   }
 
-  public touchedCat() {
-    this.form.form.controls.sel_categories.markAsTouched();
-  }
-
-  public touchedStores() {
-    this.form.form.controls.sel_stores.markAsTouched();
-  }
-
-  public categoriesSelect(data: { value: string[] }) {
-    this.CampaignsService.campaign.categories = data.value.join(',');
-  }
-
-  public storesSelect(data: { value: string[] }) {
-    this.CampaignsService.campaign.stores = data.value.join(',');
-  }
+  public touchedCat = () => this.form.form.controls.sel_categories.markAsTouched();
+  public touchedStores = () => this.form.form.controls.sel_stores.markAsTouched();
+  public categoriesSelect = (data: { value: string[] }) => this.CampaignsService.campaign.categories = data.value.join(',');
+  public storesSelect = (data: { value: string[] }) => this.CampaignsService.campaign.stores = data.value.join(',');
 
   private getCategories() {
     this.subs = this.CampaignsService.getCategories(true).subscribe(
       res => {
-        this.arrCategories = this.convertCat(res.categories);
+        this.arrCategories = this.convert2select(res.categories, 'name');
         if (this.CampaignsService.campaign.categories) {
           this.arrCatValue = this.CampaignsService.campaign.categories.split(',');
         }
@@ -127,7 +116,7 @@ export class EditComponent implements OnInit, OnDestroy {
   private getStores() {
     this.subs = this.CampaignsService.getStorefronts({title: '', page_size: 1000, page: 1}).subscribe(
       res => {
-        this.arrStores = this.convertStores(res.stores);
+        this.arrStores = this.convert2select(res.stores, 'title');
         if (this.CampaignsService.campaign.stores) {
           this.arrStoresValue = this.CampaignsService.campaign.stores.split(',');
         }
@@ -135,29 +124,17 @@ export class EditComponent implements OnInit, OnDestroy {
     );
   }
 
-  private convertStores(arrStores) {
-    Object.keys(arrStores).map((index) => {
-      arrStores[index]['text'] = arrStores[index].title;
+  private convert2select(arrData, key) {
+    Object.keys(arrData).map((index) => {
+      arrData[index]['text'] = arrData[index][key];
     });
-    return arrStores;
+    return arrData;
   }
 
-  private convertCat(arrCat) {
-    Object.keys(arrCat).map((index) => {
-      arrCat[index]['text'] = arrCat[index].name;
-    });
-    return arrCat;
-  }
-
-  public setVisibility(val) {
-    this.CampaignsService.campaign.private = val;
-  }
+  public setVisibility = (val) => this.CampaignsService.campaign.private = val;
 
   private getProductDefault(): any {
-    let check = this.CampaignsService.campaign.products.findIndex(x => x.default === true);
-    if (check < 0) {
-      check = 0;
-    }
+    const check = this.CampaignsService.campaign.products.findIndex(x => x.default === true) || 0;
     const prod: any = [];
     Object.keys(this.CampaignsService.campaign.products[check]).map((index) => {
       prod[index] = this.CampaignsService.campaign.products[check][index];
@@ -165,13 +142,8 @@ export class EditComponent implements OnInit, OnDestroy {
     return prod;
   }
 
-  public getOldOpt(product): any {
-    if (product.base.type) {
-      return Ds._getMainOpt(product.base.type.id, this.face, this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign);
-    } else {
-      return null;
-    }
-  }
+  public getOldOpt = (product) => product.base.type ? Ds._getMainOpt(product.base.type.id, this.face,
+    this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign) : null;
 
   private getFace(): any {
     const check = this.CampaignsService.campaign.products.findIndex(x => x.default === true);
@@ -207,16 +179,9 @@ export class EditComponent implements OnInit, OnDestroy {
           this.CampaignsService.campaign.products[index].default = false;
         }
       });
-      if (product.back_view) {
-        this.face = 'back';
-      } else {
-        this.face = 'front';
-      }
+      this.face = product.back_view ? 'back' : 'front';
       this.product = this.getProductDefault();
-      let indexColor = this.product.colors.findIndex(x => x.default === true);
-      if (indexColor < 0) {
-        indexColor = 0;
-      }
+      const indexColor = this.product.colors.findIndex(x => x.default === true) || 0;
       this.color = this.product.colors[indexColor];
     }
   }
