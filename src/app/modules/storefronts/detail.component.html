@@ -1,9 +1,21 @@
 <div class="row">
   <div class="col-sm-12">
     <h3>Storefront Info
-      <button (click)="goBack()" class="btn btn-default btn-xs pull-right">
-        <i class="fa fa-arrow-left" aria-hidden="true"></i>
-      </button>
+      <label class="pull-right action">
+        <button *ngIf="StorefrontsService.storefront&&StorefrontsService.storefront.state!=='deleted'"
+                (click)="setState('deleted')"
+                class="btn btn-default btn-xs">
+          Inactive
+        </button>
+        <button *ngIf="StorefrontsService.storefront&&StorefrontsService.storefront.state==='deleted'"
+                (click)="setState('approved')"
+                class="btn btn-default btn-xs">
+          Active
+        </button>
+        <button (click)="goBack()" class="btn btn-default btn-xs">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </button>
+      </label>
     </h3>
     <form novalidate #form="ngForm">
       <div class="form-group" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">

@@ -6,6 +6,7 @@ import {UploadService} from '../../public/upload.service';
 import {StorefrontsService} from './storefronts.service';
 import {QuillEditorComponent} from 'ngx-quill/src/quill-editor.component';
 import {CampaignsdlComponent} from '../../public/campaigns.component';
+import {ConfirmComponent} from '../../public/confirm.component';
 import {coverSize} from '../../lib/const';
 
 @Component({
@@ -230,6 +231,23 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   public goBack() {
     this.router.navigate([`/storefronts`]);
+  }
+
+  public setState(state) {
+    this.DialogSubs = this.StorefrontsService.http.dialogService.addDialog(ConfirmComponent, {
+      title: 'Confirm change state',
+      message: 'You sure want to change state!'
+    })
+      .subscribe((isConfirmed) => {
+        if (isConfirmed) {
+          this.StorefrontsService.storefront.state = state;
+          this.updateStorefront();
+        }
+        this.DialogSubs.unsubscribe();
+      });
+    setTimeout(() => {
+      this.DialogSubs.unsubscribe();
+    }, 10000);
   }
 
   public updateStorefront() {

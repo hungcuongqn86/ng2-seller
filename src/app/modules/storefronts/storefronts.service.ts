@@ -6,6 +6,7 @@ import {pspApiUrl} from '../../app.config';
 
 @Injectable()
 export class StorefrontsService {
+  static instance: StorefrontsService;
   public storefront: any = {
     id: '',
     title: '',
@@ -19,10 +20,11 @@ export class StorefrontsService {
     campaigns: ''
   };
 
-  public search = {title: '', page_size: 10, page: 1};
+  public search = {title: '', state: 'approved', page_size: 10, page: 1};
   private module = 'stores';
 
   constructor(public http: HttpClient) {
+    return StorefrontsService.instance = StorefrontsService.instance || this;
   }
 
   checkSuggestion(uri: string, id): any {
@@ -59,7 +61,6 @@ export class StorefrontsService {
   updateStorefronts(storefront: any) {
     const url = pspApiUrl + this.module + `/${storefront.id}`;
     delete storefront.id;
-    delete storefront.state;
     delete storefront.user_id;
     const body = JSON.stringify(storefront);
     return this.http.put(url, body).map((res: Response) => res.json());
