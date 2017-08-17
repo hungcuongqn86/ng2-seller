@@ -134,7 +134,8 @@ export class EditComponent implements OnInit, OnDestroy {
   public setVisibility = (val) => this.CampaignsService.campaign.private = val;
 
   private getProductDefault(): any {
-    const check = this.CampaignsService.campaign.products.findIndex(x => x.default === true) || 0;
+    const check = this.CampaignsService.campaign.products.findIndex(x => x.default === true) >= 0 ?
+      this.CampaignsService.campaign.products.findIndex(x => x.default === true) : 0;
     const prod: any = [];
     Object.keys(this.CampaignsService.campaign.products[check]).map((index) => {
       prod[index] = this.CampaignsService.campaign.products[check][index];
@@ -181,7 +182,8 @@ export class EditComponent implements OnInit, OnDestroy {
       });
       this.face = product.back_view ? 'back' : 'front';
       this.product = this.getProductDefault();
-      const indexColor = this.product.colors.findIndex(x => x.default === true) || 0;
+      const indexColor = this.product.colors.findIndex(x => x.default === true) >= 0 ?
+        this.product.colors.findIndex(x => x.default === true) : 0;
       this.color = this.product.colors[indexColor];
     }
   }
