@@ -1,4 +1,4 @@
-import {Component, ElementRef, Renderer, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, Renderer, ViewChild} from '@angular/core';
 import {NgModel} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
@@ -97,8 +97,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   private resizeCover() {
-    const w = this.coverbg.nativeElement.offsetWidth;
-    const h = (coverSize.w / w) * coverSize.h;
+    const w = this.coverbg.nativeElement.offsetWidth, h = (coverSize.w / w) * coverSize.h;
     this.renderer.setElementStyle(this.coverbg.nativeElement, 'height', h + 'px');
   }
 
@@ -188,13 +187,9 @@ export class DetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  public removeBanner() {
-    this.StorefrontsService.storefront.banner = '';
-  }
-
-  public setVisibility(val) {
-    this.StorefrontsService.storefront.private = val;
-  }
+  public removeBanner = () => this.StorefrontsService.storefront.banner = '';
+  public setVisibility = val => this.StorefrontsService.storefront.private = val;
+  public goBack = () => this.router.navigate([`/storefronts`]);
 
   public suggestion() {
     if (this.StorefrontsService.storefront.id === '' && this.StorefrontsService.storefront.title !== '') {
@@ -227,10 +222,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       }
       this.DialogSubs.unsubscribe();
     });
-  }
-
-  public goBack() {
-    this.router.navigate([`/storefronts`]);
   }
 
   public setState(state) {

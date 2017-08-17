@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {StorefrontsService} from './storefronts.service';
 import {store_states} from '../../lib/const';
+import {AppService} from '../../app.service';
 
 @Component({
   selector: 'app-storefronts',
@@ -15,14 +16,15 @@ export class StorefrontsComponent implements OnInit {
   public states = store_states;
   public stateName = '';
 
-  constructor(public StorefrontsService: StorefrontsService, private router: Router) {
+  constructor(public StorefrontsService: StorefrontsService, private router: Router, private AppService: AppService) {
 
   }
 
   ngOnInit() {
-    for (let i = 0; i < this.states.length; i++) {
-      if (this.states[i].id === this.StorefrontsService.search.state) {
-        this.stateName = this.states[i].name;
+    for (const item of this.states) {
+      if (item.id === this.StorefrontsService.search.state) {
+        this.stateName = item.name;
+        break;
       }
     }
     this.getStorefronts();
@@ -47,11 +49,9 @@ export class StorefrontsComponent implements OnInit {
     this.getStorefronts();
   }
 
-  public goDetail(store) {
-    this.router.navigate([`/storefronts/${store.id}`]);
-  }
-
-  public addStorefront() {
-    this.router.navigate([`/storefronts/add`]);
-  }
+  public goDetail = store => this.router.navigate([`/storefronts/${store.id}`]);
+  public addStorefront = () => this.router.navigate([`/storefronts/add`]);
+  public genStoreDetailUrl = uri => 'http://' + this.AppService.svConfig['system.ecomerce.domain.name']
+    + this.AppService.svConfig['store.detail.uri.prefix'] + '/' + uri.split('/').join('');
+  public goView = store => window.open(this.genStoreDetailUrl(store.url), '_blank');
 }

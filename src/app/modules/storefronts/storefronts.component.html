@@ -37,7 +37,8 @@
           {{store.title}}
         </td>
         <td>
-          {{store.url}}
+          <a (click)="goView(store)"
+             href="javascript:void(0);">{{genStoreDetailUrl(store.url)}}</a>
         </td>
         <td>
           <button (click)="goDetail(store)" class="btn btn-xs btn-default">

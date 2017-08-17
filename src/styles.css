@@ -244,3 +244,7 @@ footer .col-footer {
 .label-red {
   color: red;
 }
+
+.tooltip-inner {
+  max-width: 500px;
+}
