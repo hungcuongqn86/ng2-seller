@@ -1,39 +1,23 @@
 import {Injectable} from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate} from '@angular/router';
 import {HttpClient} from './lib/http';
 import {DsLib} from './lib/lib';
 
 @Injectable()
 export class AppGuard implements CanActivate {
-    constructor(private http: HttpClient) {
-    }
+  constructor(private http: HttpClient) {
+  }
 
-    canActivate(route: ActivatedRouteSnapshot) {
-        const step = route.url[0].path;
-        let checkRoute = false;
-        if (this.http.canActive.includes(step)) {
-            checkRoute = true;
-        }
+  canActivate(route: ActivatedRouteSnapshot) {
+    const step = route.url[0].path, checkRoute = this.http.canActive.includes(step);
+    const checkLogin = DsLib.checkSession(), tooken = DsLib.checkLogin() ? DsLib.getToken().id : '';
+    return this.http.checkAccess(() => this.canAccessScreen(), () => this.pass(), tooken, checkRoute, checkLogin);
+  }
 
-        // Check session
-        let checkLogin = false;
-        if (DsLib.checkSession()) {
-            checkLogin = true;
-        }
+  private canAccessScreen() {
+    DsLib.removeToken();
+    this.http.router.navigate(['/auth/login']);
+  }
 
-        let tooken = '';
-        if (DsLib.checkLogin()) {
-            tooken = DsLib.getToken().id;
-        }
-        return this.http.checkAccess(() => this.canAccessScreen(), () => this.pass(), tooken, checkRoute, checkLogin);
-    }
-
-    private canAccessScreen() {
-        DsLib.removeToken();
-        this.http.router.navigate(['/auth/login']);
-    }
-
-    private pass() {
-        this.http.profile = DsLib.getProfile();
-    }
+  private pass = () => this.http.profile = DsLib.getProfile();
 }
