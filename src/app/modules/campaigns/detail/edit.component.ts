@@ -62,7 +62,7 @@ export class EditComponent implements OnInit, OnDestroy {
       }
     }
     this.product = this.getProductDefault();
-    this.face = this.getFace();
+    this.face = Ds.getFace(this.CampaignsService.campaign);
   }
 
   ngOnDestroy() {
@@ -145,16 +145,6 @@ export class EditComponent implements OnInit, OnDestroy {
 
   public getOldOpt = (product) => product.base.type ? Ds._getMainOpt(product.base.type.id, this.face,
     this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign) : null;
-
-  private getFace(): any {
-    const check = this.CampaignsService.campaign.products.findIndex(x => x.default === true);
-    if (check >= 0) {
-      if (this.CampaignsService.campaign.products[check].back_view) {
-        return 'back';
-      }
-    }
-    return 'front';
-  }
 
   public changeProduct() {
     this.DialogSubs = this.CampaignsService.http.dialogService.addDialog(ProductdfComponent, {

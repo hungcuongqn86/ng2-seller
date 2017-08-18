@@ -3,93 +3,69 @@ import {DialogComponent, DialogService} from 'ng2-bootstrap-modal';
 import {Ds} from '../lib/ds';
 
 export interface PromptModel {
-    title;
-    campaign;
-    arrbasetypes;
+  title;
+  campaign;
+  arrbasetypes;
 }
 
 @Component({
-    templateUrl: './productdf.component.html',
-    styleUrls: ['./productdf.component.css']
+  templateUrl: './productdf.component.html',
+  styleUrls: ['./productdf.component.css']
 })
 export class ProductdfComponent extends DialogComponent<PromptModel, string> implements PromptModel, OnInit {
-    public title;
-    public campaign: any;
-    public product: any;
-    public arrbasetypes: any;
-    public face = 'front';
-    public color: any = null;
+  public title;
+  public campaign: any;
+  public product: any;
+  public arrbasetypes: any;
+  public face = 'front';
+  public color: any = null;
 
-    constructor(dialogService: DialogService) {
-        super(dialogService);
-    }
+  constructor(dialogService: DialogService) {
+    super(dialogService);
+  }
 
-    ngOnInit() {
-        this.product = this.getProductDefault();
-        this.face = this.getFace();
-    }
+  ngOnInit() {
+    this.product = this.getProductDefault();
+    this.face = Ds.getFace(this.campaign);
+  }
 
-    private getProductDefault(): any {
-        let check = this.campaign.products.findIndex(x => x.default === true);
-        if (check < 0) {
-            check = 0;
-        }
-        return this.campaign.products[check];
-    }
+  private getProductDefault(): any {
+    const check = this.campaign.products.findIndex(x => x.default === true) >= 0 ?
+      this.campaign.products.findIndex(x => x.default === true) : 0;
+    return this.campaign.products[check];
+  }
 
-    public getOldOpt(product): any {
-        return Ds._getMainOpt(product.base.type.id, 'front', this.arrbasetypes, this.campaign);
-    }
+  public getOldOpt = product => Ds._getMainOpt(product.base.type.id, 'front', this.arrbasetypes, this.campaign);
 
-    private getFace(): any {
-        const check = this.campaign.products.findIndex(x => x.default === true);
-        if (check >= 0) {
-            if (this.campaign.products[check].back_view) {
-                return 'back';
-            }
-        }
-        return 'front';
+  private selectProduct(prod) {
+    if (this.product.id !== prod.id) {
+      this.product = prod;
     }
+  }
 
-    private selectProduct(prod) {
-        if (this.product.id !== prod.id) {
-            this.product = prod;
-        }
-    }
+  public changeColor(e, prod, itemColor) {
+    e.stopPropagation();
+    this.selectProduct(prod);
+    this.color = itemColor;
+    Object.keys(this.product.colors).map((index) => {
+      this.product.colors[index].default = this.product.colors[index].id === itemColor.id;
+    });
+  }
 
-    public changeColor(e, prod, itemColor) {
-        e.stopPropagation();
-        this.selectProduct(prod);
-        this.color = itemColor;
-        Object.keys(this.product.colors).map((index) => {
-            if (this.product.colors[index].id === itemColor.id) {
-                this.product.colors[index].default = true;
-            } else {
-                this.product.colors[index].default = false;
-            }
-        });
-    }
+  public setFace(face) {
+    this.face = face;
+    const prod: any = [];
+    Object.keys(this.product).map((index) => {
+      prod[index] = this.product[index];
+    });
+    prod.back_view = this.face === 'back';
+    this.product = prod;
+  }
 
-    public setFace(face) {
-        this.face = face;
-        const prod: any = [];
-        Object.keys(this.product).map((index) => {
-            prod[index] = this.product[index];
-        });
-        if (this.face === 'front') {
-            prod.back_view = false;
-        } else {
-            prod.back_view = true;
-        }
-        this.product = prod;
-    }
+  public mdClose = () => this.close();
 
-    public mdClose() {
-        this.close();
-    }
-
-    public confirm() {
-        this.result = this.product;
-        this.close();
-    }
+  public confirm() {
+    this.result = this.product;
+    this.close();
+  }
 }
