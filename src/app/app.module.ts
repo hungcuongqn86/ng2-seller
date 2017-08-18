@@ -14,7 +14,7 @@ import {PublicService} from './public/public.service';
 import {AppService} from './app.service';
 import {routing} from './app.routing.module';
 
-import {TranslateModule, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import {TranslateLoader, TranslateModule, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {ProgressBarModule} from 'ngx-progress-bar';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {AlertComponent} from './public/alert.component';
@@ -31,7 +31,7 @@ import {SharedModule} from './public/shared.module';
 import {environment} from '../environments/environment';
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateStaticLoader(http, environment.basename + '/assets/i18n', '.json?v=1.0.1');
+  return new TranslateStaticLoader(http, environment.basename + '/assets/i18n', '.json?v=1.0.2');
 }
 
 @NgModule({
