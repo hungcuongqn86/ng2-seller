@@ -1,244 +1,244 @@
 /* You can add global styles to this file, and also import other style files */
 *,
 ol, ul, li {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .clearfix {
-    clear: both;
+  clear: both;
 }
 
 a:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /*MENU*/
 
 .mnu-top {
-    background: #00517f;
-    /*padding:10px 0;*/
-    color: #fff;
+  background: #00517f;
+  /*padding:10px 0;*/
+  color: #fff;
 }
 
 @media (max-width: 768px) {
-    .mnu-top {
-        text-align: center !important;
-    }
+  .mnu-top {
+    text-align: center !important;
+  }
 }
 
 .mnu-top a {
-    color: #fff;
-    padding: 10px 0;
-    padding-left: 20px;
-    font-size: 13px;
-    text-align: right;
+  color: #fff;
+  padding: 10px 0;
+  padding-left: 20px;
+  font-size: 13px;
+  text-align: right;
 }
 
 .mnu-top a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .mnu-top li {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
 .cart-top i {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .navbar-fixed-top .nav {
-    padding: 15px 0;
+  padding: 15px 0;
 }
 
 .navbar-fixed-top .navbar-brand {
-    padding: 0 15px;
+  padding: 0 15px;
 }
 
 @media (max-width: 768px) {
-    .navbar-inverse {
-        background: #d7eefd !important;
-    }
+  .navbar-inverse {
+    background: #d7eefd !important;
+  }
 }
 
 .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
-    background-color: #d7eefd;
+  background-color: #d7eefd;
 }
 
 @media (min-width: 992px) {
-    .navbar-inverse {
-        padding: 10px 0;
-    }
+  .navbar-inverse {
+    padding: 10px 0;
+  }
 }
 
 .navbar-inverse {
-    background-color: transparent;
-    border-color: transparent;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 .navbar-inverse .navbar-nav > li > a {
-    color: #333;
-    text-transform: uppercase;
-    font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
-    color: #0495e8;
-    background-color: transparent;
+  color: #0495e8;
+  background-color: transparent;
 }
 
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
-    color: #0495e8;
-    background-color: transparent;
+  color: #0495e8;
+  background-color: transparent;
 }
 
 .navbar-inverse .navbar-toggle {
-    border-color: #00517f;
+  border-color: #00517f;
 }
 
 .navbar-inverse .navbar-toggle .icon-bar {
-    background-color: #00517f;
+  background-color: #00517f;
 }
 
 @media (max-width: 768px) {
-    .navbar-collapse {
-        float: none !important;
-    }
+  .navbar-collapse {
+    float: none !important;
+  }
 }
 
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    border-color: transparent;
+  border-color: transparent;
 }
 
 /*Mega menu*/
 .mega-menu {
-    min-width: 460px;
-    padding: 30px;
-    border: 0;
+  min-width: 460px;
+  padding: 30px;
+  border: 0;
 }
 
 .mega-menu ul li {
-    list-style: none;
-    margin: 15px 0;
+  list-style: none;
+  margin: 15px 0;
 }
 
 .title-mnu-mage {
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #0495e8;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #0495e8;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 15px;
 }
 
 .mega-menu ul li a {
-    color: #333;
+  color: #333;
 }
 
 .mega-menu ul li a:hover {
-    color: #0495e8;
+  color: #0495e8;
 }
 
 /*Search Form*/
 @media (max-width: 768px) {
-    .form-search-header {
-        width: 65%;
-        margin: 8px 15px;
-    }
+  .form-search-header {
+    width: 65%;
+    margin: 8px 15px;
+  }
 }
 
 .form-search-header {
-    margin-top: 8px;
-    padding-right: 0;
+  margin-top: 8px;
+  padding-right: 0;
 }
 
 /*Footer*/
 footer {
-    margin-top: 70px;
+  margin-top: 70px;
 }
 
 footer .col-footer {
-    background: #00517f;
-    padding: 50px 0;
+  background: #00517f;
+  padding: 50px 0;
 
 }
 
 .col-item-foooter a {
-    color: #fff;
+  color: #fff;
 }
 
 .col-item-foooter h3 {
-    text-transform: uppercase;
-    color: #66bff2;
-    font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 15px;
+  text-transform: uppercase;
+  color: #66bff2;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 15px;
 }
 
 .col-item-foooter li {
-    list-style: none;
-    margin: 10px 0;
+  list-style: none;
+  margin: 10px 0;
 }
 
 .col-item-foooter li a:hover {
-    color: #3ba6e4;
+  color: #3ba6e4;
 }
 
 .change-lang button,
 .change-money select {
-    background: transparent;
-    border-radius: 0;
-    border-color: #66bff2;
-    color: #fff;
+  background: transparent;
+  border-radius: 0;
+  border-color: #66bff2;
+  color: #fff;
 }
 
 .change-money select option {
-    color: #333;
+  color: #333;
 }
 
 .copyright {
-    background: #333;
-    color: #b1b1b1;
+  background: #333;
+  color: #b1b1b1;
 }
 
 .copyright p {
-    margin: 0;
-    padding: 5px;
-    font-size: 13px;
+  margin: 0;
+  padding: 5px;
+  font-size: 13px;
 }
 
 /*
 ---
 */
 .select2-container {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border: 1px solid dodgerblue !important;
-    box-shadow: 0 0 8px -2px dodgerblue;
+  border: 1px solid dodgerblue !important;
+  box-shadow: 0 0 8px -2px dodgerblue;
 }
 
 .select2-dropdown {
-    box-shadow: 0 0 8px -2px dodgerblue;
+  box-shadow: 0 0 8px -2px dodgerblue;
 }
 
 .has-error .select2-selection {
-    border-color: #a94442 !important;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  border-color: #a94442 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 }
 
 .lightblue {
-    background: #0495e8;
-    border-color: #0489d6;
-    color: #fff;
+  background: #0495e8;
+  border-color: #0489d6;
+  color: #fff;
 }
 
 .bootstrap-switch .bootstrap-switch-label {
-    padding-right: 21px !important;
+  padding-right: 21px !important;
 }
 
 .label-red {
@@ -247,4 +247,21 @@ footer .col-footer {
 
 .tooltip-inner {
   max-width: 500px;
+}
+
+.dropdown-multiselect {
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-multiselect .caret {
+  right: 10px;
+  position: absolute;
+  top: 15px;
+}
+
+.gdropdown-multiselect {
+  border: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }

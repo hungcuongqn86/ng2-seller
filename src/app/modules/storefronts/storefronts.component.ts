@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {StorefrontsService} from './storefronts.service';
-import {store_states} from '../../lib/const';
+import {myMultiSelectText, mySMultiSelectSettings, store_states} from '../../lib/const';
 import {AppService} from '../../app.service';
 
 @Component({
@@ -14,7 +14,10 @@ export class StorefrontsComponent implements OnInit {
   private subs: any;
   public StorefrontsData: any = {};
   public states = store_states;
-  public stateName = '';
+
+  public mySSettings = mySMultiSelectSettings;
+  public myText = myMultiSelectText;
+  public statesModel: Array<any>;
 
   constructor(public StorefrontsService: StorefrontsService, private router: Router, private AppService: AppService) {
 
@@ -23,7 +26,7 @@ export class StorefrontsComponent implements OnInit {
   ngOnInit() {
     for (const item of this.states) {
       if (item.id === this.StorefrontsService.search.state) {
-        this.stateName = item.name;
+        this.statesModel = [this.StorefrontsService.search.state];
         break;
       }
     }
@@ -43,9 +46,8 @@ export class StorefrontsComponent implements OnInit {
     );
   }
 
-  public selState(state) {
-    this.stateName = state.name;
-    this.StorefrontsService.search.state = state.id;
+  public selState() {
+    this.StorefrontsService.search.state = this.statesModel.join(',');
     this.getStorefronts();
   }
 

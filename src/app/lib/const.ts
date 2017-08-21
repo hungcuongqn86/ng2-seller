@@ -17,3 +17,22 @@ export const store_states = [{
   id: 'deleted',
   name: 'Deleted'
 }];
+
+export const promotionDiscount = '24yQLTr5bg5f5Cor';
+export const myMultiSelectText = {
+  defaultTitle: ''
+};
+export const mySMultiSelectSettings = {
+  checkedStyle: 'fontawesome',
+  selectionLimit: 1,
+  autoUnselect: true,
+  closeOnSelect: true,
+  buttonClasses: 'btn btn-default btn-block dropdown-multiselect'
+};
+export const myGMultiSelectSettings = {
+  checkedStyle: 'fontawesome',
+  selectionLimit: 1,
+  autoUnselect: true,
+  closeOnSelect: true,
+  buttonClasses: 'btn btn-default gdropdown-multiselect'
+};
