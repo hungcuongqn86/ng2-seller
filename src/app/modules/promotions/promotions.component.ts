@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ConfirmComponent} from '../../public/confirm.component';
 import {PromotionsService} from './promotions.service';
-import {myMultiSelectText,myGMultiSelectSettings, mySMultiSelectSettings, promotionDiscount} from '../../lib/const';
+import {myGMultiSelectSettings, myMultiSelectText, mySMultiSelectSettings, promotionDiscount} from '../../lib/const';
 import {Observable} from 'rxjs/Rx';
 
 @Component({

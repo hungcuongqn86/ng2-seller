@@ -260,6 +260,10 @@ footer .col-footer {
   top: 15px;
 }
 
+.input-group .multiselect {
+  padding: 0;
+}
+
 .gdropdown-multiselect {
   border: none;
   border-top-right-radius: 0;

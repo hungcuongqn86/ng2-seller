@@ -7,7 +7,7 @@ import {StorefrontsService} from './storefronts.service';
 import {QuillEditorComponent} from 'ngx-quill/src/quill-editor.component';
 import {CampaignsdlComponent} from '../../public/campaigns.component';
 import {ConfirmComponent} from '../../public/confirm.component';
-import {coverSize} from '../../lib/const';
+import {coverSize, myGMultiSelectSettings, myMultiSelectText} from '../../lib/const';
 
 @Component({
   selector: 'app-campaign-detail',
@@ -24,6 +24,10 @@ export class DetailComponent implements OnInit, OnDestroy {
   private subs: any;
   private DialogSubs: any;
   public campaigns: Array<any> = [];
+
+  public myGSettings = myGMultiSelectSettings;
+  public myText = myMultiSelectText;
+  public domainModel: Array<any> = [];
 
   @ViewChild('editor') editor: QuillEditorComponent;
   public quillOption = {
@@ -52,6 +56,20 @@ export class DetailComponent implements OnInit, OnDestroy {
     });
     if (this.StorefrontId) {
       this.btnUpdateTitle = 'Update storefront';
+    } else {
+      this.StorefrontsService.storefront = {
+        id: '',
+        title: '',
+        desc: '',
+        url: {
+          domain: '',
+          uri: ''
+        },
+        private: false,
+        banner: '',
+        campaigns: ''
+      };
+      this.form.reset();
     }
     this.setupdata();
   }
@@ -74,16 +92,12 @@ export class DetailComponent implements OnInit, OnDestroy {
       () => {
         if (this.arrDomains.length) {
           if (this.StorefrontsService.storefront.url.domain === '') {
-            this.setDomain(this.arrDomains[0]);
+            this.StorefrontsService.storefront.url.domain = this.arrDomains[0].id;
+            this.domainModel = [this.arrDomains[0].id];
           } else {
-            Object.keys(this.arrDomains).map((index) => {
-              if (this.arrDomains[index].id = this.StorefrontsService.storefront.url.domain) {
-                this.setDomain(this.arrDomains[index]);
-              }
-            });
+            this.domainModel = [this.StorefrontsService.storefront.url.domain];
           }
         }
-
         if (this.StorefrontsService.storefront.banner !== '') {
           this.resizeCover();
         }
@@ -143,9 +157,12 @@ export class DetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  public setDomain(domail) {
-    this.StorefrontsService.storefront.url.domain = domail.id;
-    this.url = domail.name;
+  public setDomain() {
+    if (this.domainModel.length === 0) {
+      this.domainModel = [this.StorefrontsService.storefront.url.domain];
+    } else {
+      this.StorefrontsService.storefront.url.domain = this.domainModel.join(',');
+    }
   }
 
   public checkSuggestion() {
