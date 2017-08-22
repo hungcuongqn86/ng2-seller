@@ -24,12 +24,8 @@ export class StorefrontsComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (const item of this.states) {
-      if (item.id === this.StorefrontsService.search.state) {
-        this.statesModel = [this.StorefrontsService.search.state];
-        break;
-      }
-    }
+    this.myText.defaultTitle = 'Select all';
+    this.statesModel = [this.StorefrontsService.search.state];
     this.getStorefronts();
   }
 

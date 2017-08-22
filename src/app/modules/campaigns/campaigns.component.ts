@@ -1,8 +1,8 @@
-import {Component, ViewChild, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {CampaignsService} from './campaigns.service';
 import {AppService} from '../../app.service';
-import {campaign_states} from '../../lib/const';
+import {campaign_states, myMultiSelectText, mySMultiSelectSettings} from '../../lib/const';
 
 @Component({
   selector: 'app-campaigns',
@@ -15,19 +15,18 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   public CampaignData: any = {};
   private subs: any;
   public states = campaign_states;
-  public stateName = '';
+
+  public mySSettings = mySMultiSelectSettings;
+  public myText = myMultiSelectText;
+  public statesModel: Array<any>;
 
   constructor(public CampaignsService: CampaignsService, public AppService: AppService, private router: Router) {
     this.CampaignsService.campaign = null;
   }
 
   ngOnInit() {
-    for (const item of this.states) {
-      if (item.id === this.CampaignsService.search.state) {
-        this.stateName = item.name;
-        break;
-      }
-    }
+    this.myText.defaultTitle = 'Select all';
+    this.statesModel = [this.CampaignsService.search.state];
     this.getCampaigns();
   }
 
@@ -66,9 +65,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   public genCampaignDetailUrl = uri => 'http://' + this.AppService.svConfig['system.ecomerce.domain.name']
     + this.AppService.svConfig['campaign.detail.uri.prefix'] + '/' + uri.split('/').join('');
 
-  public selState(state) {
-    this.stateName = state.name;
-    this.CampaignsService.search.state = state.id;
+  public selState() {
+    this.CampaignsService.search.state = this.statesModel.join(',');
     this.getCampaigns();
   }
 }

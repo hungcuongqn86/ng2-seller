@@ -41,6 +41,7 @@ export class PromotionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.myText.defaultTitle = '';
     this.getPromotions();
     this.getPromotionsType();
     this.getDiscountType();
