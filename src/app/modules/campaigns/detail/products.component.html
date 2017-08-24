@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-sm-12">
+    <form novalidate #form="ngForm">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th style="width: 12%;">Product
+            <button (click)="openBases()" class="btn btn-xs btn-default">
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
+            </button>
+          </th>
+          <th style="width: 20%;"></th>
+          <th>Base cost</th>
+          <th>Sale price</th>
+          <th>Expected sales</th>
+          <th>Profit / Unit</th>
+          <th>Profit</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let prod of CampaignsService.campaign.products">
+          <td>
+            <div appProduct [product]="prod" [face]="face" [mainopt]="getOldOpt(prod)"></div>
+          </td>
+          <td>{{prod.base.name}}
+            <div class="colors">
+              <template ngFor let-itemColor [ngForOf]="prod.colors">
+                <div class="color">
+                  <ninip-lgcolor [color]="itemColor.value"></ninip-lgcolor>
+                </div>
+              </template>
+              <div class="color">
+                <ninip-lgcolor [color]="'steelblue'" [faclass]="'fa-plus'" (click)="openColors(prod)"></ninip-lgcolor>
+              </div>
+            </div>
+          </td>
+          <td>
+            ${{prod.base.cost}}
+          </td>
+          <td>
+            ${{prod.price}}
+          </td>
+          <td>
+            {{prod.sale_expected}}
+          </td>
+          <td>
+            ${{ccProfit(prod)}}
+          </td>
+          <td>
+            ${{cctProfit(prod)}}
+          </td>
+          <td>
+            <button (click)="deleteProduct(prod)" class="btn btn-xs btn-default">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

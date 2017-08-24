@@ -1,0 +1,7 @@
+.nav-tabs > li {
+    cursor: pointer;
+}
+
+.action button {
+    margin-top: 10px;
+}

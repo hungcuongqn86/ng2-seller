@@ -1,0 +1,23 @@
+<div class="modal-dialog product-modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="panel panel-default produc-box">
+                <div class="panel-body">
+                    <div class="row">
+                        <div *ngFor="let variant of variants" class="col-sm-2">
+                            <div (click)="selectVar(variant)" class="variant">
+                                <img src="{{variant.image.front}}">
+                                <span *ngIf="variants_sl.indexOf(variant.id) >= 0" class="variant-chk"><i
+                                        class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" (click)="mdClose()" class="btn btn-default pull-right margin"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button" (click)="confirm()" class="btn btn-primary pull-right margin">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

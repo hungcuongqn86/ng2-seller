@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col-sm-12">
+    <form novalidate (ngSubmit)="searchCampaigns()" #form="ngForm">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+                        <span data-toggle="dropdown" class="form-control">{{stateName}}<i
+                          style="margin-top: 4px;"
+                          class="fa fa-caret-down pull-right"
+                          aria-hidden="true"></i></span>
+            <ul class="dropdown-menu dropdown-promotions">
+              <li *ngFor='let state of states'><a
+                (click)="selState(state)"
+                href="javascript:void(0)">{{state.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-4 col-sm-offset-4">
+          <div class="form-group">
+            <input title="Filter by search" placeholder="Search for campaign by URL or title"
+                   [(ngModel)]="CampaignsService.search.title"
+                   name="title" id="title"
+                   class="form-control">
+          </div>
+        </div>
+      </div>
+    </form>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th style="width: 15%;">Campaign
+          <button (click)="AppService.addCampaign()" class="btn btn-xs btn-default">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+          </button>
+        </th>
+        <th style="width: 30%;"></th>
+        <th>Orders</th>
+        <th>Unit sales</th>
+        <th>Total profit</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let camp of CampaignData.campaigns | paginate: {  itemsPerPage: CampaignsService.search.page_size, currentPage: CampaignsService.search.page, totalItems: CampaignData.total}">
+        <td>
+          <div appCampaign [campaign]="camp"></div>
+        </td>
+        <td>
+          <p>{{camp.title}}</p>
+
+          <p><a (click)="goView(camp)"
+                href="javascript:void(0);">{{genCampaignDetailUrl(camp.url)}}</a></p>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+          <button (click)="goDetail(camp)" class="btn btn-xs btn-default">
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div *ngIf="CampaignData.total > CampaignsService.search.page_size">
+      <pagination-template #api="paginationApi"
+                           (pageChange)="getPage($event)">
+        <ul class="pagination pagination-sm">
+          <li [class.disabled]="api.isFirstPage()">
+            <a *ngIf="!api.isFirstPage()" (click)="api.previous()" href="javascript:void(0);"><i
+              class="fa fa-chevron-left"
+              aria-hidden="true"></i></a>
+            <a *ngIf="api.isFirstPage()" href="javascript:void(0);"><i
+              class="fa fa-chevron-left"
+              aria-hidden="true"></i></a>
+          </li>
+          <li *ngFor="let page of api.pages"
+              [class.active]="api.getCurrent() === page.value">
+            <a (click)="api.setCurrent(page.value)" *ngIf="api.getCurrent() !== page.value"
+               href="javascript:void(0);">
+              <span>{{ page.label }}</span>
+            </a>
+            <a *ngIf="api.getCurrent() === page.value" href="javascript:void(0);">{{ page.label }}</a>
+          </li>
+          <li [class.disabled]="api.isLastPage()">
+            <a *ngIf="!api.isLastPage()" (click)="api.next()" href="javascript:void(0);"><i
+              class="fa fa-chevron-right"
+              aria-hidden="true"></i></a>
+            <a *ngIf="api.isLastPage()" href="javascript:void(0);"><i
+              class="fa fa-chevron-right"
+              aria-hidden="true"></i></a>
+          </li>
+        </ul>
+      </pagination-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+.modal-dialog {
+    height: 95%;
+    width: 70%;
+}
+
+.modal-content {
+    height: 95%;
+}
+
+.modal-header {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.modal-header .close {
+    margin-top: 10px;
+}
+
+.modal-body {
+    max-height: calc(100% - 80px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: 75%;
+}
+
+.producs-base-item {
+    border: 1px solid #ddd;
+    margin-top: 15px;
+    cursor: pointer;
+    background-color: beige;
+}
+
+.producs-base-item:hover {
+    background-color: #1b6d85;
+}
+
+.producs-base-item img {
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+.producs-base-item .produc-name {
+    margin: 5px;
+    margin-top: 15px;
+}
+
+.breadcrumb {
+    background-color: #fff;
+    font-size: 20px;
+    margin-bottom: 0;
+}

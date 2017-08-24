@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group" style="margin-top: 10px;">
+            <label>Product</label>
+            <span data-toggle="dropdown" class="form-control">{{product.base.name}}<i
+                    style="margin-top: 4px;"
+                    class="fa fa-caret-down pull-right"
+                    aria-hidden="true"></i></span>
+            <ul class="dropdown-menu dropdown-promotions">
+                <li *ngFor="let prod of CampaignsService.campaign.products"><a (click)="setProduct(prod)"
+                                                                               href="javascript:void(0)">{{prod.base.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <form #form="ngForm">
+            <input [(ngModel)]="fMockup.file" #filePicker="ngModel" style="display: none;"
+                   type="file" id="filePicker" name="filePicker"
+                   class="form-control"
+                   (change)="handleFileSelect($event)">
+        </form>
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>Mockups</strong>
+                <label title="Upload for the group" (click)="setSelectMulti()" for="filePicker"
+                       class="btn btn-xs btn-default pull-right margin">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                </label>
+                <label title="Add template" (click)="openTemplate()" class="btn btn-xs btn-default pull-right margin">
+                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                </label>
+            </div>
+            <div class="panel-body">
+                <div *ngFor="let variant of product.variants" class="row row-eq-height variants">
+                    <div *ngFor="let mockup of variant.mockupsConvert" class="col-sm-3 ctr-add">
+                        <img *ngIf="mockup.type !== 'add'" src="{{mockup.url}}">
+                        <span *ngIf="mockup.type === 'ds'" class="variant-fl"><i class="fa fa-lock"
+                                                                                 aria-hidden="true"></i></span>
+                        <span *ngIf="mockup.type === 'mup'" (click)="deleteMockup(mockup)" title="Delete"
+                              class="action-del"><i
+                                class="fa fa-times-circle"
+                                aria-hidden="true"></i></span>
+                        <div *ngIf="mockup.type === 'add'">
+                            <label (click)="selectVariant(variant)" for="filePicker"><i title="Add new"
+                                                                                        class="fa fa-upload"
+                                                                                        aria-hidden="true"></i></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

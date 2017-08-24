@@ -1,0 +1,46 @@
+{
+  "HEADER": {
+    "START_DESIGNING": "Start Designing",
+    "REGISTER": "Register",
+    "SIGN_IN": "Sign in"
+  },
+  "COMMON": {
+    "CAMPAIGN": "Campaign",
+    "CAMPAIGNS": "Campaigns",
+    "PROMOTIONS": "Promotions",
+    "STOREFRONTS": "Storefronts",
+    "SIGN_OUT": "Logout",
+    "DETAL_LABLE": "Detail",
+    "ADD_LABLE": "Add",
+    "EDIT_LABLE": "Edit",
+    "SAVE": "Save"
+  },
+  "NAVIGATOR": {
+    "DESIGN": "Products & Designs"
+  },
+  "AUTH": {
+    "REGISTER": "Register",
+    "SIGN_IN": "Sign in"
+  },
+  "FOOTER": {
+    "MARKETPLACE": "Marketplace",
+    "SHOP": "Shop",
+    "OPEN_A_SHOP": "Open a shop",
+    "HOW_IT_WORKS": "How it works",
+    "GETTINGS_STARTED": "Gettings Started",
+    "NEW_CLOTH_ACADENY": "New Cloth Acadeny",
+    "HELP": "Help",
+    "TRACK_ORDER": "Track order",
+    "HELP_CENTER": "Help center",
+    "FAQ": "FAQ",
+    "RETURNS": "Returns",
+    "CONTACT_US": "Contact us",
+    "COMPANY": "Company",
+    "ABOUT_US": "About us",
+    "PRIVACY": "Privacy",
+    "TERMS": "Terms",
+    "CARRERS": "Carrers",
+    "PARTNERS": "Partners",
+    "FOLLOW_US": "Follow us"
+  }
+}

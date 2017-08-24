@@ -1,0 +1,18 @@
+.modal-dialog {
+    width: 50%;
+}
+
+.ColorPicker .color {
+    display: inline-block;
+    margin: 5px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.produc-box {
+    margin-bottom: 0;
+}
+
+.margin {
+    margin: 5px;
+}

@@ -1,0 +1,164 @@
+<div class="row">
+  <div class="col-sm-12">
+    <form novalidate #form="ngForm">
+      <div class="panel panel-default">
+        <div class="panel-heading">Create New Promotion</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group"
+                   [ngClass]="((code.touched && !code.valid)||!checkcode.available)? 'has-error': ''">
+                <label for="code">Promo ID (alphanumeric)</label>
+                <input [(ngModel)]="promotion.code" #code="ngModel" name="code" id="code"
+                       [maxLength]="50"
+                       (change)="checkDupp()"
+                       pattern="^[\w\d]+$" required
+                       class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Type</label>
+                <span data-toggle="dropdown" class="form-control">{{promotion_type}}<i
+                  style="margin-top: 4px;"
+                  class="fa fa-caret-down pull-right"
+                  aria-hidden="true"></i></span>
+                <ul class="dropdown-menu dropdown-promotions">
+                  <li *ngFor='let itemPmt of promotionsTypeData'><a
+                    (click)="setPromotionType(itemPmt)"
+                    href="javascript:void(0)">{{itemPmt.name}}</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div [hidden]="promotion.type!=='24yQLTr5bg5f5Cor'" class="col-sm-3">
+              <div class="form-group" [ngClass]="(amount.touched && !amount.valid)? 'has-error': ''">
+                <label for="amount">Amount</label>
+                <div class="input-group">
+                                    <span data-toggle="dropdown" class="input-group-addon">{{discount_type}}<i
+                                      class="fa fa-caret-down" style="margin-left: 8px;"
+                                      aria-hidden="true"></i></span>
+                  <ul class="dropdown-menu dropdown-amount">
+                    <li *ngFor='let itemDt of discountTypeData'><a (click)="setDiscountType(itemDt)"
+                                                                   href="javascript:void(0)">{{itemDt.name}}</a>
+                    </li>
+                  </ul>
+                  <input [(ngModel)]="promotion.discount_value" #amount="ngModel" type="number"
+                         class="form-control"
+                         min="0"
+                         name="amount" id="amount" [required]="promotion.type==='24yQLTr5bg5f5Cor'">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-2 middle">
+              <div class="form-group">
+                <label style="display: block;">&nbsp;</label>
+                <button (click)="addPromotion()"
+                        [disabled]="!checkcode.available || !form.form.valid"
+                        class="btn {{checkcode.available && form.form.valid? 'btn-primary': 'btn-default'}}">
+                  Add discount
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div [hidden]="checkcode.available && (code.valid || code.untouched)">
+                                <span *ngIf="code.errors && code.errors.required"
+                                      class="help-block alert-warning">
+                                                <i class="fa fa-exclamation-triangle"
+                                                   aria-hidden="true"></i> Promo ID required!!!
+                                            </span>
+                <span *ngIf="code.errors && code.errors.pattern" class="help-block alert-warning">
+                                                <i class="fa fa-exclamation-triangle"
+                                                   aria-hidden="true"></i> Promo ID pattern!!!
+                                            </span>
+                <span *ngIf="!checkcode.available" class="help-block alert-warning">
+                                                <i class="fa fa-exclamation-triangle"
+                                                   aria-hidden="true"></i> Code duplicates!!!!
+                                            </span>
+              </div>
+              <div [hidden]="amount.valid || amount.untouched">
+                                <span *ngIf="amount && amount.errors && amount.errors.required"
+                                      class="help-block alert-warning">
+                                                <i class="fa fa-exclamation-triangle"
+                                                   aria-hidden="true"></i> Amount required!!!
+                                            </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <table class="table table-striped table-hover">
+      <thead>
+      <tr>
+        <th>Promo ID</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Redeemed</th>
+        <th>Status</th>
+        <th class="text-right">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        *ngFor="let promotion of promotionsData.promotions | paginate: {  itemsPerPage: searchparam.page_size, currentPage: searchparam.page, totalItems: promotionsData.total}">
+        <td>
+          {{promotion.code}}
+        </td>
+        <td>
+          {{promotion.type.name}}
+        </td>
+        <td>
+          {{promotion.discount && promotion.discount.type? promotion.discount.type:''}}{{promotion.discount &&
+          promotion.discount.value? promotion.discount.value:''}}
+        </td>
+        <td>
+          {{promotion.used}}
+        </td>
+        <td>
+          <bSwitch [switch-size]="'mini'" (onChangeState)="onSwitchChange($event, promotion)"
+                   [ngModel]="promotion.state === 'approved'"></bSwitch>
+        </td>
+        <td class="middle">
+          <button (click)="deletePromotion(promotion)" class="btn btn-xs btn-default pull-right">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div *ngIf="promotionsData.total > searchparam.page_size">
+      <pagination-template #api="paginationApi"
+                           (pageChange)="getPage($event)">
+        <ul class="pagination pagination-sm">
+          <li [class.disabled]="api.isFirstPage()">
+            <a *ngIf="!api.isFirstPage()" (click)="api.previous()" href="javascript:void(0);"><i
+              class="fa fa-chevron-left"
+              aria-hidden="true"></i></a>
+            <a *ngIf="api.isFirstPage()" href="javascript:void(0);"><i
+              class="fa fa-chevron-left"
+              aria-hidden="true"></i></a>
+          </li>
+          <li *ngFor="let page of api.pages"
+              [class.active]="api.getCurrent() === page.value">
+            <a (click)="api.setCurrent(page.value)" *ngIf="api.getCurrent() !== page.value"
+               href="javascript:void(0);">
+              <span>{{ page.label }}</span>
+            </a>
+            <a *ngIf="api.getCurrent() === page.value" href="javascript:void(0);">{{ page.label }}</a>
+          </li>
+          <li [class.disabled]="api.isLastPage()">
+            <a *ngIf="!api.isLastPage()" (click)="api.next()" href="javascript:void(0);"><i
+              class="fa fa-chevron-right"
+              aria-hidden="true"></i></a>
+            <a *ngIf="api.isLastPage()" href="javascript:void(0);"><i
+              class="fa fa-chevron-right"
+              aria-hidden="true"></i></a>
+          </li>
+        </ul>
+      </pagination-template>
+    </div>
+  </div>
+</div>

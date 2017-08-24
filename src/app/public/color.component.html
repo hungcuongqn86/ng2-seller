@@ -1,0 +1,31 @@
+<div class="modal-dialog product-modal-dialog">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="panel panel-default produc-box">
+        <div class="panel-body">
+          <div class="row producs-list">
+            <div class="col-sm-4">
+              <div appProduct [product]="oProduct" [face]="face" [mainopt]="mainOpt"
+                   [color]="color"></div>
+            </div>
+            <div class="col-sm-8 prod-inf">
+              <div class="colors">
+                <div class="ColorPicker interactive">
+                  <div *ngFor='let itemColor of oProduct.base.colors' class="color">
+                    <ninip-lgcolor [color]="itemColor.value" (click)="selectColor(itemColor)"
+                                   [faclass]="checkColor(itemColor)>=0?'fa-check':null"
+                                   (mouseover)="previewColor(itemColor)"></ninip-lgcolor>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" (click)="mdClose()" class="btn btn-default pull-right margin" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" (click)="confirm()" class="btn btn-primary pull-right margin">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

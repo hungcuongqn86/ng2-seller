@@ -1,0 +1,15 @@
+<div id="app">
+  <div id="wrapper">
+    <app-layouts-header></app-layouts-header>
+    <div class="container">
+      <div class="row">
+        <app-layouts-sidebar *ngIf="PublicService.http.profile"></app-layouts-sidebar>
+        <div
+          [ngClass]="PublicService.http.profile&&PublicService.showsidebar? 'col-sm-8 col-md-9': 'col-sm-12 col-md-12'">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+    <app-layouts-footer></app-layouts-footer>
+  </div>
+</div>

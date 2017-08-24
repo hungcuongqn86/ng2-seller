@@ -1,0 +1,65 @@
+<div class="mnu-top text-right">
+  <div class="container">
+    <ul class="list-inline">
+      <li *ngIf="PublicService.http.profile" style="cursor: pointer;">
+        <a (click)="AppService.addCampaign()">{{ 'HEADER.START_DESIGNING' | translate }}
+        </a></li>
+      <li *ngIf="PublicService.http.profile" class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+           aria-expanded="false">
+          {{PublicService.http.profile}} <span class="caret"></span>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-profile" role="menu">
+          <li>
+            <a routerLink="campaigns" href="javascript: void(0)">
+              {{ 'COMMON.CAMPAIGNS' | translate }} <i class="fa fa-server" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li>
+            <a routerLink="storefronts" href="javascript: void(0)">
+              {{ 'COMMON.STOREFRONTS' | translate }} <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li>
+            <a routerLink="promotions" href="javascript: void(0)">
+              {{ 'COMMON.PROMOTIONS' | translate }} <i class="fa fa-tags" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li>
+            <a (click)="logout()" href="javascript: void(0)">
+              {{ 'COMMON.SIGN_OUT' | translate }} <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <!--<li *ngIf="!PublicService.http.profile">
+          <a routerLinkActive="active" routerLink="auth/register" href="javascript: void(0)">{{
+              'AUTH.REGISTER' | translate }}</a>
+      </li>
+      <li routerLinkActive="active" routerLink="auth/login" *ngIf="!PublicService.http.profile">
+          <a href="javascript: void(0)">{{ 'AUTH.SIGN_IN' | translate }}</a>
+      </li>-->
+      <li>&nbsp;</li>
+    </ul>
+  </div>
+</div>
+<!-- Navigation -->
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <img class="hidden-xs" src="./assets/img/logo-burger.png" alt="">
+        <img class="hidden-lg hidden-md hidden-sm" src="./assets/img/logo-burger-m.png" alt="">
+      </a>
+    </div>
+  </div>
+</nav>
