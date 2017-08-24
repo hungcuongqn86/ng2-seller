@@ -12,9 +12,9 @@
               <div class="colors">
                 <div class="ColorPicker interactive">
                   <div *ngFor='let itemColor of oProduct.base.colors' class="color">
-                    <ninip-lgcolor [color]="itemColor.value" (click)="selectColor(itemColor)"
+                    <ni-color [color]="itemColor.value" (click)="selectColor(itemColor)"
                                    [faclass]="checkColor(itemColor)>=0?'fa-check':null"
-                                   (mouseover)="previewColor(itemColor)"></ninip-lgcolor>
+                                   (mouseover)="previewColor(itemColor)"></ni-color>
                   </div>
                 </div>
               </div>

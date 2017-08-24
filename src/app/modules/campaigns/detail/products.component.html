@@ -27,11 +27,11 @@
             <div class="colors">
               <template ngFor let-itemColor [ngForOf]="prod.colors">
                 <div class="color">
-                  <ninip-lgcolor [color]="itemColor.value"></ninip-lgcolor>
+                  <ni-color [color]="itemColor.value"></ni-color>
                 </div>
               </template>
               <div class="color">
-                <ninip-lgcolor [color]="'steelblue'" [faclass]="'fa-plus'" (click)="openColors(prod)"></ninip-lgcolor>
+                <ni-color [color]="'steelblue'" [faclass]="'fa-plus'" (click)="openColors(prod)"></ni-color>
               </div>
             </div>
           </td>

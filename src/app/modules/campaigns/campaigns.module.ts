@@ -5,7 +5,7 @@ import {HttpModule} from '@angular/http';
 import {QuillModule} from 'ngx-quill';
 import {Select2Module} from 'ng2-select2';
 import {Ng2PaginationModule} from 'ng2-pagination';
-import {LgcolorModule} from 'lgcolor';
+import {LgcolorModule} from 'ngx-selectcolor';
 
 import {CampaignsService} from './campaigns.service';
 import {UploadService} from '../../public/upload.service';

@@ -17,7 +17,7 @@ import {routing} from './app.routing.module';
 import {TranslateLoader, TranslateModule, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {ProgressBarModule} from 'ngx-progress-bar';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
-import {LgcolorModule} from 'lgcolor';
+import {LgcolorModule} from 'ngx-selectcolor';
 import {AlertComponent} from './public/alert.component';
 import {ConfirmComponent} from './public/confirm.component';
 import {LoadingComponent} from './public/loading.component';

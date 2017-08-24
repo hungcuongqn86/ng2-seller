@@ -11,7 +11,7 @@
             <td style="width: 80%" class="middle" (click)="changeColor($event,prod,prod.colors[0])">
               <div class="colors">
                 <div *ngFor='let itemColor of prod.colors' class="color">
-                  <ninip-lgcolor [color]="itemColor.value" (click)="changeColor($event,prod,itemColor)"></ninip-lgcolor>
+                  <ni-color [color]="itemColor.value" (click)="changeColor($event,prod,itemColor)"></ni-color>
                 </div>
               </div>
             </td>
