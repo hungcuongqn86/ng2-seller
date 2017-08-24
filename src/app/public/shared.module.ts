@@ -2,7 +2,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {ProductDirective} from '../directive/product.directive';
 import {DebounceDirective} from '../directive/debounce.directive';
 import {CampaignDirective} from '../directive/campaign.directive';
-import {CharLeftDirective} from 'charactersleft';
+import {CharLeftDirective} from 'ngx-charleft';
 
 @NgModule({
   imports: [],

@@ -35,6 +35,7 @@
     "ng2-select2": "^1.0.0-beta.10",
     "ng2-tooltip": "0.0.7",
     "ng2-translate": "^5.0.0",
+    "ngx-charleft": "^1.1.1",
     "ngx-progress-bar": "0.0.10",
     "rxjs": "^5.1.0",
     "select2": "^4.0.3",

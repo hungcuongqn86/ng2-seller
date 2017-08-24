@@ -8,7 +8,8 @@
                #titleVali="ngModel"
                name="title" id="title"
                [maxLength]="50"
-               [ninipCharLeft]="50"
+               [niCharLeft]="50"
+               [labelClass]="'pull-right'"
                pattern="^[\w\d _.-]+$" required
                class="form-control">
         <div [hidden]="titleVali.valid || titleVali.untouched">
@@ -27,7 +28,8 @@
         <label>Description</label>
         <quill-editor #editor [(ngModel)]="CampaignsService.campaign.desc" [modules]="quillOption"
                       [maxLength]="2000"
-                      [ninipCharLeft]="2000"
+                      [niCharLeft]="2000"
+                      [labelClass]="'pull-right'"
                       (onEditorCreated)="seDescription()" name="desc"
                       name="desc"
                       [placeholder]="placeholder">
