@@ -15,6 +15,8 @@ export class ProductDirective implements OnChanges {
   @Input('color')
   public color: any = null;
   prodDraw: any;
+  viewDraw: any;
+  symbol: any;
   prodColor: any;
   nested: any;
 
@@ -44,27 +46,38 @@ export class ProductDirective implements OnChanges {
     const sW = this.el.nativeElement.offsetWidth;
     if (this.prodDraw) {
       this.prodDraw.clear();
+      this.viewDraw.clear();
     } else {
       this.prodDraw = SVG(this.el.nativeElement);
+      this.viewDraw = SVG(this.el.nativeElement);
     }
+    this.prodDraw.style('display', 'none');
+    myjs.viewDraw.style('display', 'block');
+    this.symbol = this.prodDraw.symbol();
     if (!this.color) {
-      const indexColor = this.product.colors.findIndex(x => x.default === true) >= 0 ?
-        this.product.colors.findIndex(x => x.default === true) : 0;
+      let indexColor = this.product.colors.findIndex(x => x.default === true);
+      if (indexColor < 0) {
+        indexColor = 0;
+      }
       this.color = this.product.colors[indexColor];
     }
-    this.prodColor = this.prodDraw.rect().fill(this.color.value);
-    this.prodDraw.image(DsLib.getBaseImgUrl(this.face, this.product.base)).loaded(function (loader) {
+    this.prodColor = this.symbol.rect().fill(this.color.value);
+    this.symbol.image(DsLib.getBaseImgUrl(this.face, this.product.base)).loaded(function (loader) {
       const sH = sW * loader.height / loader.width;
       this.size(sW, sH);
-      myjs.prodDraw.size(sW, sH);
       myjs.prodColor.size(sW, sH);
+      myjs.prodDraw.size(sW, sH);
       const zoom = (sW / myjs.product.base.image.width);
       myjs.genDesign(zoom);
+
+      const box = myjs.prodDraw.viewbox();
+      myjs.viewDraw.viewbox(0, 0, box.width, box.height);
+      const use = myjs.viewDraw.use(myjs.symbol);
     });
   }
 
   private genDesign(zoom) {
-    this.nested = this.prodDraw.nested();
+    this.nested = this.symbol.nested();
     Object.keys(this.product.designs).map((index) => {
       if (this.product.designs[index].type === this.face) {
         this.addImg(this.product.designs[index], zoom);
@@ -72,7 +85,7 @@ export class ProductDirective implements OnChanges {
     });
   }
 
-  public addImg(dsrs: any, zoom) {
+  private addImg(dsrs: any, zoom) {
     const myobj = this;
     this.nested.image(dsrs.image.url)
       .loaded(function () {
