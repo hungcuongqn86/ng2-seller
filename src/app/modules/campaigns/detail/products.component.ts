@@ -119,6 +119,22 @@ export class ProductsComponent implements OnInit, OnDestroy {
        this.CampaignsService.campaign.products[0].designs[index].main = true;
        });
        }*/
+      const optold = Ds._getMainOpt(item.base.type.id, 'front', this.CampaignsService.arrBaseTypes, this.CampaignsService.campaign);
+      if (!optold.status) {
+        const typeGroup = Ds.getBaseGroup(this.CampaignsService.arrBaseTypes, item.base.type.id);
+        for (let i = 0; i < this.CampaignsService.campaign.products.length; i++) {
+          if (this.CampaignsService.campaign.products[i].base.type) {
+            const typeGroupIndex = Ds.getBaseGroup(this.CampaignsService.arrBaseTypes,
+              this.CampaignsService.campaign.products[i].base.type.id);
+            if (typeGroup === typeGroupIndex) {
+              Object.keys(this.CampaignsService.campaign.products[i].designs).map((index) => {
+                this.CampaignsService.campaign.products[i].designs[index].main = true;
+              });
+              break;
+            }
+          }
+        }
+      }
       this.updateCampaign();
     }
   }
