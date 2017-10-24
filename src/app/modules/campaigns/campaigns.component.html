@@ -2,14 +2,15 @@
   <div class="col-sm-12">
     <form novalidate (ngSubmit)="searchCampaigns()" #form="ngForm">
       <div class="row">
-        <div class="col-sm-4">
-          <div class="form-group">
+        <div class="col-sm-4">aaaa
+          {{ 'HEADER.START_DESIGNING' | translate }}
+          <div class="form-group form-input-lg">
                         <span data-toggle="dropdown" class="form-control">{{stateName}}<i
-                          style="margin-top: 4px;"
-                          class="fa fa-caret-down pull-right"
+                          class="ion-ios-arrow-down pull-right"
                           aria-hidden="true"></i></span>
-            <ul class="dropdown-menu dropdown-promotions">
-              <li *ngFor='let state of states'><a
+            <ul class="dropdown-menu dropdown-promotions dropdown-select">
+              <li *ngFor='let state of states'
+                [ngClass]="(state.name === stateName)? 'active': ''"><a
                 (click)="selState(state)"
                 href="javascript:void(0)">{{state.name}}</a>
               </li>
@@ -17,8 +18,8 @@
           </div>
         </div>
         <div class="col-sm-4 col-sm-offset-4">
-          <div class="form-group">
-            <input title="Filter by search" placeholder="Search for campaign by URL or title"
+          <div class="form-group form-input-lg">
+            <input title="Filter by search" placeholder="Search by URL or title"
                    [(ngModel)]="CampaignsService.search.title"
                    name="title" id="title"
                    class="form-control">
@@ -29,11 +30,7 @@
     <table class="table table-hover">
       <thead>
       <tr>
-        <th style="width: 15%;">Campaign
-          <button (click)="AppService.addCampaign()" class="btn btn-xs btn-default">
-            <i class="fa fa-plus-square" aria-hidden="true"></i>
-          </button>
-        </th>
+        <th style="width: 15%;">Campaign</th>
         <th style="width: 30%;"></th>
         <th>Orders</th>
         <th>Unit sales</th>

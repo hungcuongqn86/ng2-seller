@@ -6,7 +6,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-sm-3">
-              <div class="form-group"
+              <div class="form-group form-input-lg"
                    [ngClass]="((code.touched && !code.valid)||!checkcode.available)? 'has-error': ''">
                 <label for="code">Promo ID (alphanumeric)</label>
                 <input [(ngModel)]="promotion.code" #code="ngModel" name="code" id="code"
@@ -17,14 +17,15 @@
               </div>
             </div>
             <div class="col-sm-3">
-              <div class="form-group">
+              <div class="form-group form-input-lg">
                 <label>Type</label>
                 <span data-toggle="dropdown" class="form-control">{{promotion_type}}<i
                   style="margin-top: 4px;"
-                  class="fa fa-caret-down pull-right"
+                  class="ion-ios-arrow-down pull-right"
                   aria-hidden="true"></i></span>
-                <ul class="dropdown-menu dropdown-promotions">
-                  <li *ngFor='let itemPmt of promotionsTypeData'><a
+                <ul class="dropdown-menu dropdown-promotions dropdown-select">
+                  <li *ngFor='let itemPmt of promotionsTypeData'
+                  [ngClass]="(itemPmt.name === promotion_type)? 'active': ''"><a
                     (click)="setPromotionType(itemPmt)"
                     href="javascript:void(0)">{{itemPmt.name}}</a>
                   </li>
@@ -32,11 +33,11 @@
               </div>
             </div>
             <div [hidden]="promotion.type!=='24yQLTr5bg5f5Cor'" class="col-sm-3">
-              <div class="form-group" [ngClass]="(amount.touched && !amount.valid)? 'has-error': ''">
+              <div class="form-group form-input-lg" [ngClass]="(amount.touched && !amount.valid)? 'has-error': ''">
                 <label for="amount">Amount</label>
-                <div class="input-group">
+                <div class="input-group select-ctr select-text-ctr">
                                     <span data-toggle="dropdown" class="input-group-addon">{{discount_type}}<i
-                                      class="fa fa-caret-down" style="margin-left: 8px;"
+                                      class="ion-ios-arrow-down" style="margin-left: 8px;"
                                       aria-hidden="true"></i></span>
                   <ul class="dropdown-menu dropdown-amount">
                     <li *ngFor='let itemDt of discountTypeData'><a (click)="setDiscountType(itemDt)"
@@ -46,7 +47,8 @@
                   <input [(ngModel)]="promotion.discount_value" #amount="ngModel" type="number"
                          class="form-control"
                          min="0"
-                         name="amount" id="amount" [required]="promotion.type==='24yQLTr5bg5f5Cor'">
+                         name="amount" id="amount" [required]="promotion.type==='24yQLTr5bg5f5Cor'"
+                         style="max-width:75px;padding: 6px 0;">
                 </div>
               </div>
             </div>
@@ -55,7 +57,7 @@
                 <label style="display: block;">&nbsp;</label>
                 <button (click)="addPromotion()"
                         [disabled]="!checkcode.available || !form.form.valid"
-                        class="btn {{checkcode.available && form.form.valid? 'btn-primary': 'btn-default'}}">
+                        class="btn btn-form btn-form-lg">
                   Add discount
                 </button>
               </div>
@@ -129,7 +131,7 @@
       </tr>
       </tbody>
     </table>
-    <div *ngIf="promotionsData.total > searchparam.page_size">
+    <div class="text-center" *ngIf="promotionsData.total > searchparam.page_size">
       <pagination-template #api="paginationApi"
                            (pageChange)="getPage($event)">
         <ul class="pagination pagination-sm">

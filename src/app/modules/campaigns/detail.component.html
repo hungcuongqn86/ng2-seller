@@ -4,12 +4,12 @@
             <div class="pull-right action">
                 <button *ngIf="CampaignsService.campaign&&CampaignsService.campaign.state!=='end'"
                         (click)="setState('end')"
-                        class="btn btn-default btn-xs">
+                        class="btn btn-form btn-form-xs btn-form-blank">
                     Inactive
                 </button>
                 <button *ngIf="CampaignsService.campaign&&CampaignsService.campaign.state==='end'"
                         (click)="setState('launching')"
-                        class="btn btn-default btn-xs">
+                        class="btn btn-xs btn-form btn-form-xs">
                     Active
                 </button>
                 <button (click)="goBack()" class="btn btn-default btn-xs">
@@ -23,7 +23,7 @@
                 <li class="{{tab==='mockups'? 'active': ''}}"><a (click)="selectTab('mockups')">Mockups</a></li>
             </ul>
 
-            <div class="tab-content">
+            <div class="nav-tabs-content tab-content">
                 <div *ngIf="CampaignsService.campaign&&tab==='detail'" id="detail"
                      class="tab-pane fade {{tab==='detail'? 'in active': ''}}">
                     <app-campaign-detail-edit></app-campaign-detail-edit>

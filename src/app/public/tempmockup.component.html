@@ -4,31 +4,31 @@
       <button type="button" class="close" (click)="mdClose()">&times;</button>
       <div class="row">
         <div class="col-sm-6">
-          <div class="form-group" style="margin-top: 10px;">
+          <div class="form-group form-input-lg" style="margin-top: 10px;">
             <label>Types</label>
             <span data-toggle="dropdown" class="form-control">{{type.name}}<i
               style="margin-top: 4px;"
-              class="fa fa-caret-down pull-right"
+              class="ion-ios-arrow-down pull-right"
               aria-hidden="true"></i></span>
-            <ul class="dropdown-menu dropdown-promotions">
-              <li *ngFor="let mtype of arrTypes"><a (click)="setType(mtype)"
+            <ul class="dropdown-menu dropdown-promotions dropdown-select">
+              <li *ngFor="let mtype of arrTypes" [ngClass]="(mtype.name === type.name)? 'active': ''"><a (click)="setType(mtype)"
                                                     href="javascript:void(0)">{{mtype.name}}</a>
               </li>
             </ul>
           </div>
         </div>
         <div class="col-sm-6">
-          <div class="form-group" style="margin-top: 10px;">
+          <div class="form-group form-input-lg" style="margin-top: 10px;">
             <label>Categories</label>
             <span data-toggle="dropdown" class="form-control">{{categories?categories.name:'Select all'}}<i
               style="margin-top: 4px;"
-              class="fa fa-caret-down pull-right"
+              class="ion-ios-arrow-down pull-right"
               aria-hidden="true"></i></span>
-            <ul class="dropdown-menu dropdown-promotions">
-              <li><a (click)="setCategories()"
+            <ul class="dropdown-menu dropdown-promotions dropdown-select">
+              <li [ngClass]="(!categories)? 'active': ''"><a (click)="setCategories()"
                      href="javascript:void(0)">Select all</a></li>
-              <li *ngFor="let categories of arrMockupCategories"><a (click)="setCategories(categories)"
-                                                                    href="javascript:void(0)">{{categories.name}}</a>
+              <li *ngFor="let cat of arrMockupCategories" [ngClass]="(categories && cat.name === categories.name)? 'active': ''"><a (click)="setCategories(cat)"
+                                                                    href="javascript:void(0)">{{cat.name}}</a>
               </li>
             </ul>
           </div>

@@ -5,7 +5,7 @@
         <div class="col-sm-7" style="border-right: 1px solid #ddd;">
           <div class="col-sm-12">
             <form novalidate (ngSubmit)="getCampaigns()">
-              <div style="margin: 10px">
+              <div class="form-input-lg" style="margin: 10px">
                 <p><strong>Select storefront campaigns</strong></p>
                 <input title="Filter by search" placeholder="Search for campaign by URL or title"
                        [(ngModel)]="search.title"
@@ -55,9 +55,9 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" (click)="mdClose()" class="btn btn-default pull-right margin" data-dismiss="modal">Close
+      <button type="button" (click)="mdClose()" class="btn btn-form btn-form-md btn-form-blank pull-right margin" data-dismiss="modal">Close
       </button>
-      <button type="button" (click)="confirm()" class="btn btn-primary pull-right margin">Confirm</button>
+      <button type="button" (click)="confirm()" class="btn btn-form btn-form-md pull-right margin">Confirm</button>
     </div>
   </div>
 </div>

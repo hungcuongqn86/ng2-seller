@@ -1,7 +1,7 @@
-<div id="app">
-  <div id="wrapper">
+<div id="app" style="height:100%">
+  <div id="wrapper" style="height:100%">
     <app-layouts-header></app-layouts-header>
-    <div class="container">
+    <div class="container" style="min-height: calc(100% - 428px);">
       <div class="row">
         <app-layouts-sidebar *ngIf="PublicService.http.profile"></app-layouts-sidebar>
         <div

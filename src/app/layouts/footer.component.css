@@ -1,0 +1,54 @@
+footer .footer-info {
+  background-color: #333333;
+  font-size: 14px;
+  padding: 40px 0;
+}
+
+footer .footer-info .container div {
+  padding: 0px;
+}
+
+.footer-copyright {
+  background: #545454;
+}
+
+.footer-copyright p {
+  padding: 10px 0;
+  margin: 0;
+  font-size: 12px;
+}
+
+.burger-info a {
+  margin: 10px 0;
+  display: block
+}
+
+.socical-ft a {
+  margin: 0;
+  line-height: 24px;
+}
+
+.list-social-footer a {
+  color: #fff;
+}
+
+.list-social-footer li {
+  background-color: #5b5b5b;
+  padding: 8px;
+  color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px !important;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.socical-ft ul {
+  margin-left: 25px;
+  display: inline;
+}
+
+.client-pay {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}

@@ -24,10 +24,10 @@
         <div class="row text-center" style="margin-bottom: 10px;">
           <div class="btn-group">
             <button type="button" (click)="setFace('front')"
-                    class="btn {{face==='front'? 'btn-primary': 'btn-default'}}">Front
+                    class="btn btn-form btn-form-md {{face==='front'? '': 'btn-form-blank'}}">Front
             </button>
             <button type="button" (click)="setFace('back')"
-                    class="btn {{face==='back'? 'btn-primary': 'btn-default'}}">Back
+                    class="btn btn-form btn-form-md {{face==='back'? '': 'btn-form-blank'}}">Back
             </button>
           </div>
         </div>
@@ -35,9 +35,9 @@
     </div>
 
     <div class="modal-footer">
-      <button type="button" (click)="mdClose()" class="btn btn-default pull-right margin" data-dismiss="modal">Close
+      <button type="button" (click)="mdClose()" class="btn btn-form btn-form-md btn-form-blank pull-right margin" data-dismiss="modal">Close
       </button>
-      <button type="button" (click)="confirm()" class="btn btn-primary pull-right margin">Confirm</button>
+      <button type="button" (click)="confirm()" class="btn btn-form btn-form-md pull-right margin">Confirm</button>
     </div>
   </div>
 </div>

@@ -4,12 +4,12 @@
       <label class="pull-right action">
         <button *ngIf="StorefrontsService.storefront&&StorefrontsService.storefront.state!=='deleted'"
                 (click)="setState('deleted')"
-                class="btn btn-default btn-xs">
+                class="btn btn-form btn-form-xs btn-form-blank">
           Inactive
         </button>
         <button *ngIf="StorefrontsService.storefront&&StorefrontsService.storefront.state==='deleted'"
                 (click)="setState('approved')"
-                class="btn btn-default btn-xs">
+                class="btn btn-form btn-form-xs">
           Active
         </button>
         <button (click)="goBack()" class="btn btn-default btn-xs">
@@ -18,7 +18,7 @@
       </label>
     </h3>
     <form novalidate #form="ngForm">
-      <div class="form-group" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">
+      <div class="form-group form-input-lg" [ngClass]="(titleVali.touched && !titleVali.valid)? 'has-error': ''">
         <label for="title">Title<span class="label-red">*</span></label>
         <input [(ngModel)]="StorefrontsService.storefront.title"
                #titleVali="ngModel"
@@ -52,12 +52,12 @@
                       [placeholder]="'...'">
         </quill-editor>
       </div>
-      <div class="form-group"
+      <div class="form-group form-input-lg"
            [ngClass]="((!uri.available)||(uriVali.touched && !uriVali.valid))? 'has-error': ''">
         <label for="uri">URL<span class="label-red">*</span></label>
-        <div class="input-group">
+        <div class="input-group select-ctr select-text-ctr">
                         <span data-toggle="dropdown" class="input-group-addon">{{url}}<i style="margin-left: 8px;"
-                                                                                         class="fa fa-caret-down"
+                                                                                         class="ion-ios-arrow-down"
                                                                                          aria-hidden="true"></i></span>
           <ul *ngIf="arrDomains.length&&!StorefrontId" class="dropdown-menu">
             <li *ngFor='let itemDm of arrDomains'><a (click)="setDomain(itemDm)"
@@ -115,7 +115,7 @@
           <span>{{StorefrontsService.storefront.campaigns? StorefrontsService.storefront.campaigns.split(',').length: 0}} campaigns selected</span>
         </div>
         <div class="col-sm-6 text-right">
-          <button type="button" (click)="changeCampaigns()" class="btn btn-default add-campaign">Add campaign
+          <button type="button" (click)="changeCampaigns()" class="btn btn-form  btn-form-lg add-campaign">Add campaign
           </button>
         </div>
       </div>
@@ -128,10 +128,10 @@
         <div class="col-sm-6 text-right">
           <div class="btn-group">
             <button type="button" (click)="setVisibility(false)"
-                    class="btn {{!StorefrontsService.storefront.private? 'lightblue': 'btn-default'}}">Public
+                    class="btn btn-form {{!StorefrontsService.storefront.private? 'btn-form-md': 'btn-form-md btn-form-blank'}}">Public
             </button>
             <button type="button" (click)="setVisibility(true)"
-                    class="btn {{StorefrontsService.storefront.private? 'lightblue': 'btn-default'}}">Private
+                    class="btn btn-form {{StorefrontsService.storefront.private? 'btn-form-md': 'btn-form-md btn-form-blank'}}">Private
             </button>
           </div>
         </div>
@@ -139,7 +139,7 @@
 
       <div class="form-group">
         <button type="button" (click)="updateStorefront()"
-                class="btn btn-launch {{form.form.valid? 'btn-primary lightblue': 'btn-default'}}"
+                class="btn btn-launch btn-form  btn-form-lg"
                 [disabled]="!form.form.valid">{{btnUpdateTitle}}
         </button>
       </div>

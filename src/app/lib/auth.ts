@@ -48,11 +48,11 @@ export class Auth {
   private toWordArray = src => CryptoJS.enc.Utf8.parse(src);
   private hex = src => src.toString(CryptoJS.enc.Hex).toLowerCase();
   private hmacSha256 = (key, data) => CryptoJS.HmacSHA256(data, key);
-  private yyyyMMdd = timestamp => timestamp.getUTCFullYear() + this.zeroPad(timestamp.getUTCMonth() + 1)
+  private yyyyMMdd = timestamp => timestamp.getUTCFullYear().toString() + this.zeroPad(timestamp.getUTCMonth() + 1)
     + this.zeroPad(timestamp.getUTCDate());
   private zeroPad = src => src < 10 ? '0' + src : src;
   private sha256Hash = data => this.hex(CryptoJS.SHA256(data));
-  public yyyyMMddTHHmmssZ = timestamp => timestamp.getUTCFullYear() + this.zeroPad(timestamp.getUTCMonth() + 1)
+  public yyyyMMddTHHmmssZ = timestamp => timestamp.getUTCFullYear().toString() + this.zeroPad(timestamp.getUTCMonth() + 1)
     + this.zeroPad(timestamp.getUTCDate()) + 'T' + this.zeroPad(timestamp.getUTCHours()) + this.zeroPad(timestamp.getUTCMinutes())
     + this.zeroPad(timestamp.getUTCSeconds()) + 'Z';
 }

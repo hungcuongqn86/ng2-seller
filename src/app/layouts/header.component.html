@@ -1,34 +1,37 @@
-<div class="mnu-top text-right">
+<div class="mnu-top">
   <div class="container">
-    <ul class="list-inline">
+    <a class="logo" href="/">
+      <img class="pull-left" src="./assets/img/logo-burger.png" alt="">
+    </a>
+    <ul class="menu list-inline">
       <li *ngIf="PublicService.http.profile" style="cursor: pointer;">
-        <a (click)="AppService.addCampaign()">{{ 'HEADER.START_DESIGNING' | translate }}
+        <a class="menu-label" (click)="AppService.addCampaign()">{{ 'HEADER.START_DESIGNING' | translate }}
         </a></li>
       <li *ngIf="PublicService.http.profile" class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+        <a href="#" class="dropdown-toggle menu-label" data-toggle="dropdown" role="button"
            aria-expanded="false">
-          {{PublicService.http.profile}} <span class="caret"></span>
+          {{PublicService.http.profile}} <span class="fa fa-angle-down"></span>
         </a>
 
         <ul class="dropdown-menu dropdown-menu-profile" role="menu">
           <li>
-            <a routerLink="campaigns" href="javascript: void(0)">
-              {{ 'COMMON.CAMPAIGNS' | translate }} <i class="fa fa-server" aria-hidden="true"></i>
+            <a routerLinkActive="active" routerLink="campaigns" href="javascript: void(0)">
+              <i class="fa fa-server" aria-hidden="true"></i> {{ 'COMMON.CAMPAIGNS' | translate }}
             </a>
           </li>
           <li>
-            <a routerLink="storefronts" href="javascript: void(0)">
-              {{ 'COMMON.STOREFRONTS' | translate }} <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+            <a routerLinkActive="active" routerLink="storefronts" href="javascript: void(0)">
+              <i class="fa fa-newspaper-o" aria-hidden="true"></i> {{ 'COMMON.STOREFRONTS' | translate }}
             </a>
           </li>
           <li>
-            <a routerLink="promotions" href="javascript: void(0)">
-              {{ 'COMMON.PROMOTIONS' | translate }} <i class="fa fa-tags" aria-hidden="true"></i>
+            <a routerLinkActive="active" routerLink="promotions" href="javascript: void(0)">
+              <i class="fa fa-tags" aria-hidden="true"></i> {{ 'COMMON.PROMOTIONS' | translate }}
             </a>
           </li>
           <li>
             <a (click)="logout()" href="javascript: void(0)">
-              {{ 'COMMON.SIGN_OUT' | translate }} <i class="fa fa-sign-out" aria-hidden="true"></i>
+              <i class="fa fa-sign-out" aria-hidden="true"></i> {{ 'COMMON.SIGN_OUT' | translate }}
             </a>
           </li>
         </ul>
@@ -44,22 +47,3 @@
     </ul>
   </div>
 </div>
-<!-- Navigation -->
-<nav class="navbar navbar-inverse" role="navigation">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse"
-              data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">
-        <img class="hidden-xs" src="./assets/img/logo-burger.png" alt="">
-        <img class="hidden-lg hidden-md hidden-sm" src="./assets/img/logo-burger-m.png" alt="">
-      </a>
-    </div>
-  </div>
-</nav>

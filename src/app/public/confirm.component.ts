@@ -19,10 +19,10 @@ export interface ConfirmModel {
                     <p>{{message || 'Are you sure?'}}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal" (click)="cancel()">
+                    <button type="button" class="btn btn-form btn-form-md btn-form-blank pull-left" data-dismiss="modal" (click)="cancel()">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn-outline" (click)="confirm()">OK</button>
+                    <button type="button" class="btn btn-form btn-form-md" (click)="confirm()" style="min-width:90px">OK</button>
                 </div>
             </div>
         </div>`
